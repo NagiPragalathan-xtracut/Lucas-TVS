@@ -1,9 +1,10 @@
 import { useId, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
-import type { LucideIcon } from 'lucide-react'
+import { ChevronRight, type LucideIcon } from 'lucide-react'
 import { cx } from '../../lib/cx'
 import { ROUTES } from '../../lib/routes'
 import { approachBackdrop } from '../../lib/assets'
+import { capabilityIcon } from '../../data/capabilityIcons'
 import {
   BAND,
   Eyebrow,
@@ -133,6 +134,7 @@ export type Crumb = { label: string; to?: string }
  */
 export function DarkHero({
   image,
+  video,
   position = 'center',
   heightClass,
   crumbs,
@@ -143,13 +145,18 @@ export function DarkHero({
   below,
 }: {
   image: string
+  /** Optional looping clip over `image`. The image doubles as its poster,
+   *  so the hero is never blank while the clip loads, and it is all that
+   *  shows under prefers-reduced-motion. */
+  video?: string
   position?: string
   /** Literal Tailwind min-height classes, e.g. "min-h-[564px] lg:min-h-[640px]". */
   heightClass: string
   crumbs: Crumb[]
   title: ReactNode
   accent?: ReactNode
-  intro: ReactNode
+  /** Optional — the About Us banner runs without one (13 Oct). */
+  intro?: ReactNode
   actions?: ReactNode
   /** An extra row under the actions — the sector pills on the industry pages. */
   below?: ReactNode
@@ -164,6 +171,20 @@ export function DarkHero({
         className="absolute inset-0 h-full w-full object-cover"
         style={{ objectPosition: position }}
       />
+      {video && (
+        <video
+          src={video}
+          poster={image}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          aria-hidden="true"
+          className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
+          style={{ objectPosition: position }}
+        />
+      )}
       {/* The reference's hero is a flat charcoal plate. Over a photograph
           that becomes a scrim, and it has to answer to two things at once:
           the copy needs charcoal behind it, and the photograph needs to
@@ -224,9 +245,11 @@ export function DarkHero({
                 </>
               )}
             </h1>
-            <p className="max-w-[640px] font-body text-[15px] leading-[1.6] text-white/90 lg:text-[18px]">
-              {intro}
-            </p>
+            {intro && (
+              <p className="max-w-[640px] font-body text-[15px] leading-[1.6] text-white/90 lg:text-[18px]">
+                {intro}
+              </p>
+            )}
           </div>
 
           {actions && <div className="flex flex-wrap gap-3 pt-2">{actions}</div>}
@@ -399,6 +422,40 @@ export function FeatureCard({
   )
 }
 
+/**
+ * Capabilities as icon chips, two to a row from tablet up (one on a
+ * phone), each with an icon matched to its label (data/capabilityIcons.ts).
+ * Shared by the solution rows and the service-line cards (14 Oct). The
+ * chips are information, not links; the chevron is the reference's
+ * ornament and is hidden from assistive tech.
+ */
+export function CapabilityChips({ items, className }: { items: string[]; className?: string }) {
+  return (
+    <ul className={cx('grid gap-3 sm:grid-cols-2', className)}>
+      {items.map((item) => {
+        const Icon = capabilityIcon(item)
+        return (
+          <li
+            key={item}
+            className="flex items-center gap-3 rounded-[14px] border border-line-soft bg-white py-3 pr-3 pl-3 shadow-[0_2px_6px_rgba(0,0,0,0.03)] transition-colors duration-200 hover:border-green-deep/30"
+          >
+            <span
+              aria-hidden
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px] bg-lime-tint text-green-deep"
+            >
+              <Icon strokeWidth={1.8} className="h-[18px] w-[18px]" />
+            </span>
+            <span className="min-w-0 grow font-body text-[14px] leading-[1.35] font-medium text-ink">
+              {item}
+            </span>
+            <ChevronRight aria-hidden strokeWidth={2} className="h-4 w-4 shrink-0 text-body-soft" />
+          </li>
+        )
+      })}
+    </ul>
+  )
+}
+
 /** Title beside its icon, a line, then the service tags — Capabilities. */
 export function ServiceCard({
   icon,
@@ -418,7 +475,8 @@ export function ServiceCard({
         <h3 className="font-display text-[20px] leading-[1.3] font-semibold text-ink">{title}</h3>
       </div>
       <p className="font-body text-[15px] leading-[1.6] text-body">{body}</p>
-      <TagList items={tags} />
+      {/* 14 Oct: icon chips instead of grey pills, as on the industry pages. */}
+      <CapabilityChips items={tags} className="pt-1" />
     </article>
   )
 }
@@ -550,28 +608,56 @@ export type SolutionRowData = {
 }
 
 /**
+ * Splits a solution title for its two-tone heading: everything after the
+ * last " & " is the green accent ("Electrification & | Powertrain
+ * Systems"); a title with no ampersand accents its last word.
+ */
+function splitTitle(title: string): [string, string] {
+  const amp = title.lastIndexOf(' & ')
+  if (amp > 0) return [title.slice(0, amp + 3), title.slice(amp + 3)]
+  const sp = title.lastIndexOf(' ')
+  return sp > 0 ? [title.slice(0, sp + 1), title.slice(sp + 1)] : ['', title]
+}
+
+/**
  * One solution: a 380px photograph beside a 560px column of copy, the
  * sides swapping on alternate rows. On a phone the photograph always leads.
+ *
+ * 14 Oct restyle, site-wide (industry pages and Technologies): two-tone
+ * heading, a "Capabilities" divider, and the capabilities as icon chips —
+ * two to a row from tablet up (one on a phone) — each with an icon matched to its label
+ * (data/capabilityIcons.ts). The chips are information, not links; the
+ * chevron is the reference's ornament and is hidden from assistive tech.
  */
 export function SolutionRow({ solution, flip }: { solution: SolutionRowData; flip: boolean }) {
+  const [lead, accent] = splitTitle(solution.title)
   return (
-    <div className="flex flex-col gap-7 lg:flex-row lg:items-center lg:gap-[72px]">
+    <div className="flex flex-col gap-7 lg:flex-row lg:items-center lg:gap-12">
       <ImageSlot
         src={solution.image}
         label={solution.imageLabel}
         className={cx(
-          'h-[220px] w-full min-w-0 rounded-[24px] lg:h-[380px] lg:grow',
+          'h-[220px] w-full min-w-0 rounded-[24px] lg:h-[400px] lg:grow',
           flip && 'lg:order-last',
         )}
       />
-      <div className="flex flex-col justify-center gap-3.5 lg:w-[560px] lg:shrink-0">
+      <div className="flex flex-col justify-center gap-4 lg:w-[680px] lg:shrink-0">
         <IconTile tone="tint">{solution.icon}</IconTile>
-        <h3 className="font-display text-[22px] leading-[1.2] font-semibold text-ink lg:text-[28px]">
-          {solution.title}
+        <h3 className="font-display text-[24px] leading-[1.15] font-semibold text-ink lg:text-[32px]">
+          {lead}
+          <span className="text-green-deep">{accent}</span>
         </h3>
-        <p className="font-body text-[16px] leading-[1.6] text-body">{solution.description}</p>
-        <p className="pt-1 font-mono text-[12px] tracking-[0.1em] text-green-deep uppercase">Capabilities</p>
-        <TagList items={solution.items} />
+        <p className="font-body text-[16px] leading-[1.6] text-body lg:text-[17px]">
+          {solution.description}
+        </p>
+        <div className="flex items-center gap-3 pt-1">
+          <p className="font-mono text-[12px] tracking-[0.12em] text-green-deep uppercase">
+            Capabilities
+          </p>
+          <span aria-hidden className="h-[2px] w-8 rounded-full bg-lime" />
+          <span aria-hidden className="h-px grow bg-line" />
+        </div>
+        <CapabilityChips items={solution.items} />
       </div>
     </div>
   )

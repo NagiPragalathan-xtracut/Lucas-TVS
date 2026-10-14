@@ -7,7 +7,6 @@ import {
   CtaPlate,
   DarkBand,
   DarkHero,
-  FeatureCard,
   MoreTile,
   ProductTile,
   SectorCard,
@@ -17,8 +16,12 @@ import {
 } from '../../components/site/blocks'
 import { BAT, INDUSTRIES, industryBySlug, type Industry } from '../../data/industries'
 import { CATALOGUE_URL, productsIn } from '../../data/products'
+import { DEFENCE_PLATFORMS } from '../../data/defenceSupplied'
 import { ROUTES, insightPath } from '../../lib/routes'
 import NotFoundPage from './NotFoundPage'
+
+/** The "<Sector> Products." band — hidden on every industry page (14 Oct). */
+const SHOW_PRODUCTS = false
 
 /**
  * Automotive, Industrial and Defence & Aerospace — one template, built to
@@ -43,6 +46,7 @@ export default function IndustryPage() {
     <PageShell title={industry.label}>
       <DarkHero
         image={industry.heroImage}
+        video={industry.heroVideo}
         position={industry.heroPosition ?? '65% center'}
         heightClass={industry.heroHeight}
         crumbs={[{ label: 'Industries', to: ROUTES.industries }, { label: industry.label }]}
@@ -72,14 +76,9 @@ export default function IndustryPage() {
         />
       </Band>
 
-      <Band tone="mute">
-        <StackHeader eyebrow="Key focus areas" title="Where we" accent="focus." />
-        <div className={`${BODY_GAP} grid gap-3.5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6`}>
-          {industry.focusAreas.map((area) => (
-            <FeatureCard key={area.title} icon={<area.icon />} title={area.title} body={area.body} />
-          ))}
-        </div>
-      </Band>
+      {/* "Key focus areas — Where we focus." (four cards) was removed on
+          14 Oct: the same ground is covered by "Solutions that deliver."
+          further down the page. */}
 
       {isAutomotive && <BatBand />}
 
@@ -101,7 +100,14 @@ export default function IndustryPage() {
         </div>
       </Band>
 
-      <ProductsBand industry={industry} products={products} isAutomotive={isAutomotive} />
+      {industry.slug === 'defence-aerospace' && <DefenceSuppliedBand />}
+
+      {/* 14 Oct: the products band was removed from Industrial and
+          Defence, then hidden on Automotive too. Set SHOW_PRODUCTS to true
+          to bring Automotive's back. */}
+      {SHOW_PRODUCTS && isAutomotive && (
+        <ProductsBand industry={industry} products={products} isAutomotive={isAutomotive} />
+      )}
 
       <Band tone="mute">
         <StackHeader eyebrow="Other industries" title="One core," accent="three sectors." />
@@ -211,6 +217,75 @@ function BatBand() {
           </ul>
         </div>
       </div>
+    </DarkBand>
+  )
+}
+
+/**
+ * Defence & Aerospace only: the products we supply into defence platforms
+ * (14 Oct, from the client's defence product sheet). One card per
+ * platform — the vehicle and its components photographed together, the
+ * platform name, then every product the sheet lists for it as an icon
+ * row. (The "For T72 & T90 Battle Tanks" tag was removed on 14 Oct.)
+ * On the dark band so it reads apart from the white solutions above.
+ */
+function DefenceSuppliedBand() {
+  return (
+    <DarkBand>
+      <SplitHeader
+        dark
+        eyebrow="Products supplied"
+        title="Built into"
+        accent="defence platforms."
+        body="Power and motion systems we supply for armoured and high-mobility vehicles."
+      />
+      <ol className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+        {DEFENCE_PLATFORMS.map((platform, i) => (
+          <li
+            key={platform.name}
+            className="flex flex-col overflow-hidden rounded-[22px] border border-white/10 bg-white"
+          >
+            <div className="relative border-b border-line-soft bg-white">
+              <img
+                src={platform.image}
+                alt={platform.imageAlt}
+                decoding="async"
+                loading="lazy"
+                width={960}
+                height={480}
+                className="aspect-[2/1] w-full object-contain"
+              />
+              <span className="absolute top-3 left-3 rounded-full bg-[#101211] px-2.5 py-1 font-mono text-[11px] tracking-[0.08em] text-lime">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+            </div>
+
+            <div className="flex grow flex-col gap-4 p-5 lg:p-6">
+              <h3 className="font-display text-[20px] leading-[1.25] font-semibold text-ink lg:text-[22px]">
+                {platform.name}
+              </h3>
+              <ul className="flex flex-col gap-2.5">
+                {platform.products.map((product) => (
+                  <li
+                    key={product.label}
+                    className="flex items-center gap-3 rounded-[12px] border border-line-soft px-3 py-2.5"
+                  >
+                    <span
+                      aria-hidden
+                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[9px] bg-lime-tint text-green-deep"
+                    >
+                      <product.icon strokeWidth={1.8} className="h-[17px] w-[17px]" />
+                    </span>
+                    <span className="font-body text-[14px] leading-[1.35] font-medium text-ink">
+                      {product.label}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </li>
+        ))}
+      </ol>
     </DarkBand>
   )
 }

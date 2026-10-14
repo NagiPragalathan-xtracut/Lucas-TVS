@@ -45,10 +45,11 @@ export type NavItem = {
 }
 
 /**
- * Desktop/mobile navigation. Order and labels follow the wireframe header
- * (About · Capabilities · Products · Industries · Quality · Insights ·
- * Careers) — Industries gains a dropdown because the wireframes give it
- * three child pages and a landing page.
+ * Desktop/mobile navigation: About · Capabilities · Industries · Careers.
+ * Products, Quality and Insights were dropped from the bar on review
+ * (13 Oct); their pages still exist and stay linked from the footer.
+ * Industries gains a dropdown because the wireframes give it three child
+ * pages and a landing page.
  */
 export const NAV: NavItem[] = [
   { label: 'About', to: ROUTES.about },
@@ -73,7 +74,6 @@ export const NAV: NavItem[] = [
       },
     ],
   },
-  { label: 'Products', to: ROUTES.products },
   {
     label: 'Industries',
     to: ROUTES.industries,
@@ -95,8 +95,6 @@ export const NAV: NavItem[] = [
       },
     ],
   },
-  { label: 'Quality', to: ROUTES.quality },
-  { label: 'Insights', to: ROUTES.insights },
   { label: 'Careers', to: ROUTES.careers },
 ]
 

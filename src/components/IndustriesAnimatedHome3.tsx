@@ -18,7 +18,7 @@ const INDUSTRIES = [
   {
     title: 'Industrial',
     description:
-      'Enabling intelligent manufacturing, automation, digitalization and connected industrial ecosystems.',
+      'Enabling digitization and connected industrial ecosystem.',
     image: sectorIndustrial,
     alt: 'Robotic arm welding on an automated factory production line',
     href: ROUTES.industrial,
@@ -60,10 +60,9 @@ const HEADER = (
         <h2 className="font-display text-[24px] leading-[1.15] font-medium text-ink sm:text-[30px] lg:text-[38px]">
           One Engineering Core, Three Sectors.
         </h2>
-        <p className="mx-auto mt-3 max-w-[955px] font-body text-[14px] leading-[1.5] text-body lg:text-[15px]">
-          Automotive, Industrial and Defence &amp; Aerospace — end-to-end
-          engineering, software and digital solutions across every domain.
-        </p>
+        {/* The sub-line ("Automotive, Industrial and Defence & Aerospace —
+            end-to-end engineering, software and digital solutions across
+            every domain.") was removed on 13 Oct. */}
       </header>
     </div>
   </div>

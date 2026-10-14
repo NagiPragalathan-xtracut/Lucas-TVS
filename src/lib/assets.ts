@@ -114,7 +114,55 @@ import facilityAerial from '../assets/rectangle5.webp'
 // engineering building, with a vehicle HUD, and a tank and aircraft in the
 // distance, so all three sectors are in frame. Same 1257x716 and the same
 // 601x269 notch; new filename for the same caching reason.
-import aboutEngineering from '../assets/about-engineering-sectors.webp'
+//
+// 13 Oct: replaced again — the same e-motor, controllers and HUD, now with
+// a scooter, car, truck, loader, tank and military tanker lined up in front
+// of the mountains. Same 1257x716 and notch; new filename again.
+import aboutEngineering from '../assets/about-mobility-sectors.webp'
+
+// Hero strategic-investment card (13 Oct). The BAT mark is the supplied 88px
+// tile; the flag map is an outline traced to SVG and filled with the flag
+// stripes, so it stays crisp at any size.
+import logoBat from '../assets/logo-bat.webp'
+import germanyFlagMap from '../assets/germany-flag-map.svg'
+
+// About page "Who we are" (13 Oct): the full-frame version of the
+// homepage About composite, without the corner notch. 1600px wide.
+import aboutWhoWeAre from '../assets/about-who-we-are.webp'
+
+// Group-company marks for the About page ecosystem grid (14 Oct), cropped
+// from the client's group slide — low-resolution stand-ins (about 2x their
+// display size) until the companies' own logo files are supplied.
+import logoLucasIndianService from '../assets/logo-lucas-indian-service.webp'
+import logoDelphiTvs from '../assets/logo-delphi-tvs.webp'
+import logoIndeon from '../assets/logo-indeon.webp'
+
+// Products delivered through the engineering service offerings (14 Oct),
+// cropped from the client's product sheet and set on 640x480 plates of
+// each photo's own background.
+import svcBms from '../assets/ServiceProducts/bms.webp'
+import svcDcDc from '../assets/ServiceProducts/dc-dc-converter.webp'
+import svcObc from '../assets/ServiceProducts/onboard-charger.webp'
+import svcInverter from '../assets/ServiceProducts/traction-inverter.webp'
+import svcMotorController from '../assets/ServiceProducts/integrated-motor-controller.webp'
+import svcVcu from '../assets/ServiceProducts/vehicle-control-unit.webp'
+
+// Defence & Aerospace › "Defence Electronics" solution photo (14 Oct).
+import defenceElectronics from '../assets/defence-electronics.webp'
+// …and "Digital Defence Technologies" (14 Oct).
+import defenceDigital from '../assets/defence-digital.webp'
+
+// Home3 solutions CTA background (14 Oct): transparent EV on the right,
+// pale waves on the left where the copy sits.
+import solutionsCtaBg from '../assets/solutions-cta-bg.webp'
+
+// Home3 hero slide-card thumbnails (14 Oct), cropped from the client's
+// slider reference and exported at 240x180 (2x their 120x90 slot).
+import heroThumbEmbeddedSoftware from '../assets/HeroSlides/embedded-software.webp'
+import heroThumbPowerElectronics from '../assets/HeroSlides/power-electronics.webp'
+import heroThumbDigitalElectronics from '../assets/HeroSlides/digital-electronics.webp'
+import heroThumbProductDevelopment from '../assets/HeroSlides/product-development.webp'
+import heroThumbEngineeringServices from '../assets/HeroSlides/engineering-services.webp'
 
 // Focus-area grid — Home3's bento section under Engineering Services.
 // Artwork only: each file is the illustration cropped out of the client's
@@ -318,6 +366,26 @@ export {
   logoLombardini,
   facilityAerial,
   aboutEngineering,
+  logoBat,
+  germanyFlagMap,
+  aboutWhoWeAre,
+  logoLucasIndianService,
+  logoDelphiTvs,
+  logoIndeon,
+  svcBms,
+  svcDcDc,
+  svcObc,
+  svcInverter,
+  svcMotorController,
+  svcVcu,
+  defenceElectronics,
+  defenceDigital,
+  solutionsCtaBg,
+  heroThumbEmbeddedSoftware,
+  heroThumbPowerElectronics,
+  heroThumbDigitalElectronics,
+  heroThumbProductDevelopment,
+  heroThumbEngineeringServices,
   focusGridElectrification,
   focusGridElectrification2,
   focusGridSoftwareDefined,

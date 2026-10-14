@@ -6,12 +6,15 @@ import { WhoWeAreHome3 } from '../components/WhoWeAreHome3'
 import { IndustriesAnimatedHome3 } from '../components/IndustriesAnimatedHome3'
 import { EngineeringServicesHome3 } from '../components/EngineeringServicesHome3'
 import { FocusGridHome3 } from '../components/FocusGridHome3'
-import { SolutionsFinderHome3 } from '../components/SolutionsFinderHome3'
+import { LookingForHome3 } from '../components/LookingForHome3'
 import { OurApproachHome3 } from '../components/OurApproachHome3'
 import { WhyChooseUsHome3 } from '../components/WhyChooseUsHome3'
 import { CareersHome3 } from '../components/CareersHome3'
 import { InsightsHome3 } from '../components/InsightsHome3'
 import { SiteFooterHome3 } from '../components/SiteFooterHome3'
+
+/** Home3's "Insights & Events" section — hidden for now (14 Oct). */
+const SHOW_INSIGHTS = false
 
 const WORD_STAGGER_MS = 55
 
@@ -163,7 +166,9 @@ export default function Home3() {
           <IndustriesAnimatedHome3 />
           <FocusGridHome3 />
           <EngineeringServicesHome3 />
-          <SolutionsFinderHome3 />
+          {/* 13 Oct: the tabbed solutions finder (SolutionsFinderHome3) is
+              hidden; this simpler enquiry CTA takes its place. */}
+          <LookingForHome3 />
           <OurApproachHome3 />
           {/* One Integrated Engineering Stack was here. Cut in the 16 Sep
               review: there is nothing to put behind "hardware + software
@@ -178,7 +183,9 @@ export default function Home3() {
               sustainability, which is why it was in; Shrihari's call is to
               let the parent site carry it. */}
           <CareersHome3 />
-          <InsightsHome3 />
+          {/* Insights & Events hidden 14 Oct. Set SHOW_INSIGHTS to true to
+              bring it back. */}
+          {SHOW_INSIGHTS && <InsightsHome3 />}
         </div>
       </main>
       {/* Also above the pinned hero — it's a sibling of <main>, so without

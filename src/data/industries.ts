@@ -15,7 +15,12 @@ import {
   IconTrend,
 } from '../components/site/design'
 import {
+  defenceDigital,
+  defenceElectronics,
   focusAutomation,
+  heroSlideAutomotive,
+  heroSlideIndustrialHome3,
+  heroSlideDefenceAerospaceHome3,
   focusGridAiDigital,
   focusGridAutomation,
   focusGridElectrification,
@@ -57,6 +62,10 @@ export type Industry = {
   accent: string
   intro: string
   heroImage: string
+  /** Looping banner clip — the same one this sector runs in the homepage
+   *  hero (13 Oct). `heroImage` stays as its poster and as the fallback
+   *  under reduced motion. */
+  heroVideo?: string
   heroPosition?: string
   /** The reference artboard heights for this hero, as literal classes. */
   heroHeight: string
@@ -87,11 +96,15 @@ export const INDUSTRIES: Industry[] = [
     label: 'Automotive',
     to: ROUTES.automotive,
     sector: 'Automotive',
-    title: 'Engineering the Future of',
-    accent: 'Mobility.',
+    // 14 Oct copy. Was "Engineering the Future of / Mobility." over
+    // "Helping OEMs, Tier-1s, EV startups and mobility innovators bring
+    // differentiated products to market faster."
+    title: 'Electrification &',
+    accent: 'Powertrain Systems',
     intro:
-      'Helping OEMs, Tier-1s, EV startups and mobility innovators bring differentiated products to market faster.',
+      'Engineering high-performance electric powertrain solutions for 2/3/4 Wheelers, Passenger, Commercial, Off-highway, and Specialty vehicles.',
     heroImage: focusSoftwareDefined,
+    heroVideo: heroSlideAutomotive,
     heroHeight: 'min-h-[664px] lg:min-h-[655px]',
     cardBody:
       'Accelerating the transition to connected, electric, autonomous, and software-defined mobility.',
@@ -167,6 +180,7 @@ export const INDUSTRIES: Industry[] = [
     accent: 'Connected Operations.',
     intro: 'Helping industrial OEMs and manufacturers accelerate digital transformation.',
     heroImage: focusAutomation,
+    heroVideo: heroSlideIndustrialHome3,
     heroHeight: 'min-h-[679px] lg:min-h-[720px]',
     cardBody:
       'Enabling intelligent manufacturing, automation, digitalization, and connected industrial ecosystems.',
@@ -240,6 +254,7 @@ export const INDUSTRIES: Industry[] = [
     intro:
       'Supporting Defence OEMs, system integrators, DPSUs, DRDO laboratories and armed forces programmes.',
     heroImage: focusMissionCritical,
+    heroVideo: heroSlideDefenceAerospaceHome3,
     heroHeight: 'min-h-[664px] lg:min-h-[720px]',
     cardBody:
       'Supporting mission-critical programs through advanced engineering, embedded systems, electronics, and digital technologies.',
@@ -284,7 +299,9 @@ export const INDUSTRIES: Industry[] = [
         description: 'Robust electronic subsystems for demanding operational environments.',
         items: ['Motors, Controllers & Inverters', 'Sensor Integration', 'Power Electronics', 'Embedded Processing', 'Rugged & Vehicle Electronics'],
         icon: IconBoard,
-        imageLabel: 'Image: defence electronics module',
+        image: defenceElectronics,
+        imageLabel:
+          'Rugged defence electronics — a ruggedised control unit, circuit board, cameras and military connectors, with an armoured vehicle behind',
       },
       {
         title: 'Digital Defence Technologies',
@@ -292,7 +309,9 @@ export const INDUSTRIES: Industry[] = [
           'Modern digital technologies that improve situational awareness and effectiveness.',
         items: ['AI & Analytics', 'Digital Engineering', 'Predictive Technologies', 'Digital Transformation'],
         icon: IconNetwork,
-        imageLabel: 'Image: command & control display',
+        image: defenceDigital,
+        imageLabel:
+          'A defence command centre — rugged laptops showing maps and radar, a wall of situational-awareness displays, and a drone and radar vehicle outside',
       },
     ],
     products: {

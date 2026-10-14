@@ -68,18 +68,24 @@ export function SiteHeaderHome3() {
               : 'border-white/10 bg-black/40',
           )}
         >
-          <Link to={ROUTES.home} className="shrink-0" aria-label="Lucas-TVS home">
-            <img
-              src={logoLucasTvs}
-              alt="Lucas-TVS"
-              className={cx(
-                'h-[38px] w-auto transition-[filter] duration-300 lg:h-[49px]',
-                !solid && 'brightness-0 invert',
-              )}
-            />
-          </Link>
+          {/* The logo and CTA sides grow equally (flex-1 basis-0) so the links
+              land on the bar's true centre despite the sides' unequal widths.
+              Flex, not absolute/translate: the mega panels are positioned
+              against the <nav>, and a positioned <ul> would squash them. */}
+          <div className="flex shrink-0 xl:flex-1 xl:basis-0">
+            <Link to={ROUTES.home} className="shrink-0" aria-label="Lucas-TVS home">
+              <img
+                src={logoLucasTvs}
+                alt="Lucas-TVS"
+                className={cx(
+                  'h-[38px] w-auto transition-[filter] duration-300 lg:h-[49px]',
+                  !solid && 'brightness-0 invert',
+                )}
+              />
+            </Link>
+          </div>
 
-          <ul className="ml-4 hidden flex-1 items-center justify-between gap-7 xl:flex">
+          <ul className="hidden shrink-0 items-center gap-10 xl:flex">
             {LINKS.map((item) => {
               const id = MEGA_BY_ROUTE[item.to]
               const open = id !== undefined && mega.openId === id
@@ -105,42 +111,44 @@ export function SiteHeaderHome3() {
               `Link` carrying the same classes. White over the dark bar, lime
               once the bar turns white — a white pill on white would vanish.
               The focus ring follows: white on dark, ink on white. */}
-          <Link
-            to={ROUTES.contact}
-            className={cx(
-              'ml-auto hidden items-center justify-center gap-2 rounded-full px-8 py-3.5 font-sans text-[16px] leading-[1.25] font-medium whitespace-nowrap text-ink-slate shadow-[0_4px_4px_0_rgba(211,211,211,0.25),inset_0_0_4px_0_rgba(0,0,0,0.25)] transition-[transform,background-color] duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 lg:inline-flex',
-              solid ? 'bg-lime focus-visible:outline-ink' : 'bg-white focus-visible:outline-white',
-            )}
-          >
-            Talk to Engineering
-          </Link>
+          <div className="ml-auto flex items-center justify-end gap-6 xl:flex-1 xl:basis-0">
+            <Link
+              to={ROUTES.contact}
+              className={cx(
+                'hidden items-center justify-center gap-2 rounded-full px-8 py-3.5 font-sans text-[16px] leading-[1.25] font-medium whitespace-nowrap text-ink-slate shadow-[0_4px_4px_0_rgba(211,211,211,0.25),inset_0_0_4px_0_rgba(0,0,0,0.25)] transition-[transform,background-color] duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 lg:inline-flex',
+                solid ? 'bg-lime focus-visible:outline-ink' : 'bg-white focus-visible:outline-white',
+              )}
+            >
+              Talk to Engineering
+            </Link>
 
-          <button
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            aria-expanded={open}
-            aria-label={open ? 'Close menu' : 'Open menu'}
-            className={cx(
-              'ml-auto grid h-10 w-10 place-items-center rounded-full border transition-colors duration-300 xl:hidden',
-              solid ? 'border-line' : 'border-white/25',
-            )}
-          >
-            <span className="relative block h-[14px] w-[18px]">
-              {[0, 6, 12].map((y, i) => (
-                <span
-                  key={y}
-                  className={cx(
-                    'absolute left-0 h-[2px] w-full rounded transition-all duration-200',
-                    solid ? 'bg-ink' : 'bg-white',
-                    open && i === 0 && 'top-[6px] rotate-45',
-                    open && i === 1 && 'opacity-0',
-                    open && i === 2 && 'top-[6px] -rotate-45',
-                  )}
-                  style={open ? undefined : { top: y }}
-                />
-              ))}
-            </span>
-          </button>
+            <button
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              aria-expanded={open}
+              aria-label={open ? 'Close menu' : 'Open menu'}
+              className={cx(
+                'grid h-10 w-10 place-items-center rounded-full border transition-colors duration-300 xl:hidden',
+                solid ? 'border-line' : 'border-white/25',
+              )}
+            >
+              <span className="relative block h-[14px] w-[18px]">
+                {[0, 6, 12].map((y, i) => (
+                  <span
+                    key={y}
+                    className={cx(
+                      'absolute left-0 h-[2px] w-full rounded transition-all duration-200',
+                      solid ? 'bg-ink' : 'bg-white',
+                      open && i === 0 && 'top-[6px] rotate-45',
+                      open && i === 1 && 'opacity-0',
+                      open && i === 2 && 'top-[6px] -rotate-45',
+                    )}
+                    style={open ? undefined : { top: y }}
+                  />
+                ))}
+              </span>
+            </button>
+          </div>
         </nav>
 
         {open && (

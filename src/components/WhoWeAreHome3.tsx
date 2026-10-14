@@ -10,7 +10,7 @@ import { aboutEngineering } from '../lib/assets'
  * then asked for the stat strip alone to come back off. So of the three:
  *
  *   - the campus photo is gone after all, but by replacement rather than
- *     removal: `aboutEngineering` (src/assets/about-engineering-sectors.webp)
+ *     removal: `aboutEngineering` (src/assets/about-mobility-sectors.webp)
  *     is a supplied engineering composite — e-motor, control units and a
  *     board, with automotive and defence in the background — with the same
  *     aspect and the same transparent corner notch, so the layout below is
@@ -42,17 +42,22 @@ export function WhoWeAreHome3() {
           <h2 className="mt-4 max-w-[514px] font-display text-[28px] leading-[1.15] font-medium text-ink sm:text-[34px] lg:mt-6 lg:text-[40px]">
             Products, Systems &amp; Engineering Services
           </h2>
-          <p className="mt-4 max-w-[532px] font-body text-[15px] leading-[1.5] text-body lg:mt-5 lg:text-[16px]">
-            We deliver end-to-end engineering, software and digital solutions
-            that help customers build intelligent products, advanced
-            electronics, connected platforms and mission-critical systems.
+          {/* 13 Oct copy. Held to three lines (line-clamp ends it with "…")
+              so the block always fits the photo's notch, however long the
+              copy grows; the full text stays in the DOM for screen readers
+              and search. */}
+          <p className="mt-4 line-clamp-3 max-w-[532px] font-body text-[15px] leading-[1.5] text-body lg:mt-5 lg:text-[16px]">
+            Lucas TVS – Products, Systems &amp; Engineering Services is a global engineering and technology partner helping leading
+            OEMs, Tier-1 suppliers, industrial enterprises, and defence
+            organizations develop next-generation products, intelligent
+            systems, and digital platforms.
           </p>
         </div>
 
         <div className="relative overflow-hidden rounded-[15px]">
           <img
             src={aboutEngineering}
-            alt="Electric motor, control units and a circuit board in front of an engineering building, with a vehicle design on a display screen and a tank and aircraft in the distance"
+            alt="A scooter, car, truck, loader, tank and military tanker in front of mountains, with aircraft overhead, beside an electric motor, control units and a circuit board and a vehicle design on a display screen"
             className="h-[380px] w-full object-cover object-bottom sm:h-[460px] lg:h-auto lg:object-fill"
           />
 

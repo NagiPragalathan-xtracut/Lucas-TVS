@@ -52,6 +52,17 @@
   }
 }
 
+/* Home3 hero slide timer (14 Oct): the active card's progress bar fills
+   over one slide's duration, and its `animationend` advances the slider. */
+@keyframes hero-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
 @property --border-glow-angle {
   syntax: "<angle>";
   initial-value: 0deg;

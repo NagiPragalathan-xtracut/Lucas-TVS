@@ -1,44 +1,40 @@
-import { useEffect, useState } from 'react'
+import { useState, type CSSProperties } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import { Button } from './primitives'
 import { cx } from '../lib/cx'
 import {
   heroSlideAutomotive,
   heroSlideIndustrialHome3,
   heroSlideDefenceAerospaceHome3,
+  logoBat,
+  germanyFlagMap,
+  heroThumbEmbeddedSoftware,
+  heroThumbPowerElectronics,
+  heroThumbDigitalElectronics,
+  heroThumbProductDevelopment,
+  heroThumbEngineeringServices,
 } from '../lib/assets'
+import { insightPath } from '../lib/routes'
 
 // Automotive still runs the original clip — the 16 Sep review kept it as it
 // stands and asked for no change. Industrial and Defence are the re-shot
 // versions the same review called for; see the note on their imports.
+// 14 Oct: the strip follows the client's reference — five capability
+// slides, each with the thumbnail cropped from that reference. There are
+// three domain clips, so the backdrops reuse them: the car for the software
+// and product slides, the robot cell for power electronics and services,
+// the command-centre clip for digital electronics.
 const SLIDES = [
-  { id: 'automotive', label: 'Automotive', video: heroSlideAutomotive },
-  { id: 'industrial', label: 'Industrial', video: heroSlideIndustrialHome3 },
-  {
-    id: 'defence-aerospace',
-    label: 'Defence & Aerospace',
-    video: heroSlideDefenceAerospaceHome3,
-  },
+  { id: 'embedded-software', label: 'Embedded Software', video: heroSlideAutomotive, thumb: heroThumbEmbeddedSoftware },
+  { id: 'power-electronics', label: 'Power Electronics', video: heroSlideIndustrialHome3, thumb: heroThumbPowerElectronics },
+  { id: 'digital-electronics', label: 'Digital Electronics', video: heroSlideDefenceAerospaceHome3, thumb: heroThumbDigitalElectronics },
+  { id: 'product-development', label: 'Product Development', video: heroSlideAutomotive, thumb: heroThumbProductDevelopment },
+  { id: 'engineering-services', label: 'Engineering Services', video: heroSlideIndustrialHome3, thumb: heroThumbEngineeringServices },
 ]
 
 const AUTOPLAY_MS = 5000
 const EASE = [0.16, 1, 0.3, 1] as const
-const DESKTOP_QUERY = '(min-width: 1024px)'
-
-/** Matches Tailwind's `lg` breakpoint — lets us mount only one of the two
- *  video layouts below, instead of loading all six clips on every device. */
-function useIsDesktop() {
-  const [isDesktop, setIsDesktop] = useState(() => window.matchMedia(DESKTOP_QUERY).matches)
-
-  useEffect(() => {
-    const query = window.matchMedia(DESKTOP_QUERY)
-    const onChange = (e: MediaQueryListEvent) => setIsDesktop(e.matches)
-    query.addEventListener('change', onChange)
-    return () => query.removeEventListener('change', onChange)
-  }, [])
-
-  return isDesktop
-}
 
 const riseIn = (reduceMotion: boolean | null, delay: number) =>
   reduceMotion
@@ -50,34 +46,37 @@ const riseIn = (reduceMotion: boolean | null, delay: number) =>
       }
 
 /**
- * Home3-only replacement for `Hero`. Rebuilt per the client's reference
- * (three-domain diagonal slider, Sep 12): the robot-arm clip is swapped
- * for the three supplied domain videos (src/assets/Hero/slide{1,2,3}.mp4),
- * shown side by side with a diagonal skew between panels — one expanded,
- * the other two collapsed to their number + label. Copy is unchanged from
- * the Sep-11 content review (headline, sub-line, eyebrow, CTA); only the
- * backdrop and its interaction model are new.
+ * Home3-only replacement for `Hero`.
+ *
+ * 14 Oct: rebuilt to the client's slider reference. The three diagonal
+ * panels became one full-bleed clip that crossfades between slides. The
+ * five capability cards ride a curved track along the bottom (`SlideArc`)
+ * — the homepage sectors carousel's orbit and glowing dot, laid flat — with
+ * the active card at the crest, ringed in lime, its bar filling over the
+ * slide's run. No prev/next arrows (asked to remove them).
+ * Copy, CTA and the BAT card above it are unchanged.
+ *
+ * Timing is driven by the progress animation itself: an always-rendered
+ * timer element runs the same keyframes as the visible bar and its
+ * `animationend` advances the slide. Hovering the hero pauses both (one
+ * `animation-play-state`), so the bar and the slide change never drift,
+ * and pausing resumes from where it stopped rather than restarting.
+ * Under reduced motion nothing autoplays and the active bar shows full.
  */
 export function HeroHome3() {
   const reduceMotion = useReducedMotion()
-  const isDesktop = useIsDesktop()
   const [active, setActive] = useState(0)
   const [paused, setPaused] = useState(false)
 
-  // Width is driven by `active` alone (click or autoplay) — hover only adds
-  // a light glow/zoom on top, so a lingering hover state can never desync
-  // the panel widths from whichever slide is actually selected.
-  const expanded = active
-
-  useEffect(() => {
-    if (paused || reduceMotion) return
-    const id = window.setInterval(() => {
-      setActive((i) => (i + 1) % SLIDES.length)
-    }, AUTOPLAY_MS)
-    return () => window.clearInterval(id)
-  }, [paused, reduceMotion, active])
-
   const goTo = (i: number) => setActive((i + SLIDES.length) % SLIDES.length)
+
+  const progressStyle = {
+    animationName: 'hero-progress',
+    animationDuration: `${AUTOPLAY_MS}ms`,
+    animationTimingFunction: 'linear',
+    animationFillMode: 'forwards',
+    animationPlayState: paused ? 'paused' : 'running',
+  } as const
 
   return (
     <section
@@ -92,120 +91,8 @@ export function HeroHome3() {
       onMouseLeave={() => setPaused(false)}
     >
       <div className="relative h-[560px] bg-black sm:h-[620px] lg:h-[720px]">
-        {/* Desktop / tablet — three diagonal panels, one expanded. Only
-            mounted above the `lg` breakpoint, so mobile never loads these
-            three clips on top of its own single full-bleed one. */}
-        {isDesktop && (
-        <div
-          className="grid h-full transition-[grid-template-columns] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
-          style={{
-            gridTemplateColumns: SLIDES.map((_, i) => (i === expanded ? '70fr' : '15fr')).join(' '),
-          }}
-        >
-          {SLIDES.map((slide, i) => {
-            const isExpanded = i === expanded
-            return (
-              <button
-                key={slide.id}
-                type="button"
-                onClick={() => goTo(i)}
-                aria-label={`Show ${slide.label}`}
-                aria-current={i === active}
-                // 16 Sep review: hover / roll-over expand, not click. A
-                // visitor gives the banner a few seconds, and the panel
-                // never opened for anyone who didn't think to click it.
-                // `onClick` stays for touch, where there is no hover, and
-                // `onFocus` gives the same reveal to keyboard tabbing.
-                onMouseEnter={() => goTo(i)}
-                onFocus={() => goTo(i)}
-                className="group relative h-full min-w-0 cursor-pointer overflow-visible"
-              >
-                {/* The slab is overscanned so the skew can't open a black
-                    triangle at a panel edge, but the overscan must only run
-                    to the RIGHT. Panels paint in DOM order, so each one's
-                    left edge is the visible seam with its neighbour: a left
-                    overscan on panels 2-3 stole 70px back from the panel
-                    before them, while the last panel had no successor to
-                    take its own 70px — which is why 03 rendered ~58% wider
-                    than 02. Overscanning right only puts every seam exactly
-                    on a column boundary; the previous panel's right overscan
-                    fills the triangle behind it. Panel 0 still needs a left
-                    overscan, since the section edge is what clips it. */}
-                <div
-                  className={cx(
-                    'absolute inset-y-0 -right-[70px] -skew-x-6 overflow-hidden bg-black',
-                    i === 0 ? '-left-[70px]' : 'left-0',
-                  )}
-                >
-                  <div className="absolute inset-0 skew-x-6 scale-x-110">
-                    <video
-                      src={slide.video}
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      preload="auto"
-                      aria-hidden="true"
-                      className={cx(
-                        'h-full w-full object-cover transition-transform duration-700 ease-out',
-                        isExpanded ? 'scale-105' : 'scale-100',
-                      )}
-                    />
-                    {/* Bottom-only. This used to wash the whole panel
-                        (black/35 at the top, black/15 through the middle),
-                        which read as dark bands over the footage rather than
-                        as a scrim. Only the label band needs the contrast —
-                        the headline has its own horizontal scrim below. */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
-                    <div
-                      className={cx(
-                        'absolute inset-0 bg-lime/10 opacity-0 transition-opacity duration-500',
-                        !isExpanded && 'group-hover:opacity-100',
-                      )}
-                    />
-                  </div>
-                </div>
-
-                <div
-                  className={cx(
-                    'absolute inset-x-0 bottom-8 text-left transition-[padding] duration-500 xl:bottom-10',
-                    isExpanded ? 'px-6 xl:px-8' : 'px-3',
-                  )}
-                >
-                  {/* 16 Sep review: the 01 / 02 / 03 numbering is gone —
-                      names only, the numbers added no edge. The label
-                      carries the panel on its own now, so it steps up from
-                      the sizes it used under the number. */}
-                  <span
-                    className={cx(
-                      'block truncate font-body font-semibold whitespace-nowrap text-white uppercase transition-all duration-500',
-                      // The collapsed size steps with the breakpoint because
-                      // a collapsed panel is a fixed 15% of the viewport:
-                      // "DEFENCE & AEROSPACE" is the longest label, and at
-                      // 1024px it only has ~130px to live in. 10/13/15px
-                      // measure 119/155/178px, so it never hits `truncate`.
-                      isExpanded
-                        ? 'text-[20px] tracking-[0.14em] xl:text-[24px]'
-                        : 'text-[11px] tracking-[0.02em] xl:text-[14px] 2xl:text-[16px]',
-                    )}
-                  >
-                    {slide.label}
-                  </span>
-                  <span
-                    className={cx(
-                      'mt-2 block h-[3px] bg-lime transition-all duration-500',
-                      isExpanded ? 'w-12' : 'w-6 opacity-50',
-                    )}
-                  />
-                </div>
-              </button>
-            )
-          })}
-        </div>
-        )}
-
-        {/* Mobile — one full-bleed clip at a time, only mounted below `lg`. */}
-        {!isDesktop && (
+        {/* One full-bleed clip at a time, crossfading. Only the active clip
+            preloads; the others fetch when they come up. */}
         <div className="relative h-full">
           {SLIDES.map((slide, i) => (
             <video
@@ -223,8 +110,21 @@ export function HeroHome3() {
               )}
             />
           ))}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/40" />
+          {/* Floor scrim for the slide strip, plus a lighter one up top for
+              the floating header. */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-black/35" />
         </div>
+
+        {/* The slide timer — see the component note. Always rendered (the
+            visible bars are hidden on a phone), never seen. */}
+        {!reduceMotion && (
+          <span
+            key={`timer-${active}`}
+            aria-hidden
+            className="pointer-events-none absolute h-px w-px opacity-0"
+            style={progressStyle}
+            onAnimationEnd={() => goTo(active + 1)}
+          />
         )}
 
         {/* Legibility scrim. The per-panel gradient is bottom-weighted for
@@ -247,7 +147,7 @@ export function HeroHome3() {
             the bottom of the video. `lg:block` used to override the flex
             centring, which is what left the headline pinned 13px under the
             header with 311px of dead space below it. */}
-        <div className="shell pointer-events-none absolute inset-0 flex flex-col justify-center pt-24 lg:pt-[92px]">
+        <div className="shell pointer-events-none absolute inset-0 flex flex-col justify-center pt-24 lg:pt-[92px] xl:pb-[210px]">
           <div className="pointer-events-auto flex flex-col">
             <motion.div {...riseIn(reduceMotion, 0.1)} className="order-1 lg:mt-0">
               {/* 16 Sep review: two messages only — what we do, then who it
@@ -267,8 +167,10 @@ export function HeroHome3() {
                   lands on balanced lines at `lg` without overflowing
                   narrow screens. */}
               <h1 className="max-w-[560px] font-display text-[36px] leading-[1.15] font-semibold text-balance text-white sm:text-[48px] lg:max-w-[780px] lg:text-[56px]">
-                End-to-End Engineering, Software &amp;{' '}
-                <span className="text-lime">Digital Solutions.</span>
+                {/* 13 Oct: was "End-to-End Engineering, Software & Digital
+                    Solutions." with the last two words in lime. */}
+                Engineering the Future of{' '}
+                <span className="text-lime">Intelligent Mobility</span>
               </h1>
               <p className="mt-4 max-w-[480px] font-body text-[15px] leading-[1.5] font-medium text-balance text-white/75 lg:mt-5 lg:max-w-[600px] lg:text-[16px]">
                 For Automotive, Industrial and Defence &amp; Aerospace.
@@ -278,55 +180,249 @@ export function HeroHome3() {
             <motion.div {...riseIn(reduceMotion, 0.2)} className="order-2 mt-6 self-start lg:mt-8">
               <Button href="/contact">Talk to Engineering</Button>
             </motion.div>
+
+            {/* Strategic investment (13 Oct): BAT, Germany, called out under
+                the CTA. A real <fieldset>/<legend> so the eyebrow breaks the
+                top border natively — the card is translucent, so there is
+                no solid fill to mask the line with. The whole card links to
+                the BAT announcement. */}
+            <motion.div {...riseIn(reduceMotion, 0.3)} className="order-3 mt-8 self-start lg:mt-10">
+              <Link
+                to={insightPath('lucas-tvs-invests-in-bat-germany')}
+                aria-label="Strategic investment: Bavarian Automotive Technologies GmbH, Germany"
+                className="group block rounded-[14px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lime"
+              >
+                <fieldset className="flex items-center gap-5 rounded-[14px] border border-lime/40 bg-black/30 px-5 pt-2 pb-5 backdrop-blur-sm transition-[border-color,background-color] duration-300 group-hover:border-lime group-hover:bg-black/45 sm:gap-6 sm:px-7 sm:pb-6">
+                  <legend className="mx-auto px-4 font-body text-[11px] leading-none font-medium tracking-[0.26em] text-lime uppercase sm:text-[12px]">
+                    Strategic Investment
+                  </legend>
+                  <img
+                    src={germanyFlagMap}
+                    alt=""
+                    className="h-12 w-auto shrink-0 drop-shadow-[0_0_1px_rgba(255,255,255,0.7)] sm:h-[58px]"
+                  />
+                  <span className="font-display text-[16px] leading-[1.3] font-medium text-white sm:text-[19px]">
+                    Bavarian Automotive
+                    <br />
+                    Technologies GmbH
+                  </span>
+                  <img src={logoBat} alt="" className="ml-1 h-12 w-12 shrink-0 rounded-[4px] sm:ml-3 sm:h-[58px] sm:w-[58px]" />
+                </fieldset>
+              </Link>
+            </motion.div>
           </div>
         </div>
 
-        {/* No prev/next arrows — the panels themselves are the click target,
-            and the vertical indicator below covers direct jumps. */}
+        {/* Slide arc — from xl (dots below). See `SlideArc`. */}
+        <SlideArc active={active} onSelect={goTo} progressStyle={reduceMotion ? undefined : progressStyle} />
 
-        {/* Vertical domain indicator — desktop only. */}
-        <div className="absolute top-1/2 right-6 z-10 hidden -translate-y-1/2 flex-col items-center gap-4 lg:flex">
-          {SLIDES.map((slide, i) => (
-            <button
-              key={slide.id}
-              type="button"
-              onClick={() => goTo(i)}
-              onMouseEnter={() => goTo(i)}
-              onFocus={() => goTo(i)}
-              aria-label={`Go to ${slide.label}`}
-              aria-current={i === active}
-              className="group flex flex-col items-center gap-1"
+        {/* Below xl: the active slide's name over the dots (14 Oct) — the
+            arc's cards need more width than a phone or tablet has. */}
+        <div className="absolute inset-x-0 bottom-4 z-10 flex flex-col items-center gap-2.5 xl:hidden">
+          <p aria-live="polite" className="font-body text-[13px] font-semibold tracking-[0.06em] text-white uppercase">
+            <motion.span
+              key={SLIDES[active].id}
+              initial={reduceMotion ? false : { opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, ease: EASE }}
+              className="inline-block"
             >
-              {/* Dot only — the 01 / 02 / 03 caption that sat under it went
-                  with the rest of the numbering on 16 Sep. The panel labels
-                  already name each sector, so nothing is lost. */}
-              <span
+              {SLIDES[active].label}
+            </motion.span>
+          </p>
+          <div className="flex gap-2">
+            {SLIDES.map((slide, i) => (
+              <button
+                key={slide.id}
+                type="button"
+                onClick={() => goTo(i)}
+                aria-label={`Go to ${slide.label}`}
+                aria-current={i === active}
                 className={cx(
-                  'h-2 w-2 rounded-full transition-all duration-300',
-                  i === active ? 'scale-125 bg-lime' : 'bg-white/35 group-hover:bg-white/60',
+                  'h-2 rounded-full transition-all duration-300',
+                  i === active ? 'w-6 bg-lime' : 'w-2 bg-white/40',
                 )}
               />
-            </button>
-          ))}
-        </div>
-
-        {/* Mobile dots. */}
-        <div className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 gap-2 lg:hidden">
-          {SLIDES.map((slide, i) => (
-            <button
-              key={slide.id}
-              type="button"
-              onClick={() => goTo(i)}
-              aria-label={`Go to ${slide.label}`}
-              aria-current={i === active}
-              className={cx(
-                'h-2 rounded-full transition-all duration-300',
-                i === active ? 'w-6 bg-lime' : 'w-2 bg-white/40',
-              )}
-            />
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>
+  )
+}
+
+/* Arc geometry, in the track's own 1000 x 210 box. The track is a
+   quadratic curve from the bottom corners up to a crest at the centre; each
+   card's slot is a point on it, spaced SLOT_STEP apart in curve-time. */
+const ARC_W = 1000
+const ARC_H = 210
+const ARC_EDGE_Y = 214
+const ARC_CREST_Y = 96
+const SLOT_STEP = 0.205
+
+function arcPoint(t: number) {
+  const control = 2 * ARC_CREST_Y - (ARC_EDGE_Y + ARC_EDGE_Y) / 2
+  const y = (1 - t) * (1 - t) * ARC_EDGE_Y + 2 * (1 - t) * t * control + t * t * ARC_EDGE_Y
+  return { x: t * ARC_W, y }
+}
+
+/** Signed distance from the active slide, wrapped into -2..2. */
+function slotOffset(i: number, active: number) {
+  const n = SLIDES.length
+  let k = (((i - active) % n) + n) % n
+  if (k > n / 2) k -= n
+  return k
+}
+
+/**
+ * The hero's slide picker, from xl up: the five cards sit on a curved
+ * track along the bottom — a dotted orbit with a lime arc at its crest and
+ * a glowing dot marking the active slot, after the homepage sectors
+ * carousel, turned horizontal. The active card rides the crest at full
+ * size, ringed in lime with its progress bar filling; neighbours step down
+ * the curve, smaller and fainter. Advancing rotates every card one slot.
+ *
+ * The card leaving one end for the other would otherwise sweep across the
+ * whole track, so a card whose slot jumps more than two places moves
+ * without a transition — both ends are faint, so it simply reappears.
+ */
+function SlideArc({
+  active,
+  onSelect,
+  progressStyle,
+}: {
+  active: number
+  onSelect: (i: number) => void
+  progressStyle?: CSSProperties
+}) {
+  // The slide we are rotating away from, captured when `active` changes
+  // (React's "adjust state on prop change" pattern — no ref read in render).
+  const [last, setLast] = useState(active)
+  const [from, setFrom] = useState(active)
+  if (active !== last) {
+    setFrom(last)
+    setLast(active)
+  }
+
+  const crest = arcPoint(0.5)
+
+  return (
+    <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 hidden h-[210px] xl:block">
+      <div className="shell relative h-full">
+        {/* The track: a faint dotted orbit, and a lime arc that glows at the
+            crest and fades out along the curve. */}
+        <svg
+          aria-hidden
+          viewBox={`0 0 ${ARC_W} ${ARC_H}`}
+          preserveAspectRatio="none"
+          className="absolute inset-0 h-full w-full overflow-visible"
+        >
+          <defs>
+            <linearGradient id="hero-arc-glow" x1="0" x2="1" y1="0" y2="0">
+              <stop offset="0" stopColor="#b3e718" stopOpacity="0" />
+              <stop offset="0.5" stopColor="#b3e718" stopOpacity="0.9" />
+              <stop offset="1" stopColor="#b3e718" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+          <path
+            d={`M 0 ${ARC_EDGE_Y + 14} Q ${ARC_W / 2} ${2 * (ARC_CREST_Y + 14) - (ARC_EDGE_Y + 14)} ${ARC_W} ${ARC_EDGE_Y + 14}`}
+            fill="none"
+            stroke="rgba(255,255,255,0.28)"
+            strokeWidth="1.2"
+            strokeDasharray="2 6"
+            vectorEffect="non-scaling-stroke"
+          />
+          <path
+            d={`M 0 ${ARC_EDGE_Y} Q ${ARC_W / 2} ${2 * ARC_CREST_Y - ARC_EDGE_Y} ${ARC_W} ${ARC_EDGE_Y}`}
+            fill="none"
+            stroke="url(#hero-arc-glow)"
+            strokeWidth="2"
+            vectorEffect="non-scaling-stroke"
+          />
+        </svg>
+
+        {/* Slot ticks along the track. */}
+        {[-2, -1, 1, 2].map((k) => {
+          const pt = arcPoint(0.5 + k * SLOT_STEP)
+          return (
+            <span
+              key={k}
+              aria-hidden
+              className="absolute h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/40"
+              style={{ left: `${(pt.x / ARC_W) * 100}%`, top: `${(pt.y / ARC_H) * 100}%` }}
+            />
+          )
+        })}
+
+        {/* The glowing dot at the crest — the active slot. */}
+        <span
+          aria-hidden
+          className="absolute -translate-x-1/2 -translate-y-1/2"
+          style={{ left: '50%', top: `${(crest.y / ARC_H) * 100}%` }}
+        >
+          <span className="absolute inset-0 -m-2 rounded-full bg-lime/25 blur-[6px]" />
+          <span className="relative flex h-5 w-5 items-center justify-center rounded-full border border-lime/60 bg-black/40">
+            <span className="h-2 w-2 rounded-full bg-lime shadow-[0_0_10px_rgba(179,231,24,0.9)]" />
+          </span>
+        </span>
+
+        {SLIDES.map((slide, i) => {
+          const k = slotOffset(i, active)
+          const jumped = Math.abs(k - slotOffset(i, from)) > 2
+          const pt = arcPoint(0.5 + k * SLOT_STEP)
+          const depth = Math.abs(k)
+          const current = k === 0
+          return (
+            <button
+              key={slide.id}
+              type="button"
+              onClick={() => onSelect(i)}
+              aria-label={`Show ${slide.label}`}
+              aria-current={current}
+              tabIndex={0}
+              className={cx(
+                'pointer-events-auto absolute flex w-[236px] items-center gap-3 rounded-[16px] border p-2 text-left backdrop-blur-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime',
+                !jumped &&
+                  'transition-[left,top,transform,opacity,border-color,background-color,box-shadow] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]',
+                current
+                  ? 'border-lime bg-lime/10 shadow-[0_0_28px_rgba(179,231,24,0.35)]'
+                  : 'border-white/15 bg-black/50 hover:border-white/40',
+              )}
+              style={{
+                left: `${(pt.x / ARC_W) * 100}%`,
+                top: `${(pt.y / ARC_H) * 100}%`,
+                // Sit the card on the track: centred on its slot, bottom edge
+                // just above the line. Upright, as in the reference.
+                transform: `translate(-50%, calc(-100% - 14px)) scale(${current ? 1 : depth === 1 ? 0.86 : 0.74})`,
+                transformOrigin: '50% 100%',
+                opacity: current ? 1 : depth === 1 ? 0.85 : 0.5,
+                zIndex: 10 - depth,
+              }}
+            >
+              <img
+                src={slide.thumb}
+                alt=""
+                decoding="async"
+                className="h-[64px] w-[80px] shrink-0 rounded-[10px] object-cover"
+              />
+              <span className="flex min-w-0 grow flex-col gap-2.5 pr-1">
+                <span className="font-body text-[15px] leading-[1.25] font-semibold text-white">
+                  {slide.label}
+                </span>
+                <span aria-hidden className="relative block h-[3px] w-full max-w-[100px] overflow-hidden rounded-full bg-white/25">
+                  {current && (
+                    <span
+                      key={`bar-${active}`}
+                      className="absolute inset-0 origin-left rounded-full bg-lime"
+                      style={progressStyle}
+                    />
+                  )}
+                </span>
+              </span>
+            </button>
+          )
+        })}
+      </div>
+    </div>
   )
 }

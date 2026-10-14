@@ -118,18 +118,21 @@ export function SiteHeader() {
               : 'border-[#3a3c3a] bg-[rgba(16,18,17,0.72)]',
           )}
         >
-          <Link to={ROUTES.home} className="shrink-0 py-1" aria-label="Lucas-TVS home">
-            <img
-              src={logoLucasTvs}
-              alt="Lucas-TVS"
-              className={cx(
-                'h-[34px] w-auto transition-[filter] duration-300 lg:h-[42px]',
-                !solid && 'brightness-0 invert',
-              )}
-            />
-          </Link>
+          {/* Both sides grow equally so the links sit on the bar's true centre. */}
+          <div className="flex shrink-0 xl:flex-1 xl:basis-0">
+            <Link to={ROUTES.home} className="shrink-0 py-1" aria-label="Lucas-TVS home">
+              <img
+                src={logoLucasTvs}
+                alt="Lucas-TVS"
+                className={cx(
+                  'h-[34px] w-auto transition-[filter] duration-300 lg:h-[42px]',
+                  !solid && 'brightness-0 invert',
+                )}
+              />
+            </Link>
+          </div>
 
-          <ul className="hidden items-center gap-[34px] xl:flex">
+          <ul className="hidden shrink-0 items-center gap-10 xl:flex">
             {NAV.map((item) => {
               const id = MEGA_BY_ROUTE[item.to]
               return id ? (
@@ -154,7 +157,7 @@ export function SiteHeader() {
             })}
           </ul>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center justify-end gap-3 xl:flex-1 xl:basis-0">
             <Link
               to={ROUTES.contact}
               className={cx(
