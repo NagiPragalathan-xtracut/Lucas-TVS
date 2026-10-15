@@ -175,6 +175,9 @@ import heroBgEngineeringServices from '../assets/HeroSlides/bg-engineering-servi
 // a slide without one keeps its still above.
 import heroVideoEmbeddedSoftware from '../assets/HeroSlides/embedded-software.mp4'
 import heroVideoPowerElectronics from '../assets/HeroSlides/power-electronics.mp4'
+import heroVideoEngineeringServices from '../assets/HeroSlides/engineering-services.mp4'
+import heroVideoDigitalElectronics from '../assets/HeroSlides/digital-electronics.mp4'
+import heroVideoProductDevelopment from '../assets/HeroSlides/product-development.mp4'
 
 // Focus-area grid — Home3's bento section under Engineering Services.
 // Artwork only: each file is the illustration cropped out of the client's
@@ -406,6 +409,9 @@ export {
   heroBgEngineeringServices,
   heroVideoEmbeddedSoftware,
   heroVideoPowerElectronics,
+  heroVideoEngineeringServices,
+  heroVideoDigitalElectronics,
+  heroVideoProductDevelopment,
   focusGridElectrification,
   focusGridElectrification2,
   focusGridSoftwareDefined,

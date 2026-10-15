@@ -11,6 +11,9 @@ import {
   heroBgEngineeringServices,
   heroVideoEmbeddedSoftware,
   heroVideoPowerElectronics,
+  heroVideoEngineeringServices,
+  heroVideoDigitalElectronics,
+  heroVideoProductDevelopment,
   logoBat,
   germanyFlagMap,
   heroThumbEmbeddedSoftware,
@@ -28,9 +31,9 @@ import { insightPath } from '../lib/routes'
 const SLIDES: { id: string; label: string; image: string; video?: string; thumb: string }[] = [
   { id: 'embedded-software', label: 'Embedded Software', image: heroBgEmbeddedSoftware, video: heroVideoEmbeddedSoftware, thumb: heroThumbEmbeddedSoftware },
   { id: 'power-electronics', label: 'Power Electronics', image: heroBgPowerElectronics, video: heroVideoPowerElectronics, thumb: heroThumbPowerElectronics },
-  { id: 'digital-electronics', label: 'Digital Electronics', image: heroBgDigitalElectronics, thumb: heroThumbDigitalElectronics },
-  { id: 'product-development', label: 'Product Development', image: heroBgProductDevelopment, thumb: heroThumbProductDevelopment },
-  { id: 'engineering-services', label: 'Engineering Services', image: heroBgEngineeringServices, thumb: heroThumbEngineeringServices },
+  { id: 'digital-electronics', label: 'Digital Electronics', image: heroBgDigitalElectronics, video: heroVideoDigitalElectronics, thumb: heroThumbDigitalElectronics },
+  { id: 'product-development', label: 'Product Development', image: heroBgProductDevelopment, video: heroVideoProductDevelopment, thumb: heroThumbProductDevelopment },
+  { id: 'engineering-services', label: 'Engineering Services', image: heroBgEngineeringServices, video: heroVideoEngineeringServices, thumb: heroThumbEngineeringServices },
 ]
 
 const AUTOPLAY_MS = 5000
