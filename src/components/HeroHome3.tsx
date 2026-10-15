@@ -1,6 +1,5 @@
 import { useState, type CSSProperties } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
-import { Link } from 'react-router-dom'
 import { Button } from './primitives'
 import { cx } from '../lib/cx'
 import {
@@ -22,7 +21,6 @@ import {
   heroThumbProductDevelopment,
   heroThumbEngineeringServices,
 } from '../lib/assets'
-import { insightPath } from '../lib/routes'
 
 // The five capability slides, after the client's slider reference: each
 // has its own full-bleed backdrop (15 Oct, supplied) and the thumbnail
@@ -217,31 +215,28 @@ export function HeroHome3() {
             {/* Strategic investment (13 Oct): BAT, Germany, called out under
                 the CTA. A real <fieldset>/<legend> so the eyebrow breaks the
                 top border natively — the card is translucent, so there is
-                no solid fill to mask the line with. The whole card links to
-                the BAT announcement. */}
-            <motion.div {...riseIn(reduceMotion, 0.3)} className="order-3 mt-8 self-start lg:mt-10">
-              <Link
-                to={insightPath('lucas-tvs-invests-in-bat-germany')}
+                no solid fill to mask the line with. 15 Oct: no longer a
+                link, and scaled down overall. */}
+            <motion.div {...riseIn(reduceMotion, 0.3)} className="order-3 mt-6 self-start lg:mt-8">
+              <fieldset
                 aria-label="Strategic investment: Bavarian Automotive Technologies GmbH, Germany"
-                className="group block rounded-[14px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lime"
+                className="flex items-center gap-3.5 rounded-[12px] border border-lime/40 bg-black/30 px-4 pt-1.5 pb-3.5 backdrop-blur-sm sm:gap-4 sm:px-5 sm:pb-4"
               >
-                <fieldset className="flex items-center gap-5 rounded-[14px] border border-lime/40 bg-black/30 px-5 pt-2 pb-5 backdrop-blur-sm transition-[border-color,background-color] duration-300 group-hover:border-lime group-hover:bg-black/45 sm:gap-6 sm:px-7 sm:pb-6">
-                  <legend className="mx-auto px-4 font-body text-[11px] leading-none font-medium tracking-[0.26em] text-lime uppercase sm:text-[12px]">
-                    Strategic Investment
-                  </legend>
-                  <img
-                    src={germanyFlagMap}
-                    alt=""
-                    className="h-12 w-auto shrink-0 drop-shadow-[0_0_1px_rgba(255,255,255,0.7)] sm:h-[58px]"
-                  />
-                  <span className="font-display text-[16px] leading-[1.3] font-medium text-white sm:text-[19px]">
-                    Bavarian Automotive
-                    <br />
-                    Technologies GmbH
-                  </span>
-                  <img src={logoBat} alt="" className="ml-1 h-12 w-12 shrink-0 rounded-[4px] sm:ml-3 sm:h-[58px] sm:w-[58px]" />
-                </fieldset>
-              </Link>
+                <legend className="mx-auto px-3 font-body text-[10px] leading-none font-medium tracking-[0.24em] text-lime uppercase sm:text-[11px]">
+                  Strategic Investment
+                </legend>
+                <img
+                  src={germanyFlagMap}
+                  alt=""
+                  className="h-9 w-auto shrink-0 drop-shadow-[0_0_1px_rgba(255,255,255,0.7)] sm:h-10"
+                />
+                <span className="font-display text-[14px] leading-[1.3] font-medium text-white sm:text-[15px]">
+                  Bavarian Automotive
+                  <br />
+                  Technologies GmbH
+                </span>
+                <img src={logoBat} alt="BAT" className="ml-1 h-9 w-9 shrink-0 rounded-[4px] sm:ml-2 sm:h-10 sm:w-10" />
+              </fieldset>
             </motion.div>
           </div>
         </div>
