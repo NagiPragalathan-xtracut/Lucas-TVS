@@ -91,7 +91,7 @@ export function HeroHome3() {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="relative h-[560px] bg-black sm:h-[620px] lg:h-[720px] xl:h-[780px]">
+      <div className="relative h-[560px] bg-black sm:h-[620px] lg:h-[740px] xl:h-[780px]">
         {/* One full-bleed backdrop per slide, crossfading. The active one
             drifts in slowly (a gentle push-in over the slide's run) so the
             still reads as live; under reduced motion it simply cuts. The
@@ -178,7 +178,7 @@ export function HeroHome3() {
             the bottom of the video. `lg:block` used to override the flex
             centring, which is what left the headline pinned 13px under the
             header with 311px of dead space below it. */}
-        <div className="shell pointer-events-none absolute inset-0 flex flex-col justify-center pt-24 lg:pt-[92px] xl:pt-[128px] xl:pb-[210px]">
+        <div className="shell pointer-events-none absolute inset-0 flex flex-col justify-center pt-24 lg:pt-[112px] lg:pb-[196px] xl:pt-[128px] xl:pb-[210px]">
           <div className="pointer-events-auto flex flex-col">
             <motion.div {...riseIn(reduceMotion, 0.1)} className="order-1 lg:mt-0">
               {/* 16 Sep review: two messages only — what we do, then who it
@@ -197,7 +197,7 @@ export function HeroHome3() {
                   No hard breaks — the max-width does the wrapping, so it
                   lands on balanced lines at `lg` without overflowing
                   narrow screens. */}
-              <h1 className="max-w-[560px] font-display text-[36px] leading-[1.15] font-semibold text-balance text-white sm:text-[46px] lg:max-w-[780px] lg:text-[50px]">
+              <h1 className="max-w-[560px] font-display text-[36px] leading-[1.15] font-semibold text-balance text-white sm:text-[44px] lg:max-w-[720px] lg:text-[44px] xl:max-w-[780px] xl:text-[50px]">
                 {/* 13 Oct: was "End-to-End Engineering, Software & Digital
                     Solutions." with the last two words in lime. */}
                 Engineering the Future of{' '}
@@ -241,12 +241,12 @@ export function HeroHome3() {
           </div>
         </div>
 
-        {/* Slide arc — from xl (dots below). See `SlideArc`. */}
+        {/* Slide arc — every laptop and desktop width (dots below lg). See `SlideArc`. */}
         <SlideArc active={active} onSelect={goTo} progressStyle={reduceMotion ? undefined : progressStyle} />
 
-        {/* Below xl: the active slide's name over the dots (14 Oct) — the
+        {/* Below lg: the active slide's name over the dots (14 Oct) — the
             arc's cards need more width than a phone or tablet has. */}
-        <div className="absolute inset-x-0 bottom-4 z-10 flex flex-col items-center gap-2.5 xl:hidden">
+        <div className="absolute inset-x-0 bottom-4 z-10 flex flex-col items-center gap-2.5 lg:hidden">
           <p aria-live="polite" className="font-body text-[13px] font-semibold tracking-[0.06em] text-white uppercase">
             <motion.span
               key={SLIDES[active].id}
@@ -303,7 +303,8 @@ function slotOffset(i: number, active: number) {
 }
 
 /**
- * The hero's slide picker, from xl up: the five cards sit on a curved
+ * The hero's slide picker, on every laptop and desktop width (lg up;
+ * cards, thumbnails and type step down below xl so the curve still fits): the five cards sit on a curved
  * track along the bottom — a dotted orbit with a lime arc at its crest and
  * a glowing dot marking the active slot, after the homepage sectors
  * carousel, turned horizontal. The active card rides the crest at full
@@ -335,7 +336,7 @@ function SlideArc({
   const crest = arcPoint(0.5)
 
   return (
-    <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 hidden h-[210px] xl:block">
+    <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 hidden h-[196px] lg:block xl:h-[210px]">
       <div className="shell relative h-full">
         {/* The track: a faint dotted orbit, and a lime arc that glows at the
             crest and fades out along the curve. */}
@@ -409,7 +410,7 @@ function SlideArc({
               aria-current={current}
               tabIndex={0}
               className={cx(
-                'pointer-events-auto absolute flex w-[236px] items-center gap-3 rounded-[16px] border p-2 text-left backdrop-blur-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime',
+                'pointer-events-auto absolute flex w-[188px] items-center gap-2.5 rounded-[14px] border p-1.5 text-left xl:w-[236px] xl:gap-3 xl:rounded-[16px] xl:p-2 backdrop-blur-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime',
                 !jumped &&
                   'transition-[left,top,transform,opacity,border-color,background-color,box-shadow] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]',
                 current
@@ -431,10 +432,10 @@ function SlideArc({
                 src={slide.thumb}
                 alt=""
                 decoding="async"
-                className="h-[64px] w-[80px] shrink-0 rounded-[10px] object-cover"
+                className="h-[50px] w-[62px] shrink-0 rounded-[9px] object-cover xl:h-[64px] xl:w-[80px] xl:rounded-[10px]"
               />
               <span className="flex min-w-0 grow flex-col gap-2.5 pr-1">
-                <span className="font-body text-[15px] leading-[1.25] font-semibold text-white">
+                <span className="font-body text-[13px] leading-[1.25] font-semibold text-white xl:text-[15px]">
                   {slide.label}
                 </span>
                 <span aria-hidden className="relative block h-[3px] w-full max-w-[100px] overflow-hidden rounded-full bg-white/25">
