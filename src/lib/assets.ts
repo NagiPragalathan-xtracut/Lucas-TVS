@@ -151,6 +151,8 @@ import svcVcu from '../assets/ServiceProducts/vehicle-control-unit.webp'
 import defenceElectronics from '../assets/defence-electronics.webp'
 // …and "Digital Defence Technologies" (14 Oct).
 import defenceDigital from '../assets/defence-digital.webp'
+// Automotive › "Connectivity & Digital Solutions" (15 Oct).
+import automotiveConnectivity from '../assets/automotive-connectivity.webp'
 
 // Home3 solutions CTA background (14 Oct): transparent EV on the right,
 // pale waves on the left where the copy sits.
@@ -163,6 +165,16 @@ import heroThumbPowerElectronics from '../assets/HeroSlides/power-electronics.we
 import heroThumbDigitalElectronics from '../assets/HeroSlides/digital-electronics.webp'
 import heroThumbProductDevelopment from '../assets/HeroSlides/product-development.webp'
 import heroThumbEngineeringServices from '../assets/HeroSlides/engineering-services.webp'
+// …and their full-bleed backdrops (15 Oct), supplied by the client.
+import heroBgEmbeddedSoftware from '../assets/HeroSlides/bg-embedded-software.webp'
+import heroBgPowerElectronics from '../assets/HeroSlides/bg-power-electronics.webp'
+import heroBgDigitalElectronics from '../assets/HeroSlides/bg-digital-electronics.webp'
+import heroBgProductDevelopment from '../assets/HeroSlides/bg-product-development.webp'
+import heroBgEngineeringServices from '../assets/HeroSlides/bg-engineering-services.webp'
+// Looping backdrop clips (15 Oct, supplied) — added one slide at a time;
+// a slide without one keeps its still above.
+import heroVideoEmbeddedSoftware from '../assets/HeroSlides/embedded-software.mp4'
+import heroVideoPowerElectronics from '../assets/HeroSlides/power-electronics.mp4'
 
 // Focus-area grid — Home3's bento section under Engineering Services.
 // Artwork only: each file is the illustration cropped out of the client's
@@ -380,12 +392,20 @@ export {
   svcVcu,
   defenceElectronics,
   defenceDigital,
+  automotiveConnectivity,
   solutionsCtaBg,
   heroThumbEmbeddedSoftware,
   heroThumbPowerElectronics,
   heroThumbDigitalElectronics,
   heroThumbProductDevelopment,
   heroThumbEngineeringServices,
+  heroBgEmbeddedSoftware,
+  heroBgPowerElectronics,
+  heroBgDigitalElectronics,
+  heroBgProductDevelopment,
+  heroBgEngineeringServices,
+  heroVideoEmbeddedSoftware,
+  heroVideoPowerElectronics,
   focusGridElectrification,
   focusGridElectrification2,
   focusGridSoftwareDefined,

@@ -4,9 +4,13 @@ import { Link } from 'react-router-dom'
 import { Button } from './primitives'
 import { cx } from '../lib/cx'
 import {
-  heroSlideAutomotive,
-  heroSlideIndustrialHome3,
-  heroSlideDefenceAerospaceHome3,
+  heroBgEmbeddedSoftware,
+  heroBgPowerElectronics,
+  heroBgDigitalElectronics,
+  heroBgProductDevelopment,
+  heroBgEngineeringServices,
+  heroVideoEmbeddedSoftware,
+  heroVideoPowerElectronics,
   logoBat,
   germanyFlagMap,
   heroThumbEmbeddedSoftware,
@@ -17,20 +21,16 @@ import {
 } from '../lib/assets'
 import { insightPath } from '../lib/routes'
 
-// Automotive still runs the original clip — the 16 Sep review kept it as it
-// stands and asked for no change. Industrial and Defence are the re-shot
-// versions the same review called for; see the note on their imports.
-// 14 Oct: the strip follows the client's reference — five capability
-// slides, each with the thumbnail cropped from that reference. There are
-// three domain clips, so the backdrops reuse them: the car for the software
-// and product slides, the robot cell for power electronics and services,
-// the command-centre clip for digital electronics.
-const SLIDES = [
-  { id: 'embedded-software', label: 'Embedded Software', video: heroSlideAutomotive, thumb: heroThumbEmbeddedSoftware },
-  { id: 'power-electronics', label: 'Power Electronics', video: heroSlideIndustrialHome3, thumb: heroThumbPowerElectronics },
-  { id: 'digital-electronics', label: 'Digital Electronics', video: heroSlideDefenceAerospaceHome3, thumb: heroThumbDigitalElectronics },
-  { id: 'product-development', label: 'Product Development', video: heroSlideAutomotive, thumb: heroThumbProductDevelopment },
-  { id: 'engineering-services', label: 'Engineering Services', video: heroSlideIndustrialHome3, thumb: heroThumbEngineeringServices },
+// The five capability slides, after the client's slider reference: each
+// has its own full-bleed backdrop (15 Oct, supplied) and the thumbnail
+// cropped from the reference for its card. `video`, where a slide has one,
+// is a looping clip that plays over its still while the slide is active.
+const SLIDES: { id: string; label: string; image: string; video?: string; thumb: string }[] = [
+  { id: 'embedded-software', label: 'Embedded Software', image: heroBgEmbeddedSoftware, video: heroVideoEmbeddedSoftware, thumb: heroThumbEmbeddedSoftware },
+  { id: 'power-electronics', label: 'Power Electronics', image: heroBgPowerElectronics, video: heroVideoPowerElectronics, thumb: heroThumbPowerElectronics },
+  { id: 'digital-electronics', label: 'Digital Electronics', image: heroBgDigitalElectronics, thumb: heroThumbDigitalElectronics },
+  { id: 'product-development', label: 'Product Development', image: heroBgProductDevelopment, thumb: heroThumbProductDevelopment },
+  { id: 'engineering-services', label: 'Engineering Services', image: heroBgEngineeringServices, thumb: heroThumbEngineeringServices },
 ]
 
 const AUTOPLAY_MS = 5000
@@ -49,7 +49,7 @@ const riseIn = (reduceMotion: boolean | null, delay: number) =>
  * Home3-only replacement for `Hero`.
  *
  * 14 Oct: rebuilt to the client's slider reference. The three diagonal
- * panels became one full-bleed clip that crossfades between slides. The
+ * panels became one full-bleed backdrop that crossfades between slides. The
  * five capability cards ride a curved track along the bottom (`SlideArc`)
  * — the homepage sectors carousel's orbit and glowing dot, laid flat — with
  * the active card at the crest, ringed in lime, its bar filling over the
@@ -90,26 +90,56 @@ export function HeroHome3() {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="relative h-[560px] bg-black sm:h-[620px] lg:h-[720px]">
-        {/* One full-bleed clip at a time, crossfading. Only the active clip
-            preloads; the others fetch when they come up. */}
-        <div className="relative h-full">
-          {SLIDES.map((slide, i) => (
-            <video
-              key={slide.id}
-              src={slide.video}
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload={i === active ? 'auto' : 'none'}
-              aria-hidden="true"
-              className={cx(
-                'absolute inset-0 h-full w-full object-cover transition-opacity duration-700',
-                i === active ? 'opacity-100' : 'opacity-0',
-              )}
-            />
-          ))}
+      <div className="relative h-[560px] bg-black sm:h-[620px] lg:h-[720px] xl:h-[780px]">
+        {/* One full-bleed backdrop per slide, crossfading. The active one
+            drifts in slowly (a gentle push-in over the slide's run) so the
+            still reads as live; under reduced motion it simply cuts. The
+            first loads eagerly, the rest lazily. */}
+        <div className="relative h-full overflow-hidden">
+          {SLIDES.map((slide, i) => {
+            const current = i === active
+            // A slide with a clip plays it instead of the push-in; the still
+            // stays underneath as its poster and as the reduced-motion view.
+            const playVideo = Boolean(slide.video) && !reduceMotion
+            return (
+              <div
+                key={slide.id}
+                aria-hidden
+                className={cx(
+                  'absolute inset-0',
+                  !reduceMotion && 'transition-opacity duration-700',
+                  current ? 'opacity-100' : 'opacity-0',
+                )}
+              >
+                <img
+                  src={slide.image}
+                  alt=""
+                  decoding="async"
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                  fetchPriority={i === 0 ? 'high' : 'auto'}
+                  className={cx(
+                    'absolute inset-0 h-full w-full object-cover',
+                    !reduceMotion && !playVideo && 'transition-transform duration-[6000ms] ease-linear',
+                    current && !reduceMotion && !playVideo ? 'scale-[1.06]' : 'scale-100',
+                  )}
+                />
+                {/* Mounted only while its slide is up, so the clips never
+                    download or decode in the background. */}
+                {playVideo && current && (
+                  <video
+                    src={slide.video}
+                    poster={slide.image}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="auto"
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                )}
+              </div>
+            )
+          })}
           {/* Floor scrim for the slide strip, plus a lighter one up top for
               the floating header. */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-black/35" />
@@ -147,7 +177,7 @@ export function HeroHome3() {
             the bottom of the video. `lg:block` used to override the flex
             centring, which is what left the headline pinned 13px under the
             header with 311px of dead space below it. */}
-        <div className="shell pointer-events-none absolute inset-0 flex flex-col justify-center pt-24 lg:pt-[92px] xl:pb-[210px]">
+        <div className="shell pointer-events-none absolute inset-0 flex flex-col justify-center pt-24 lg:pt-[92px] xl:pt-[128px] xl:pb-[210px]">
           <div className="pointer-events-auto flex flex-col">
             <motion.div {...riseIn(reduceMotion, 0.1)} className="order-1 lg:mt-0">
               {/* 16 Sep review: two messages only — what we do, then who it
@@ -166,7 +196,7 @@ export function HeroHome3() {
                   No hard breaks — the max-width does the wrapping, so it
                   lands on balanced lines at `lg` without overflowing
                   narrow screens. */}
-              <h1 className="max-w-[560px] font-display text-[36px] leading-[1.15] font-semibold text-balance text-white sm:text-[48px] lg:max-w-[780px] lg:text-[56px]">
+              <h1 className="max-w-[560px] font-display text-[36px] leading-[1.15] font-semibold text-balance text-white sm:text-[46px] lg:max-w-[780px] lg:text-[50px]">
                 {/* 13 Oct: was "End-to-End Engineering, Software & Digital
                     Solutions." with the last two words in lime. */}
                 Engineering the Future of{' '}

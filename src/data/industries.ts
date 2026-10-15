@@ -15,6 +15,7 @@ import {
   IconTrend,
 } from '../components/site/design'
 import {
+  automotiveConnectivity,
   defenceDigital,
   defenceElectronics,
   focusAutomation,
@@ -32,7 +33,6 @@ import {
   sectorAutomotive,
   sectorDefenceAerospace,
   sectorIndustrial,
-  solutionsBgIndustry,
   solutionsBgServices,
   solutionsBgTechnologies,
   solutionsBgVehicle,
@@ -160,8 +160,9 @@ export const INDUSTRIES: Industry[] = [
           'Connected ecosystems that enhance vehicle intelligence and customer engagement.',
         items: ['Connectivity', 'Telematics', 'Fleet Management', 'Remote Diagnostics', 'Predictive Analytics'],
         icon: IconLink,
-        image: solutionsBgIndustry,
-        imageLabel: 'Image: fleet dashboard',
+        image: automotiveConnectivity,
+        imageLabel:
+          'Connected vehicles on a highway exchanging signals with a cell tower, the cloud and a satellite, beside a logistics hub and offices',
       },
     ],
     products: {
