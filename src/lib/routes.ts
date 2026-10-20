@@ -157,6 +157,17 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
 ]
 
 /** Company details, given in the wireframes and reused across pages. */
+/**
+ * Social profiles (20 Oct). The client's note says these are the current
+ * Lucas TVS group pages and division-specific links are to follow — swap
+ * the URLs here when they arrive; both footers read from this list.
+ */
+export const SOCIAL_LINKS = [
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/lucas-tvs/posts/' },
+  { label: 'YouTube', href: 'https://www.youtube.com/@lucastvs4109' },
+  { label: 'X', href: 'https://x.com/LucasTVSLtd' },
+]
+
 export const COMPANY = {
   addressName: 'India Nippon Electricals Limited (INEL) — R&D Tech Center',
   addressLines: [

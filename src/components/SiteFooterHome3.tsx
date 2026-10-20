@@ -1,6 +1,7 @@
 import { AppLink } from './AppLink'
 import { Button } from './primitives'
 import { logoLucasTvsFooter } from '../lib/assets'
+import { SOCIAL_LINKS } from '../lib/routes'
 
 const COLUMNS: { heading: string; links: { label: string; href: string; external?: boolean }[] }[] = [
   {
@@ -55,7 +56,9 @@ const COLUMNS: { heading: string; links: { label: string; href: string; external
   },
 ]
 
-const LEGAL = ['LinkedIn', 'YouTube', 'X', 'Privacy', 'Terms']
+// Social links come from SOCIAL_LINKS (lib/routes.ts); these two are
+// still placeholders until the policy pages exist.
+const LEGAL = ['Privacy', 'Terms']
 
 /**
  * Home3-only replacement for `SiteFooter`. Per the Sep-11 content review:
@@ -143,6 +146,19 @@ export function SiteFooterHome3() {
             © 2026 Lucas-TVS Limited · All rights reserved
           </p>
           <ul className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            {SOCIAL_LINKS.map((item) => (
+              <li key={item.label}>
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Lucas TVS on ${item.label} (opens in a new tab)`}
+                  className="font-sans text-[11.6px] leading-[1.23] text-black transition-colors hover:text-green"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
             {LEGAL.map((item) => (
               <li key={item}>
                 <a

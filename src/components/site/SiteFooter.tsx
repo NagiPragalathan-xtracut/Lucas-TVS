@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom'
 import { logoLucasTvsFooter } from '../../lib/assets'
-import { FOOTER_COLUMNS, COMPANY, ROUTES } from '../../lib/routes'
+import { FOOTER_COLUMNS, COMPANY, ROUTES, SOCIAL_LINKS } from '../../lib/routes'
 
-const LEGAL = ['LinkedIn', 'YouTube', 'X', 'Privacy', 'Terms']
+// Social links come from SOCIAL_LINKS (lib/routes.ts); these two are
+// still placeholders until the policy pages exist.
+const LEGAL = ['Privacy', 'Terms']
 
 /**
  * Footer for the inner pages.
@@ -110,6 +112,19 @@ export function SiteFooter() {
             © 2026 Lucas-TVS Limited · All rights reserved
           </p>
           <ul className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            {SOCIAL_LINKS.map((item) => (
+              <li key={item.label}>
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Lucas TVS on ${item.label} (opens in a new tab)`}
+                  className="font-sans text-[11.6px] leading-[1.23] text-black transition-colors hover:text-green"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
             {LEGAL.map((item) => (
               <li key={item}>
                 <a
