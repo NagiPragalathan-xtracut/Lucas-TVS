@@ -10,10 +10,8 @@ import {
   Eyebrow,
   FRAME,
   IconArrowUpRight,
-  IconChat,
   IconTile,
   ImageSlot,
-  Pill,
 } from './design'
 
 /* ------------------------------------------------------------------
@@ -824,40 +822,10 @@ export function PillSearch({
    Closing plate
 ------------------------------------------------------------------- */
 
-/**
- * The lime-tinted plate that closes most pages. Both buttons on desktop,
- * the primary only on a phone, as drawn.
- */
-export function CtaPlate({
-  title = 'Talk to the engineering team',
-  body = 'Not finding the right fit? Send us the programme brief and we will route it to the engineering team that owns it.',
-}: {
+/** Site-wide closing CTA is temporarily hidden. */
+export function CtaPlate(_props: {
   title?: string
   body?: string
 }) {
-  return (
-    <section className={cx(FRAME, 'py-10 lg:py-12')}>
-      <div className="flex flex-col gap-[18px] rounded-[20px] border-[1.5px] border-[#ddebc0] bg-lime-tint p-6 lg:flex-row lg:items-center lg:justify-between lg:gap-10 lg:px-8 lg:py-7">
-        <div className="flex flex-col gap-[18px] lg:flex-row lg:items-center">
-          <IconTile tone="tint">
-            <IconChat />
-          </IconTile>
-          <div className="flex max-w-[700px] flex-col gap-1.5">
-            <p className="font-display text-[20px] leading-[1.25] font-semibold text-ink">{title}</p>
-            <p className="font-body text-[14px] leading-[1.55] text-body">{body}</p>
-          </div>
-        </div>
-        <div className="flex flex-wrap gap-3 lg:shrink-0">
-          <Pill to={ROUTES.contact}>Talk to Engineering →</Pill>
-          {/* Desktop only. Visibility lives on the wrapper: Pill's own
-              classes include `inline-flex`, which `hidden` would lose to. */}
-          <span className="hidden lg:inline-flex">
-            <Pill to={ROUTES.capabilities} tone="ghost">
-              Explore Capabilities
-            </Pill>
-          </span>
-        </div>
-      </div>
-    </section>
-  )
+  return null
 }

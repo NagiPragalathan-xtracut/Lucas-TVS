@@ -44,14 +44,6 @@ const COLUMNS: { heading: string; links: { label: string; href: string; external
       },
     ],
   },
-  {
-    heading: 'Resources',
-    links: [
-      { label: 'Insights & Events', href: '#' },
-      { label: 'Whitepapers', href: '#' },
-      { label: 'Case Studies', href: '#' },
-    ],
-  },
 ]
 
 const LEGAL = ['LinkedIn', 'YouTube', 'X', 'Privacy', 'Terms']
@@ -105,7 +97,7 @@ export function SiteFooterHome2() {
         </div>
 
         {/* Link columns ----------------------------------------------- */}
-        <nav className="mt-12 grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 lg:mt-[80px] lg:grid-cols-5 lg:gap-x-[48px]">
+        <nav className="mt-12 grid grid-cols-2 gap-x-8 gap-y-10 lg:mt-[80px] lg:grid-cols-4 lg:gap-x-[48px]">
           {COLUMNS.map((column) => (
             <div key={column.heading}>
               <h2 className="font-display text-[15px] leading-[1.27] tracking-[1.74px] text-green uppercase lg:text-[17px]">

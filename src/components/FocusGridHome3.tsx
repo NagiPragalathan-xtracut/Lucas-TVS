@@ -53,7 +53,7 @@ const CARDS: FocusCard[] = [
   {
     id: 'electrification',
     title: ['Electrification &', 'Powertrain'],
-    href: '/products',
+    href: 'https://lucas-tvs.com/automotive-solutions-products/',
     tone: 'dark',
     featured: true,
     cta: 'View Product',

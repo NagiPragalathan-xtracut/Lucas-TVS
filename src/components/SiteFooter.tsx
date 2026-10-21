@@ -21,10 +21,6 @@ const COLUMNS = [
       'Digital Engineering',
     ],
   },
-  {
-    heading: 'Resources',
-    links: ['Insights & Events', 'Whitepapers', 'Case Studies'],
-  },
 ]
 
 const LEGAL = ['LinkedIn', 'YouTube', 'X', 'Privacy', 'Terms']
@@ -65,7 +61,7 @@ export function SiteFooter() {
         </div>
 
         {/* Link columns ----------------------------------------------- */}
-        <nav className="mt-12 grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4 lg:mt-[80px] lg:gap-x-[75px]">
+        <nav className="mt-12 grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 lg:mt-[80px] lg:gap-x-[75px]">
           {COLUMNS.map((column) => (
             <div key={column.heading}>
               <h2 className="font-display text-[15px] leading-[1.27] tracking-[1.74px] text-green uppercase lg:text-[17px]">
