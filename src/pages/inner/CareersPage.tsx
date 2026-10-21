@@ -191,17 +191,19 @@ export default function CareersPage() {
         </div>
       </Band>
 
-      <DarkBand>
-        <SplitHeader
-          dark
-          eyebrow="How we hire"
-          title="A simple,"
-          accent="transparent process."
-          body="Four steps from application to your first day — usually within a few weeks."
-          actions={<Pill href={portal}>View Open Roles ↗</Pill>}
-        />
-        <HiringProcess />
-      </DarkBand>
+      <div className="pb-10 lg:pb-16">
+        <DarkBand>
+          <SplitHeader
+            dark
+            eyebrow="How we hire"
+            title="A simple,"
+            accent="transparent process."
+            body="Four steps from application to your first day — usually within a few weeks."
+            actions={<Pill href={portal}>View Open Roles ↗</Pill>}
+          />
+          <HiringProcess />
+        </DarkBand>
+      </div>
     </PageShell>
   )
 }
