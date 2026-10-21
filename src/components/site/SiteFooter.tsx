@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { logoLucasTvsFooter } from '../../lib/assets'
-import { FOOTER_COLUMNS, COMPANY, ROUTES, SOCIAL_LINKS } from '../../lib/routes'
+import { FOOTER_COLUMNS, ROUTES, SOCIAL_LINKS } from '../../lib/routes'
+import { FooterContactCard } from './FooterContactCard'
 
 // Social links come from SOCIAL_LINKS (lib/routes.ts); these two are
 // still placeholders until the policy pages exist.
@@ -9,8 +10,8 @@ const LEGAL = ['Privacy', 'Terms']
 /**
  * Footer for the inner pages.
  *
- * Visually this is `SiteFooterHome3` — same masthead, same enquiry plate,
- * same five columns, same oversized wordmark. The difference is that every
+ * Visually this is `SiteFooterHome3` — same masthead, link columns and
+ * oversized wordmark. The difference is that every
  * link here resolves to a real route instead of "#", which is the whole
  * reason it is a separate component: wiring the homepage footer's hrefs up
  * would mean editing a frozen file.
@@ -23,7 +24,7 @@ export function SiteFooter() {
       <div className="shell relative">
         {/* Masthead --------------------------------------------------- */}
         <div className="gap-8 lg:flex lg:items-start lg:justify-between">
-          <div className="lg:max-w-[542px]">
+          <div className="shrink-0">
             <Link to={ROUTES.home} aria-label="Lucas-TVS home">
               <img
                 src={logoLucasTvsFooter}
@@ -34,36 +35,17 @@ export function SiteFooter() {
             <p className="mt-6 font-sans text-[15px] leading-[1.38] text-body-soft lg:mt-[32px] lg:text-[16px]">
               A software &amp; product-engineering division of Lucas-TVS.
             </p>
-            <address className="mt-3 max-w-[420px] font-sans text-[13px] leading-[1.5] text-body-soft not-italic lg:text-[14px]">
-              {COMPANY.addressName}, {COMPANY.addressLines.join(' ')}
-            </address>
           </div>
 
-          <div className="mt-8 rounded-[14.75px] border-[1.054px] border-lime bg-lime/[0.19] p-[30px] lg:mt-[2px] lg:w-[590px] lg:shrink-0">
-            <div className="gap-6 sm:flex sm:items-center sm:justify-between">
-              <div className="min-w-0">
-                <p className="font-display text-[20px] leading-none text-black lg:text-[22px]">
-                  Engineering enquiries
-                </p>
-                <p className="mt-3 max-w-[338px] font-sans text-[15px] leading-[1.38] text-body-soft lg:text-[16px]">
-                  Tell us about your programme and we&rsquo;ll route you to the
-                  right team.
-                </p>
-              </div>
-              <Link
-                to={ROUTES.contact}
-                className="mt-5 inline-flex shrink-0 items-center justify-center rounded-full bg-lime px-8 py-4 font-sans text-[16px] leading-[1.25] font-medium whitespace-nowrap text-ink-slate shadow-[0_4px_4px_0_rgba(211,211,211,0.25),inset_0_0_4px_0_rgba(0,0,0,0.25)] transition-transform duration-200 hover:-translate-y-0.5 sm:mt-0"
-              >
-                Talk to Engineering
-              </Link>
-            </div>
+          <div className="mt-8 lg:mt-0">
+            <FooterContactCard />
           </div>
         </div>
 
         {/* Link columns ----------------------------------------------- */}
         <nav
           aria-label="Footer"
-          className="mt-12 grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 lg:mt-[80px] lg:grid-cols-5 lg:gap-x-[48px]"
+          className="mt-12 grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4 lg:mt-[80px] lg:grid-cols-4 lg:gap-x-[75px]"
         >
           {FOOTER_COLUMNS.map((column) => (
             <div key={column.heading}>

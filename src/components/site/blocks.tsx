@@ -1,6 +1,6 @@
 import { useId, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
-import { ChevronRight, type LucideIcon } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 import { cx } from '../../lib/cx'
 import { ROUTES } from '../../lib/routes'
 import { approachBackdrop } from '../../lib/assets'
@@ -425,9 +425,8 @@ export function FeatureCard({
 /**
  * Capabilities as icon chips, two to a row from tablet up (one on a
  * phone), each with an icon matched to its label (data/capabilityIcons.ts).
- * Shared by the solution rows and the service-line cards (14 Oct). The
- * chips are information, not links; the chevron is the reference's
- * ornament and is hidden from assistive tech.
+ * Shared by the solution rows and the service-line cards (14 Oct).
+ * The chips are information, not links.
  */
 export function CapabilityChips({ items, className }: { items: string[]; className?: string }) {
   return (
@@ -448,7 +447,6 @@ export function CapabilityChips({ items, className }: { items: string[]; classNa
             <span className="min-w-0 grow font-body text-[14px] leading-[1.35] font-medium text-ink">
               {item}
             </span>
-            <ChevronRight aria-hidden strokeWidth={2} className="h-4 w-4 shrink-0 text-body-soft" />
           </li>
         )
       })}

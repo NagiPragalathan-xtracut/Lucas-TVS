@@ -1,7 +1,7 @@
 import { AppLink } from './AppLink'
-import { Button } from './primitives'
 import { logoLucasTvsFooter } from '../lib/assets'
 import { SOCIAL_LINKS } from '../lib/routes'
+import { FooterContactCard } from './site/FooterContactCard'
 
 const COLUMNS: { heading: string; links: { label: string; href: string; external?: boolean }[] }[] = [
   {
@@ -74,7 +74,7 @@ export function SiteFooterHome3() {
       <div className="shell relative">
         {/* Masthead --------------------------------------------------- */}
         <div className="gap-8 lg:flex lg:items-start lg:justify-between">
-          <div className="lg:max-w-[542px]">
+          <div className="shrink-0">
             <img
               src={logoLucasTvsFooter}
               alt="Lucas-TVS"
@@ -83,28 +83,10 @@ export function SiteFooterHome3() {
             <p className="mt-6 font-sans text-[15px] leading-[1.38] text-body-soft lg:mt-[32px] lg:text-[16px]">
               A software &amp; product-engineering division of Lucas-TVS.
             </p>
-            <address className="mt-3 max-w-[420px] font-sans text-[13px] leading-[1.5] text-body-soft not-italic lg:text-[14px]">
-              India Nippon Electricals Ltd (INEL) — R&amp;D Tech Center,
-              Plot No. 137, Phase-1, SIPCOT Industrial Complex, Hosur,
-              Tamil Nadu 635126.
-            </address>
           </div>
 
-          <div className="mt-8 rounded-[14.75px] border-[1.054px] border-lime bg-lime/[0.19] p-[30px] lg:mt-[2px] lg:w-[590px] lg:shrink-0">
-            <div className="gap-6 sm:flex sm:items-center sm:justify-between">
-              <div className="min-w-0">
-                <p className="font-display text-[20px] leading-none text-black lg:text-[22px]">
-                  Engineering enquiries
-                </p>
-                <p className="mt-3 max-w-[338px] font-sans text-[15px] leading-[1.38] text-body-soft lg:text-[16px]">
-                  Tell us about your programme and we&rsquo;ll route you to the
-                  right team.
-                </p>
-              </div>
-              <Button href="/contact" className="mt-5 shrink-0 sm:mt-0">
-                Talk to Engineering
-              </Button>
-            </div>
+          <div className="mt-8 lg:mt-0">
+            <FooterContactCard />
           </div>
         </div>
 

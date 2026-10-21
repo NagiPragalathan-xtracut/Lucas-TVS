@@ -129,13 +129,11 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
     links: [
       { label: 'Engineering Services', to: ROUTES.capabilities },
       { label: 'Technologies', to: ROUTES.technologies },
-      { label: 'Engineering & R&D', to: ROUTES.engineering },
     ],
   },
   {
     heading: 'Products',
     links: [
-      { label: 'Products & Platforms', to: ROUTES.products },
       {
         label: 'Lucas-TVS Products',
         href: 'https://lucas-tvs.com/automotive-solutions-products/',
@@ -144,14 +142,6 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
         label: 'India Nippon (INEL) Products',
         href: 'https://www.indianippon.com/Products-Solutions',
       },
-    ],
-  },
-  {
-    heading: 'Resources',
-    links: [
-      { label: 'Insights & Resources', to: ROUTES.insights },
-      { label: 'Quality & Standards', to: ROUTES.quality },
-      { label: 'Sustainability', to: ROUTES.sustainability },
     ],
   },
 ]
@@ -174,12 +164,8 @@ export const COMPANY = {
     'Plot No. 137, Phase-1, SIPCOT Industrial Complex,',
     'Hosur, Tamil Nadu 635126',
   ],
-  /**
-   * Phone and email are still "XXXXXXXXXXX" / "XXXX@lucastvs.co.in" in the
-   * client's own wireframe. Left null rather than invented — the Contact
-   * page renders an awaiting-detail note in their place.
-   */
-  phone: null as string | null,
-  email: null as string | null,
+  // Display details supplied in the contact-card reference.
+  phone: '+91 00000 00000',
+  email: 'info@lucastvs.co.in',
   careersPortal: 'https://career.lucas-tvs.com',
 }

@@ -96,7 +96,7 @@ export default function CapabilitiesPage() {
       </Band>
 
       <Band tone="mute">
-        <StackHeader eyebrow="What we do" title="Eight service lines," accent="one partner." />
+        <Heading>What We Do</Heading>
         <div className={`${BODY_GAP} grid gap-3.5 lg:grid-cols-2 lg:gap-6`}>
           {SERVICE_LINES.map((line) => (
             <ServiceCard

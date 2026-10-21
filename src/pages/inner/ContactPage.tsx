@@ -3,7 +3,6 @@ import { PageShell } from '../../components/site/PageShell'
 import {
   Eyebrow,
   IconChat,
-  IconDocument,
   IconMail,
   IconPeople,
   IconPhone,
@@ -22,7 +21,7 @@ import {
   type LinkTarget,
 } from '../../components/site/blocks'
 import { COMPANY, ROUTES } from '../../lib/routes'
-import { reachCareers, reachEngineering, reachMedia, rndFeature, solutionsPanelWaves } from '../../lib/assets'
+import { reachCareers, reachEngineering, rndFeature, solutionsPanelWaves } from '../../lib/assets'
 
 const ADDRESS =
   'India Nippon Electricals Limited (INEL) R&D Tech Center, Plot No-137, Phase-1, SIPCOT Industrial Complex, Hosur, Tamil Nadu - 635126'
@@ -205,10 +204,7 @@ export default function ContactPage() {
         />
         <div className={`${FRAME} ${BAND} relative`}>
           <StackHeader eyebrow="Other ways to reach us" title="The right team," accent="first time." />
-          {/* Three across from xl. Between md and xl two across, with the
-              third card running the full width beneath — three at 1024
-              leaves each card too narrow for its copy and its photograph. */}
-          <div className={`${BODY_GAP} grid gap-4 md:grid-cols-2 lg:gap-6 xl:grid-cols-3`}>
+          <div className={`${BODY_GAP} grid gap-4 md:grid-cols-2 lg:gap-6`}>
             <ReachCard
               icon={<IconChat />}
               title="Engineering Enquiries"
@@ -222,14 +218,6 @@ export default function ContactPage() {
               body="Explore roles and life at Lucas TVS."
               link={{ label: 'View Open Roles', href: COMPANY.careersPortal }}
               image={reachCareers}
-            />
-            <ReachCard
-              icon={<IconDocument />}
-              title="Media & Events"
-              body="Press, speaking invitations and publications."
-              link={{ label: 'Latest Insights', to: ROUTES.insights }}
-              image={reachMedia}
-              className="md:col-span-2 xl:col-span-1"
             />
           </div>
         </div>

@@ -185,6 +185,7 @@ import heroVideoProductDevelopment from '../assets/HeroSlides/product-developmen
 // titles can be live, editable markup instead of pixels.
 import focusGridElectrification from '../assets/FocusGrid/electrification.webp'
 import focusGridElectrification2 from '../assets/FocusGrid/electrification2.webp'
+import industrialBessEnergy from '../assets/Industrial/bess-energy-management-v2.webp'
 import focusGridSoftwareDefined from '../assets/FocusGrid/software-defined.webp'
 import focusGridAutomation from '../assets/FocusGrid/automation.webp'
 // 30 Sep: the all-terrain vehicle shot replaced with a supplied main battle
@@ -302,11 +303,11 @@ import awardDeming from '../assets/image35.webp'
 import awardAcma from '../assets/image36.webp'
 
 // Why choose us --------------------------------------------------------
-import whyFeature from '../assets/Rectangle 10016.png'
-import whyQualityFirst from '../assets/Rectangle 10012.png'
-import whyEngineeringExcellence from '../assets/Rectangle 10013.png'
-import whyGlobalPerspective from '../assets/Rectangle 10014.png'
-import whySustainableMobility from '../assets/Rectangle 10015.png'
+import whyFeature from '../assets/WhyChoose/why-lifecycle-v2.webp'
+import whyQualityFirst from '../assets/WhyChoose/why-domain-expertise-v2.webp'
+import whyEngineeringExcellence from '../assets/WhyChoose/why-product-engineering-v2.webp'
+import whyGlobalPerspective from '../assets/WhyChoose/why-hardware-software-v2.webp'
+import whySustainableMobility from '../assets/WhyChoose/why-future-ready-v2.webp'
 
 // Sustainability & careers --------------------------------------------
 import windFarm from '../assets/rectangle10002.webp'
@@ -414,6 +415,7 @@ export {
   heroVideoProductDevelopment,
   focusGridElectrification,
   focusGridElectrification2,
+  industrialBessEnergy,
   focusGridSoftwareDefined,
   focusGridAutomation,
   focusGridMissionCritical,

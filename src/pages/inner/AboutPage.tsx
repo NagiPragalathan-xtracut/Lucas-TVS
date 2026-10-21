@@ -18,7 +18,7 @@ import {
   DarkHero,
 } from '../../components/site/blocks'
 import { cx } from '../../lib/cx'
-import { ROUTES, insightPath } from '../../lib/routes'
+import { ROUTES } from '../../lib/routes'
 import {
   aboutWhoWeAre,
   logoBat,
@@ -67,8 +67,8 @@ const TIMELINE: { year: string; text: string }[] = [
 /**
  * The six group companies, from the client's group slide (14 Oct). Each
  * point is a list of segments; `b: true` sets a segment bold, as the
- * slide does for its figures. Only the three companies that already had a
- * destination link out — nothing is invented for the other three.
+ * slide does for its figures. Website destinations follow the client's
+ * About Us ecosystem link comments.
  */
 type Seg = { t: string; b?: boolean }
 const ECOSYSTEM: {
@@ -94,7 +94,7 @@ const ECOSYSTEM: {
       [{ t: 'Strategic investment in Bavarian Automotive Technologies GmbH (software company) – HQ in Munich, Germany' }],
       [{ t: 'Extensive ECU development and industrialization experience' }],
     ],
-    link: { label: 'Read about BAT', to: insightPath('lucas-tvs-invests-in-bat-germany') },
+    link: { label: 'Visit BAT', href: 'https://bat-electrification.com/' },
   },
   {
     name: 'India Nippon Electricals (INEL)',
@@ -114,6 +114,7 @@ const ECOSYSTEM: {
       [{ t: '17K+', b: true }, { t: ' distribution footprint in India' }],
       [{ t: '550+', b: true }, { t: ' service centers' }],
     ],
+    link: { label: 'Visit Lucas Indian Service', href: 'https://www.lucas-service.com' },
   },
   {
     name: 'Delphi-TVS Technologies',
@@ -123,6 +124,7 @@ const ECOSYSTEM: {
       [{ t: '650K+', b: true }, { t: ' FIE systems produced annually' }],
       [{ t: '6+', b: true }, { t: ' countries, export sales' }],
     ],
+    link: { label: 'Visit Delphi-TVS', href: 'https://delphitvs.com' },
   },
   {
     name: 'Indeon',
@@ -131,6 +133,7 @@ const ECOSYSTEM: {
       [{ t: 'Partnership with ' }, { t: '24M', b: true }, { t: ', global battery player for lithium-ion production' }],
       [{ t: 'Giga factory based on Semisolid platform technology' }],
     ],
+    link: { label: 'Visit TVS Indeon', href: 'https://tvsindeon.com' },
   },
 ]
 

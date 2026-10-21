@@ -26,6 +26,7 @@ import {
   focusGridAutomation,
   focusGridElectrification,
   focusGridElectrification2,
+  industrialBessEnergy,
   focusGridMissionCritical,
   focusGridSoftwareDefined,
   focusMissionCritical,
@@ -205,15 +206,6 @@ export const INDUSTRIES: Industry[] = [
     solutionsEyebrow: 'Industrial solutions',
     solutions: [
       {
-        title: 'Smart Manufacturing',
-        description:
-          'Transforming production through intelligent automation and digital manufacturing technologies.',
-        items: ['Manufacturing Automation', 'Digital Factory', 'Industry 4.0', 'Production Analytics', 'Process Optimization'],
-        icon: IconFactory,
-        image: focusGridAutomation,
-        imageLabel: 'Image: automated production line',
-      },
-      {
         title: 'Motion & Energy Systems',
         description: 'Advanced technologies that improve efficiency, reliability and control.',
         items: ['Motor Control Systems', 'Drives & Controls', 'Energy Management', 'Power Electronics', 'Motion Controllers'],
@@ -236,6 +228,32 @@ export const INDUSTRIES: Industry[] = [
         icon: IconTrend,
         image: focusGridAiDigital,
         imageLabel: 'Image: engineer with tablet on shop floor',
+      },
+      {
+        title: 'Battery Energy Storage & Energy Management Systems (BESS & EMS)',
+        description:
+          'Engineering battery storage, power conversion and intelligent energy management systems.',
+        items: [
+          'Battery Management System (BMS)',
+          'Power Conversion System (PCS) Controls',
+          'Energy Management System (EMS) Development',
+          'Renewable Energy, Microgrid & Grid Integration',
+          'Industrial Communication Protocols',
+          'Remote Monitoring, Diagnostics & Predictive Maintenance',
+        ],
+        icon: IconBolt,
+        image: industrialBessEnergy,
+        imageLabel:
+          'Modular battery storage racks and power conversion systems in a connected industrial microgrid facility',
+      },
+      {
+        title: 'Smart Manufacturing',
+        description:
+          'Transforming production through intelligent automation and digital manufacturing technologies.',
+        items: ['Manufacturing Automation', 'Digital Factory', 'Industry 4.0', 'Production Analytics', 'Process Optimization'],
+        icon: IconFactory,
+        image: focusGridAutomation,
+        imageLabel: 'Image: automated production line',
       },
     ],
     products: {
