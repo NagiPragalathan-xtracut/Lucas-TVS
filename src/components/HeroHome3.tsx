@@ -87,7 +87,7 @@ export function HeroHome3() {
       // up over it. Works because no ancestor scrolls or clips — `main` and the
       // page wrapper are both plain blocks. `z-0` puts it under the stacking
       // context that wraps the rest of the page in Home3.
-      className="sticky top-0 z-0 overflow-hidden bg-white pb-16 lg:pb-24"
+      className="sticky top-0 z-0 overflow-hidden bg-white lg:pb-24"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >

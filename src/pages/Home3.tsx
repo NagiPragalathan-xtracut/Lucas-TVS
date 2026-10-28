@@ -156,11 +156,9 @@ export default function Home3() {
             covers it — hence the opaque background here, without which the
             pinned video would show through the gaps between sections. */}
         <div className="relative z-10 bg-white">
-          {/* Padding lives here rather than in the section, matching how
-              Home2 does it — WhoWeAreHome3 is Home3's own component now, but
-              keeping the offset at the page level means the hero hand-off
-              stays in one place if the section is swapped again. */}
-          <div className="pt-[100px]">
+          {/* Keep a small gap below the hero on mobile and the original
+              spacing on desktop. */}
+          <div className="pt-6 lg:pt-[100px]">
             <WhoWeAreHome3 />
           </div>
           <IndustriesAnimatedHome3 />
