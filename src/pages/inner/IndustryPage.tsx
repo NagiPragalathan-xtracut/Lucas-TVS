@@ -17,6 +17,7 @@ import {
 import { BAT, INDUSTRIES, industryBySlug, type Industry } from '../../data/industries'
 import { CATALOGUE_URL, productsIn } from '../../data/products'
 import { DEFENCE_PLATFORMS } from '../../data/defenceSupplied'
+import { insightFeature } from '../../lib/assets'
 import { ROUTES, insightPath } from '../../lib/routes'
 import NotFoundPage from './NotFoundPage'
 
@@ -198,8 +199,10 @@ function BatBand() {
 
         <div className="flex min-w-0 grow flex-col gap-3.5">
           <ImageSlot
+            src={insightFeature}
+            alt="Engineer reviewing an electric motor test with an automated assembly cell"
             tone="dark"
-            label="Image: BAT engineering facility"
+            label="Electric motor engineering"
             className="h-[200px] w-full rounded-[20px] lg:h-[260px]"
           />
           <ul className="grid grid-cols-2 gap-3.5">
