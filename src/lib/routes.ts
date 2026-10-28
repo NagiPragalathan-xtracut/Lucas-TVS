@@ -164,8 +164,9 @@ export const COMPANY = {
     'Plot No. 137, Phase-1, SIPCOT Industrial Complex,',
     'Hosur, Tamil Nadu 635126',
   ],
-  // Display details supplied in the contact-card reference.
-  phone: '+91 00000 00000',
-  email: 'info@lucastvs.co.in',
+  // Confirmed by the client (24 Oct).
+  phone: '+91 89255 50242',
+  phoneHref: 'tel:+918925550242',
+  email: 'shrihari.km@lucastvs.co.in',
   careersPortal: 'https://career.lucas-tvs.com',
 }

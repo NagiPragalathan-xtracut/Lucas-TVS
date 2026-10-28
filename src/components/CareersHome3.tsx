@@ -114,7 +114,26 @@ export function CareersHome3() {
 
               `items-start` so the four line up on their icons rather than
               being centred against each other. */}
-          <ul className="mt-9 grid grid-cols-2 items-start gap-x-5 gap-y-6 sm:flex sm:gap-0">
+          {/* Phones (24 Oct): an auto-scrolling strip, two highlights in view
+              at a time. The list is doubled and the track slides by half its
+              width, so the loop is seamless; each item is half the strip
+              (50cqw). It stops for reduced motion, where the strip can be
+              swiped instead. Screen readers get the static list below. */}
+          <div aria-hidden className="@container mt-9 overflow-hidden motion-reduce:overflow-x-auto sm:hidden">
+            <ul className="flex w-max animate-[marquee_12s_linear_infinite] motion-reduce:animate-none">
+              {[...HIGHLIGHTS, ...HIGHLIGHTS].map((h, i) => (
+                <li key={i} className="w-[50cqw] shrink-0 pr-4">
+                  <h.icon strokeWidth={1.6} className="h-[22px] w-[22px] text-green-deep" />
+                  <p className="mt-3 font-body text-[12px] leading-[1.35] text-ink">
+                    <span className="block whitespace-nowrap">{h.lines[0]}</span>
+                    <span className="block whitespace-nowrap">{h.lines[1]}</span>
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <ul className="sr-only sm:not-sr-only sm:mt-9 sm:flex sm:items-start sm:gap-0">
             {HIGHLIGHTS.map((h) => (
               <li
                 key={h.lines.join(' ')}

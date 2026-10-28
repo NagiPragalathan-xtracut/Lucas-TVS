@@ -1,5 +1,5 @@
 import { Button } from './primitives'
-import { aboutEngineering } from '../lib/assets'
+import { aboutEngineering, aboutWhoWeAre } from '../lib/assets'
 
 /**
  * Home3's About block — the parent `WhoWeAre` minus its stat strip.
@@ -32,8 +32,8 @@ export function WhoWeAreHome3() {
           The photo export carries a transparent notch across its top-left
           corner that this copy block is designed to sit in. At `lg` the block
           is absolutely placed into that notch; below `lg` it runs in normal
-          flow and the image is cropped from the bottom so the notch never
-          shows.
+          flow, with the button under it, over the full-frame (notch-free)
+          export of the same scene.
         */}
         <div className="mb-8 lg:absolute lg:top-[6px] lg:left-[36px] lg:z-10 lg:mb-0 lg:w-[540px]">
           <p className="font-body text-[18px] leading-none font-medium text-green lg:text-[20px]">
@@ -52,22 +52,45 @@ export function WhoWeAreHome3() {
             organizations develop next-generation products, intelligent
             systems, and digital platforms.
           </p>
+          {/* Below lg the button sits here, left-aligned under the copy,
+              rather than floating on the photo (23 Oct). Wrapped so
+              `lg:hidden` is not fighting the Button's own display class. */}
+          <div className="mt-6 lg:hidden">
+            <Button
+              href="/about"
+              variant="ghost"
+              className="!border-white !bg-white !px-9 shadow-[0_4px_4px_0_rgba(211,211,211,0.25),inset_0_0_4px_0_rgba(0,0,0,0.25)]"
+            >
+              Explore More
+            </Button>
+          </div>
         </div>
 
         <div className="relative overflow-hidden rounded-[15px]">
+          {/* Below lg (23 Oct): the same scene without the notch — the
+              full-frame export — as a plain rectangle, so no corner tab of
+              sky shows above the photo. From lg the notched export returns,
+              with the copy sitting in its notch. */}
+          <img
+            src={aboutWhoWeAre}
+            alt="A scooter, car, truck, loader, tank and military tanker in front of mountains, with aircraft overhead, beside an electric motor, control units and a circuit board and a vehicle design on a display screen"
+            className="aspect-[4/3] w-full object-cover object-[70%_center] sm:aspect-[16/10] lg:hidden"
+          />
           <img
             src={aboutEngineering}
             alt="A scooter, car, truck, loader, tank and military tanker in front of mountains, with aircraft overhead, beside an electric motor, control units and a circuit board and a vehicle design on a display screen"
-            className="h-[380px] w-full object-cover object-bottom sm:h-[460px] lg:h-auto lg:object-fill"
+            className="hidden h-auto w-full lg:block lg:object-fill"
           />
 
-          <Button
-            href="/about"
-            variant="ghost"
-            className="absolute top-5 right-5 !border-white !bg-white !px-9 shadow-[0_4px_4px_0_rgba(211,211,211,0.25),inset_0_0_4px_0_rgba(0,0,0,0.25)] lg:top-[47px] lg:right-[40px]"
-          >
-            Explore More
-          </Button>
+          <div className="absolute hidden lg:top-[47px] lg:right-[40px] lg:block">
+            <Button
+              href="/about"
+              variant="ghost"
+              className="!border-white !bg-white !px-9 shadow-[0_4px_4px_0_rgba(211,211,211,0.25),inset_0_0_4px_0_rgba(0,0,0,0.25)]"
+            >
+              Explore More
+            </Button>
+          </div>
 
           {/* The stat strip that sat across the bottom of the photo is
               gone. It was an overlay, so nothing below it needs to reflow —

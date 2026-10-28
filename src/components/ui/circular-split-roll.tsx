@@ -182,6 +182,14 @@ interface CircularSplitRollCompProps {
   gridImageClassName?: string;
   gridCardClassName?: string;
   gridTitleClassName?: string;
+  /**
+   * Layout of the static fallback grid shown below 1025px (and under
+   * reduced motion). "grid" (default) is the original square-card grid —
+   * 3 across, 2 on a phone. "stack" (24 Oct, Home3) is one card per row on
+   * a phone and three across from md: landscape photo cards with the title,
+   * line and an arrow laid over a bottom scrim.
+   */
+  gridLayout?: "grid" | "stack";
   /** Extra classes for the chevron badge on each image card — the badge and
    *  its glyph share `currentColor`, so `hover:`/`group-hover:` utilities
    *  here recolour both. */
@@ -252,6 +260,7 @@ function CircularSplitRollComp({
   gridImageClassName = "",
   gridCardClassName = "",
   gridTitleClassName = "",
+  gridLayout = "grid",
   cardIconClassName = "",
 
   showOrbitRing = false,
@@ -712,7 +721,54 @@ function CircularSplitRollComp({
         <div className={reducedMotion ? "block" : "hidden max-[1025px]:block"}>{header}</div>
       )}
 
-      <div className={`w-full px-5 py-10 max-md:px-4 max-md:py-8 ${reducedMotion ? "block" : "sr-only max-[1025px]:not-sr-only max-[1025px]:block"}`}>
+      <div className={`w-full px-5 py-10 max-md:px-4 max-md:py-8 ${reducedMotion ? "block" : "sr-only max-[1025px]:not-sr-only max-[1025px]:block max-[1025px]:px-5 max-[1025px]:py-10 max-md:px-4 max-md:py-8"}`}>
+        {gridLayout === "stack" ? (
+        <div className="mx-auto grid w-full max-w-5xl grid-cols-1 gap-4 md:grid-cols-3 md:gap-5">
+          {safeItems.map((item) => (
+            <article key={item.id} className={`w-full ${gridCardClassName}`}>
+              <CardLink
+                href={item.href}
+                label={item.title}
+                className="group block rounded-[20px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#238f38]"
+              >
+                <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[20px] bg-[#1b1d1b] shadow-[0_14px_32px_rgba(0,0,0,0.18)] md:aspect-[4/5]">
+                  <img
+                    src={item.image}
+                    alt={item.alt}
+                    className="absolute inset-0 block h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                    draggable="false"
+                  />
+                  <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
+                  {!item.hideCaption && (
+                    <div className="absolute inset-x-0 bottom-0 flex items-end gap-3 p-4 sm:p-5">
+                      <div className="min-w-0 grow">
+                        <h3 className={`font-display text-[22px] leading-[1.15] font-semibold tracking-[-0.01em] text-white ${gridTitleClassName}`}>
+                          {item.title}
+                        </h3>
+                        {item.description ? (
+                          <p className="mt-1.5 line-clamp-2 text-[13.5px] leading-[1.45] text-white/80">
+                            {item.description}
+                          </p>
+                        ) : null}
+                      </div>
+                      {item.href ? (
+                        <span
+                          aria-hidden
+                          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-lime text-ink transition-transform duration-300 group-hover:translate-x-0.5"
+                        >
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-[18px] w-[18px]">
+                            <path d="M7 17 17 7M8 7h9v9" />
+                          </svg>
+                        </span>
+                      ) : null}
+                    </div>
+                  )}
+                </div>
+              </CardLink>
+            </article>
+          ))}
+        </div>
+        ) : (
         <div className="mx-auto grid w-full max-w-5xl grid-cols-3 gap-5 max-md:grid-cols-2 max-md:gap-4">
           {safeItems.map((item) => (
             <article
@@ -753,6 +809,7 @@ function CircularSplitRollComp({
             </article>
           ))}
         </div>
+        )}
       </div>
     </section>
   );

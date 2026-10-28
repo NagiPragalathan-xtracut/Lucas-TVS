@@ -61,7 +61,7 @@ export function LookingForHome3() {
   }
 
   return (
-    <section id="solutions" className="shell-wide py-16 lg:py-24">
+    <section id="solutions" className="shell-wide pt-12 pb-6 sm:py-16 lg:py-24">
       <div className="relative overflow-hidden rounded-[24px] border border-line-soft bg-[#f3f7f3]">
         {/* The artwork's left half is already pale, so on desktop the copy
             sits straight on it. Below lg the car would run under the copy,

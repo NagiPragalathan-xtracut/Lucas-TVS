@@ -157,14 +157,16 @@ export function EngineeringServicesHome3() {
                   label here duplicated the eyebrow and heading above. */}
               <AppLink
                 href="/capabilities"
-                className="flex items-center justify-between gap-4 rounded-full border border-white bg-black/[0.22] py-[3px] pr-[3px] pl-[37px] backdrop-blur-sm transition-colors hover:bg-black/40"
+                className="flex items-center justify-between gap-2 rounded-full border border-white bg-black/[0.22] py-[3px] pr-[3px] pl-3 backdrop-blur-sm min-[360px]:pl-4 transition-colors hover:bg-black/40 sm:gap-4 sm:pl-[37px]"
               >
-                <span className="font-sans text-[18px] text-white lg:text-[21px]">
+                {/* One line on every phone (24 Oct): the size scales with the
+                    viewport down to 11px, and the pill narrows below sm. */}
+                <span className="font-sans text-[clamp(11px,3.6vw,18px)] whitespace-nowrap text-white sm:text-[18px] lg:text-[21px]">
                   Explore Engineering Services
                 </span>
                 <ChevronPill
-                  className="!h-[50px] !w-[102px] !bg-white shadow-[0_4px_4px_0_rgba(211,211,211,0.25),inset_0_0_4px_0_rgba(0,0,0,0.25)]"
-                  iconClassName="h-[26px] w-[26px]"
+                  className="!h-[40px] !w-[48px] shrink-0 min-[360px]:!h-[42px] min-[360px]:!w-[64px] !bg-white shadow-[0_4px_4px_0_rgba(211,211,211,0.25),inset_0_0_4px_0_rgba(0,0,0,0.25)] sm:!h-[50px] sm:!w-[102px]"
+                  iconClassName="h-[22px] w-[22px] sm:h-[26px] sm:w-[26px]"
                   label="Explore Engineering Services"
                 />
               </AppLink>

@@ -39,14 +39,11 @@ const FIELD =
  * Contact Us, built to the Contact artboards of the 29 Sep reference.
  * Copy is the reference's.
  *
- * Two things here are the reference's placeholders, shown as drawn but
- * deliberately not wired up:
+ * Phone and email are the client's confirmed details (24 Oct), from
+ * COMPANY in lib/routes.ts, and link out as tel: / mailto:.
  *
- *   - Phone "+91 00000 00000" and email "info@lucastvs.co.in". They are
- *     printed as text, not as tel:/mailto: links — the number is plainly
- *     a placeholder, and the address has not been confirmed as a real,
- *     monitored inbox. A link that silently loses an enquiry is worse
- *     than no link.
+ * Still a placeholder, deliberately not wired up:
+ *
  *   - The form. No recipient has been named, so submitting it posts
  *     nowhere: it validates, then says plainly that the form is not yet
  *     connected. It does not pretend to have sent anything.
@@ -168,10 +165,14 @@ export default function ContactPage() {
                 {ADDRESS}
               </Detail>
               <Detail icon={<IconPhone />} label="Phone">
-                +91 00000 00000
+                <a href={COMPANY.phoneHref} className="transition-colors hover:text-green-deep">
+                  {COMPANY.phone}
+                </a>
               </Detail>
               <Detail icon={<IconMail />} label="Email">
-                info@lucastvs.co.in
+                <a href={`mailto:${COMPANY.email}`} className="break-all transition-colors hover:text-green-deep">
+                  {COMPANY.email}
+                </a>
               </Detail>
             </dl>
             {/* Fixed height on a phone, where the columns stack; from lg

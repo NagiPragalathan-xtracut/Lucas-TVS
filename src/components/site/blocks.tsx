@@ -692,7 +692,7 @@ export function DarkBand({
         <div aria-hidden className="absolute inset-0 bg-[rgba(20,22,20,0.78)]" />
         <div
           className={cx(
-            'relative flex flex-col gap-7 px-5 py-9 md:px-10 lg:gap-10 lg:px-14 lg:py-[72px]',
+            'relative flex flex-col gap-7 px-5 py-14 md:px-10 lg:gap-10 lg:px-14 lg:py-[72px]',
             className,
           )}
         >

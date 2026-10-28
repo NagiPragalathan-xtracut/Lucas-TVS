@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Button, ChevronPill, Eyebrow } from './primitives'
 import { cx } from '../lib/cx'
@@ -106,7 +106,7 @@ export function WhyChooseUsHome3() {
   })
 
   return (
-    <section className="shell pt-8 pb-[100px] lg:pt-12">
+    <section className="shell pt-12 pb-[100px] sm:pt-8 lg:pt-12">
       <motion.header
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -133,6 +133,7 @@ export function WhyChooseUsHome3() {
         </div>
       </motion.header>
 
+      {canHover ? (
       <div
         className="mt-10 flex overflow-x-auto pb-2 lg:mt-[86px] lg:overflow-visible"
         style={{ gap: `${GAP_PX}px` }}
@@ -201,6 +202,93 @@ export function WhyChooseUsHome3() {
           )
         })}
       </div>
+      ) : (
+        <TouchCarousel />
+      )}
     </section>
+  )
+}
+
+/**
+ * Touch devices (24 Oct). The hover squeeze can't run without a pointer,
+ * and the old fallback left the four pillar cards as 110px slivers with
+ * sideways labels that never opened — their copy was unreachable. Here
+ * every card is a full card: photo, title and line, swiped one at a time
+ * with scroll-snap, the next card peeking in so it reads as a carousel,
+ * and dots below that track the position and jump on tap.
+ */
+function TouchCarousel() {
+  const trackRef = useRef<HTMLDivElement>(null)
+  const [current, setCurrent] = useState(0)
+
+  const onScroll = () => {
+    const track = trackRef.current
+    if (!track) return
+    const card = track.firstElementChild as HTMLElement | null
+    if (!card) return
+    const step = card.offsetWidth + GAP_PX
+    setCurrent(Math.min(ITEMS.length - 1, Math.max(0, Math.round(track.scrollLeft / step))))
+  }
+
+  const goTo = (i: number) => {
+    const track = trackRef.current
+    const card = track?.children[i] as HTMLElement | undefined
+    if (track && card) track.scrollTo({ left: card.offsetLeft - track.offsetLeft, behavior: 'smooth' })
+  }
+
+  return (
+    <div className="mt-8">
+      <div
+        ref={trackRef}
+        onScroll={onScroll}
+        aria-label="Why engineering teams choose us"
+        className="-mx-5 flex snap-x snap-mandatory overflow-x-auto scroll-px-5 px-5 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        style={{ gap: `${GAP_PX}px` }}
+      >
+        {ITEMS.map((item, i) => (
+          <article
+            key={item.label}
+            aria-label={`${i + 1} of ${ITEMS.length}: ${item.title}`}
+            className="relative h-[360px] w-[84%] shrink-0 snap-start overflow-hidden rounded-[18px] sm:w-[46%]"
+          >
+            <img
+              src={item.image}
+              alt={item.alt}
+              loading="lazy"
+              decoding="async"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/20 to-black/80" />
+            <span className="absolute top-4 left-4 rounded-full bg-black/45 px-2.5 py-1 font-mono text-[12px] text-lime backdrop-blur-sm">
+              {String(i + 1).padStart(2, '0')} / {String(ITEMS.length).padStart(2, '0')}
+            </span>
+            <div className="absolute inset-x-0 bottom-0 p-5">
+              <h3 className="font-display text-[21px] leading-[1.2] font-medium text-white">{item.title}</h3>
+              <p className="mt-2 font-body text-[14px] leading-[1.5] text-white/85">{item.description}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div className="mt-5 flex justify-center gap-2">
+        {ITEMS.map((item, i) => (
+          <button
+            key={item.label}
+            type="button"
+            onClick={() => goTo(i)}
+            aria-label={`Show ${item.title}`}
+            aria-current={i === current}
+            className="grid h-11 w-6 place-items-center"
+          >
+            <span
+              className={cx(
+                'block h-2 rounded-full transition-all duration-300',
+                i === current ? 'w-6 bg-green-deep' : 'w-2 bg-line',
+              )}
+            />
+          </button>
+        ))}
+      </div>
+    </div>
   )
 }

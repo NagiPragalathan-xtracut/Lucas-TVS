@@ -91,6 +91,9 @@ export function IndustriesAnimatedHome3() {
         // (1-3sectors.png) is 2043x770, and a square card cropped almost all
         // of it away. Sized from the Figma frame — card ~620x360 at a
         // 1810px-wide section.
+        // Below 1025px: one landscape photo card per row on a phone (three
+        // across on a tablet), title and line over the photo (24 Oct).
+        gridLayout="stack"
         imageCardWidth={620}
         imageCardHeight={360}
         // Brand green on hover. `group-hover` fires from anywhere on the

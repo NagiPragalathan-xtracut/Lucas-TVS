@@ -91,7 +91,7 @@ export function HeroHome3() {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="relative h-[560px] bg-black sm:h-[620px] lg:h-[740px] xl:h-[780px]">
+      <div className="relative h-[600px] bg-black sm:h-[640px] lg:h-[740px] xl:h-[780px]">
         {/* One full-bleed backdrop per slide, crossfading. The active one
             drifts in slowly (a gentle push-in over the slide's run) so the
             still reads as live; under reduced motion it simply cuts. The
@@ -178,7 +178,7 @@ export function HeroHome3() {
             the bottom of the video. `lg:block` used to override the flex
             centring, which is what left the headline pinned 13px under the
             header with 311px of dead space below it. */}
-        <div className="shell pointer-events-none absolute inset-0 flex flex-col justify-center pt-24 lg:pt-[112px] lg:pb-[196px] xl:pt-[128px] xl:pb-[210px]">
+        <div className="shell pointer-events-none absolute inset-0 flex flex-col justify-center pt-24 pb-20 lg:pt-[112px] lg:pb-[196px] xl:pt-[128px] xl:pb-[210px]">
           <div className="pointer-events-auto flex flex-col">
             <motion.div {...riseIn(reduceMotion, 0.1)} className="order-1 lg:mt-0">
               {/* 16 Sep review: two messages only — what we do, then who it
