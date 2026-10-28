@@ -138,18 +138,6 @@ const ECOSYSTEM: {
 ]
 
 /**
- * Names are the reference's own "Lorem Ipsum" — the client has not named
- * the team yet. The designations are theirs. Portraits render as
- * placeholders until supplied; pass `photo` to fill one.
- */
-const LEADERS: { name: string; role: string; photo?: string }[] = [
-  { name: 'Lorem Ipsum', role: 'Chief Executive Officer' },
-  { name: 'Lorem Ipsum', role: 'Chief Technology Officer' },
-  { name: 'Lorem Ipsum', role: 'Head – Engineering Services' },
-  { name: 'Lorem Ipsum', role: 'Head – Business Development' },
-]
-
-/**
  * About Us, built to "Lucas-TVS — Who We Are" in the 29 Sep reference
  * ("Lucas-TVS Phase 1 Wireframes (2)"), desktop and mobile artboards.
  *
@@ -167,8 +155,8 @@ const LEADERS: { name: string; role: string; photo?: string }[] = [
  *     composites, each under a scrim so the reference's dark surface holds.
  *
  * The rest ask for specific things that do not exist yet — the INEL and
- * BAT logos, four named leaders, photographs of the Hosur labs — and
- * render as the reference draws them, labelled placeholders, until they
+ * BAT logos and photographs of the Hosur labs — and render as the
+ * reference draws them, labelled placeholders, until they
  * arrive. One is a conflict rather than a gap: the heritage slot asks for
  * "manufacturing floor", and the 16 Sep review ruled out all factory and
  * plant imagery. It stays a placeholder until that is resolved.
@@ -330,33 +318,6 @@ export default function AboutPage() {
 
       {/* The "What drives us / Values behind every build." band (four value
           cards) was removed on 14 Oct. */}
-
-      {/* Leadership ------------------------------------------------- */}
-      <section className={`${FRAME} ${BAND}`}>
-        <SplitHeader
-          eyebrow="Leadership"
-          title="The people"
-          accent="leading the way."
-          body="Experienced leaders across engineering, technology and business, guiding every programme we deliver."
-        />
-
-        <ul className="mt-7 grid grid-cols-2 gap-3.5 lg:mt-10 lg:grid-cols-4 lg:gap-4">
-          {LEADERS.map((leader) => (
-            <li key={leader.role} className="flex flex-col gap-3">
-              <ImageSlot
-                src={leader.photo}
-                alt={leader.photo ? `${leader.name}, ${leader.role}` : undefined}
-                label="Portrait"
-                className="h-[190px] w-full rounded-[20px] lg:h-[300px]"
-              />
-              <p className="font-display text-[16px] leading-[1.25] font-semibold text-ink lg:text-[18px]">
-                {leader.name}
-              </p>
-              <p className="font-body text-[13px] leading-[1.5] text-body">{leader.role}</p>
-            </li>
-          ))}
-        </ul>
-      </section>
 
       {/* Where we build: hidden 14 Oct until the R&D Tech Center photos
           arrive. Set SHOW_RD_CENTER to true to bring it back. */}
