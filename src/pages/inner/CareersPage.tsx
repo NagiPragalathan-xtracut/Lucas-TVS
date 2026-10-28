@@ -15,10 +15,8 @@ import {
   IconTrend,
   BAND,
   FRAME,
-  ImageSlot,
   Pill,
   SplitHeader,
-  StackHeader,
 } from '../../components/site/design'
 import {
   ArrowCircle,
@@ -79,10 +77,7 @@ const HIRING_STEPS: { title: string; sub: string; icon: LucideIcon }[] = [
  * the reference's.
  *
  * Every role link goes to the careers portal the reference names
- * (career.lucas-tvs.com); the site lists no roles itself. The six "Life
- * at Lucas TVS" photographs are still to come — the earlier wireframe
- * noted they need consent from the people in them — so they render as the
- * reference draws them until supplied.
+ * (career.lucas-tvs.com); the site lists no roles itself.
  */
 export default function CareersPage() {
   const portal = COMPANY.careersPortal
@@ -100,9 +95,6 @@ export default function CareersPage() {
         actions={
           <>
             <Pill href={portal}>View Open Roles</Pill>
-            <Pill href="#life" tone="outline">
-              Life at Lucas TVS
-            </Pill>
           </>
         }
       />
@@ -166,29 +158,6 @@ export default function CareersPage() {
             </li>
           ))}
         </ul>
-      </Band>
-
-      <Band id="life">
-        <StackHeader eyebrow="Life at Lucas TVS" title="Where curious engineers" accent="thrive." />
-        {/* Desktop: a tall photograph, a wide one, then four tiles —
-            4 columns x 2 rows of 230px. A phone keeps the reference's
-            lighter set: the team photograph full width, two tiles under it. */}
-        <div className={`${BODY_GAP} grid grid-cols-2 gap-3.5 lg:grid-cols-4 lg:grid-rows-[230px_230px] lg:gap-4`}>
-          <div className="col-span-2 h-[240px] lg:col-span-1 lg:row-span-2 lg:h-auto">
-            <ImageSlot label="Engineering team" className="h-full w-full rounded-[24px]" />
-          </div>
-          <div className="hidden lg:col-span-2 lg:block">
-            <ImageSlot label="Collaboration in the lab" className="h-full w-full rounded-[20px]" />
-          </div>
-          <ImageSlot label="Hackathon" className="h-[150px] w-full rounded-[18px] lg:h-full lg:rounded-[20px]" />
-          <ImageSlot label="Test track day" className="h-[150px] w-full rounded-[18px] lg:h-full lg:rounded-[20px]" />
-          <div className="hidden lg:block">
-            <ImageSlot label="Team celebration" className="h-full w-full rounded-[20px]" />
-          </div>
-          <div className="hidden lg:block">
-            <ImageSlot label="Learning session" className="h-full w-full rounded-[20px]" />
-          </div>
-        </div>
       </Band>
 
       <div className="pb-10 lg:pb-16">
