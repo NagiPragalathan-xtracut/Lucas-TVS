@@ -140,10 +140,10 @@ import logoIndeon from '../assets/logo-indeon.webp'
 // Products delivered through the engineering service offerings (14 Oct),
 // cropped from the client's product sheet and set on 640x480 plates of
 // each photo's own background.
-import svcBms from '../assets/ServiceProducts/bms-hd-v2.png'
-import svcDcDc from '../assets/ServiceProducts/dc-dc-converter-hd-v2.png'
+import svcBms from '../assets/ServiceProducts/bms-supplied.png'
+import svcDcDc from '../assets/ServiceProducts/dc-dc-converter-supplied.png'
 import svcObc from '../assets/ServiceProducts/onboard-charger-hd.png'
-import svcInverter from '../assets/ServiceProducts/traction-inverter-hd-v2.png'
+import svcInverter from '../assets/ServiceProducts/traction-inverter-supplied.png'
 import svcMotorController from '../assets/ServiceProducts/integrated-motor-controller-hd.png'
 import svcVcu from '../assets/ServiceProducts/vehicle-control-unit-hd.png'
 
