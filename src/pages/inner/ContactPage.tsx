@@ -1,4 +1,5 @@
-import { useId, useState, type FormEvent, type ReactNode } from 'react'
+import { useId, type ReactNode } from 'react'
+import { EnquiryStatusNote } from '../../components/site/EnquiryStatusNote'
 import { PageShell } from '../../components/site/PageShell'
 import {
   Eyebrow,
@@ -22,6 +23,7 @@ import {
 } from '../../components/site/blocks'
 import { COMPANY, ROUTES } from '../../lib/routes'
 import { reachCareers, reachEngineering, rndFeature, solutionsPanelWaves } from '../../lib/assets'
+import { useEnquiry } from '../../lib/useEnquiry'
 
 const ADDRESS =
   'India Nippon Electricals Limited (INEL) R&D Tech Center, Plot No-137, Phase-1, SIPCOT Industrial Complex, Hosur, Tamil Nadu - 635126'
@@ -42,11 +44,8 @@ const FIELD =
  * Phone and email are the client's confirmed details (24 Oct), from
  * COMPANY in lib/routes.ts, and link out as tel: / mailto:.
  *
- * Still a placeholder, deliberately not wired up:
- *
- *   - The form. No recipient has been named, so submitting it posts
- *     nowhere: it validates, then says plainly that the form is not yet
- *     connected. It does not pretend to have sent anything.
+ * The form posts to the client's enquiries Google Sheet (see
+ * lib/useEnquiry.ts): one row per submission, tagged "Contact page".
  *
  * The map is a live Google Maps embed of the address (1 Oct), sized to end
  * level with the form on desktop.
@@ -55,12 +54,7 @@ const FIELD =
  * green photo cards on a pale wave backdrop. See `ReachCard`.
  */
 export default function ContactPage() {
-  const [submitted, setSubmitted] = useState(false)
-
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setSubmitted(true)
-  }
+  const { status, onSubmit } = useEnquiry('Contact page')
 
   return (
     <PageShell title="Contact Us">
@@ -138,19 +132,19 @@ export default function ContactPage() {
               )}
             </Field>
 
+            {/* Honeypot: hidden from people; the sheet script drops anything
+                that fills it in. */}
+            <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden className="hidden" />
+
             <button
               type="submit"
-              className="h-[52px] self-start rounded-full bg-lime px-[30px] font-body text-[16px] font-medium text-ink transition-transform duration-300 hover:scale-[1.03]"
+              disabled={status === 'sending'}
+              className="h-[52px] self-start rounded-full bg-lime px-[30px] font-body text-[16px] font-medium text-ink transition-transform duration-300 hover:scale-[1.03] disabled:cursor-wait disabled:opacity-70 disabled:hover:scale-100"
             >
-              Submit Enquiry →
+              {status === 'sending' ? 'Sending…' : 'Submit Enquiry →'}
             </button>
 
-            {submitted && (
-              <p role="status" className="rounded-[12px] border-[1.5px] border-dashed border-line bg-surface-mute px-4 py-3 font-body text-[13px] leading-[1.5] text-body">
-                This form is not connected yet, so nothing has been sent. The address enquiries
-                should go to is still to be confirmed.
-              </p>
-            )}
+            <EnquiryStatusNote status={status} />
 
             <p className="font-body text-[12px] text-body">
               By submitting, you agree to our privacy policy. We typically respond within two working

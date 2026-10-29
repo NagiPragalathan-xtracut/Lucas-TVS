@@ -1,10 +1,12 @@
-import { useId, useRef, useState, type FormEvent, type ReactNode } from 'react'
+import { useId, useRef, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { useLenis } from 'lenis/react'
 import { Select as BaseSelect } from '@base-ui/react/select'
 import { ArrowRight, Box, Check, ChevronDown, FileText, Settings, X, type LucideIcon } from 'lucide-react'
 import { solutionsCtaBg } from '../lib/assets'
 import { ROUTES } from '../lib/routes'
+import { useEnquiry } from '../lib/useEnquiry'
+import { EnquiryStatusNote } from './site/EnquiryStatusNote'
 
 const SOLUTIONS = ['Product', 'System', 'Engineering Service', 'Technology']
 const INDUSTRIES = ['Automotive', 'Industrial', 'Defence & Aerospace', 'Not sure yet']
@@ -28,24 +30,28 @@ const FIELD =
  * three picks carried in. Lenis is paused while it is open so the wheel
  * scrolls the dialog, not the page behind it.
  *
- * Like the Contact page form, this is not wired to a backend yet:
- * submitting validates and says plainly that nothing was sent. Once an
- * endpoint exists, `onSubmit` is the only place that changes — `FormData`
- * already carries every field, the three picks included.
+ * Like the Contact page form, it posts to the client's enquiries Google
+ * Sheet (lib/useEnquiry.ts), tagged "Homepage – Let's Get Started", the
+ * three picks included.
  */
 export function LookingForHome3() {
   const [solution, setSolution] = useState('')
   const [industry, setIndustry] = useState('')
   const [requirement, setRequirement] = useState('')
-  const [submitted, setSubmitted] = useState(false)
   const dialogRef = useRef<HTMLDialogElement>(null)
   const lenis = useLenis()
+  // The picks are controlled, so `form.reset()` leaves them; clear them here.
+  const { status, setStatus, onSubmit } = useEnquiry('Homepage – Let’s Get Started', () => {
+    setSolution('')
+    setIndustry('')
+    setRequirement('')
+  })
 
   // Driven imperatively rather than through an `open` state: the dialog's
   // own open flag is the single source of truth, so Esc, the close button
   // and a backdrop click can never leave React and the DOM disagreeing.
   const openForm = () => {
-    setSubmitted(false)
+    if (status !== 'sending') setStatus('idle')
     dialogRef.current?.showModal()
     lenis?.stop()
   }
@@ -53,11 +59,6 @@ export function LookingForHome3() {
   const closeForm = () => {
     dialogRef.current?.close()
     lenis?.start()
-  }
-
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setSubmitted(true)
   }
 
   return (
@@ -228,23 +229,20 @@ export function LookingForHome3() {
             )}
           </Field>
 
+          {/* Honeypot: hidden from people; the sheet script drops anything
+              that fills it in. */}
+          <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden className="hidden" />
+
           <button
             type="submit"
-            className="inline-flex h-[50px] items-center justify-center gap-2 self-start rounded-full bg-lime px-7 font-body text-[15px] font-medium text-ink transition-transform duration-300 hover:scale-[1.03] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-deep"
+            disabled={status === 'sending'}
+            className="inline-flex h-[50px] items-center justify-center gap-2 self-start rounded-full bg-lime px-7 font-body text-[15px] font-medium text-ink transition-transform duration-300 hover:scale-[1.03] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-deep disabled:cursor-wait disabled:opacity-70 disabled:hover:scale-100"
           >
-            Send Request
+            {status === 'sending' ? 'Sending…' : 'Send Request'}
             <ArrowRight aria-hidden strokeWidth={2} className="h-4 w-4" />
           </button>
 
-          {submitted && (
-            <p
-              role="status"
-              className="rounded-[12px] border-[1.5px] border-dashed border-line bg-surface-mute px-4 py-3 font-body text-[13px] leading-[1.5] text-body"
-            >
-              This form is not connected yet, so nothing has been sent. The address enquiries should
-              go to is still to be confirmed.
-            </p>
-          )}
+          <EnquiryStatusNote status={status} />
         </form>
       </dialog>
     </section>
