@@ -1,5 +1,6 @@
 import ReactLenis from 'lenis/react'
 import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom'
+import { PrivacyConsentProvider } from './components/site/PrivacyConsent'
 import Home from './pages/Home'
 import NewHome from './pages/NewHome'
 import Home2 from './pages/Home2'
@@ -24,6 +25,7 @@ import NotFoundPage from './pages/inner/NotFoundPage'
 
 export default function App() {
   return (
+    <PrivacyConsentProvider>
     <ReactLenis root>
       <BrowserRouter>
         <Routes>
@@ -63,5 +65,6 @@ export default function App() {
         </Routes>
       </BrowserRouter>
     </ReactLenis>
+    </PrivacyConsentProvider>
   )
 }

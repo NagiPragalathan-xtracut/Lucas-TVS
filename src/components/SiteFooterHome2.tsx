@@ -46,7 +46,7 @@ const COLUMNS: { heading: string; links: { label: string; href: string; external
   },
 ]
 
-const LEGAL = ['LinkedIn', 'YouTube', 'X', 'Privacy', 'Terms']
+const SOCIAL = ['LinkedIn', 'YouTube', 'X']
 
 /**
  * Home2-only replacement for `SiteFooter`. Per the Sep-11 content review:
@@ -136,7 +136,7 @@ export function SiteFooterHome2() {
             © 2026 Lucas-TVS Limited · All rights reserved
           </p>
           <ul className="flex flex-wrap items-center gap-x-4 gap-y-2">
-            {LEGAL.map((item) => (
+            {SOCIAL.map((item) => (
               <li key={item}>
                 <a
                   href="#"

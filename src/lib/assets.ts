@@ -25,16 +25,16 @@ import heroSlideAutomotive from '../assets/Hero/slide1.mp4'
 import heroSlideIndustrial from '../assets/Hero/slide2.mp4'
 import heroSlideDefenceAerospace from '../assets/Hero/slide3.mp4'
 
-// Hero — Home3's re-shot Industrial and Defence clips, per the 16 Sep
-// review. Industrial drops the manufacturing / assembly animation for IoT
-// connectivity, and Defence drops the space and satellite imagery (there is
-// no space capability today) for land, water and sea. Automotive was
+// Hero — Industry page Industrial and Defence clips. The Industrial industry
+// page uses the supplied connected-operations loop; Defence drops the space
+// and satellite imagery (there is no space capability today) for land, water
+// and sea. Automotive was
 // explicitly kept as it stands, so there is no `h3slide1` — Home3 goes on
 // using `heroSlideAutomotive` above.
 //
 // Separate exports rather than repointing the three above, because Home2
 // still runs the original set and must not move.
-import heroSlideIndustrialHome3 from '../assets/Hero/h3slide2.mp4'
+import heroSlideIndustrialHome3 from '../assets/Hero/industrial-connected-operations-v2.mp4'
 // 30 Sep: Defence replaced — armoured vehicles and troops on a harbour
 // apron at dusk, a transport aircraft overhead, warships alongside. H.264
 // 1920x1080 at 24fps like the others, 3.5 MB. It is a 4-second clip where

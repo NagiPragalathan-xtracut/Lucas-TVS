@@ -48,10 +48,6 @@ const COLUMNS: { heading: string; links: { label: string; href: string; external
   },
 ]
 
-// Social links come from SOCIAL_LINKS (lib/routes.ts); these two are
-// still placeholders until the policy pages exist.
-const LEGAL = ['Privacy', 'Terms']
-
 /**
  * Home3-only replacement for `SiteFooter`. Per the Sep-11 content review:
  * carries the INEL R&D Tech Center address (phone/email are still
@@ -130,16 +126,6 @@ export function SiteFooterHome3() {
                   className="font-sans text-[11.6px] leading-[1.23] text-black transition-colors hover:text-green"
                 >
                   {item.label}
-                </a>
-              </li>
-            ))}
-            {LEGAL.map((item) => (
-              <li key={item}>
-                <a
-                  href="#"
-                  className="font-sans text-[11.6px] leading-[1.23] text-black transition-colors hover:text-green"
-                >
-                  {item}
                 </a>
               </li>
             ))}

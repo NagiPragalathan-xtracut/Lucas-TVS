@@ -3,10 +3,6 @@ import { logoLucasTvsFooter } from '../../lib/assets'
 import { FOOTER_COLUMNS, ROUTES, SOCIAL_LINKS } from '../../lib/routes'
 import { FooterContactCard } from './FooterContactCard'
 
-// Social links come from SOCIAL_LINKS (lib/routes.ts); these two are
-// still placeholders until the policy pages exist.
-const LEGAL = ['Privacy', 'Terms']
-
 /**
  * Footer for the inner pages.
  *
@@ -104,16 +100,6 @@ export function SiteFooter() {
                   className="font-sans text-[11.6px] leading-[1.23] text-black transition-colors hover:text-green"
                 >
                   {item.label}
-                </a>
-              </li>
-            ))}
-            {LEGAL.map((item) => (
-              <li key={item}>
-                <a
-                  href="#"
-                  className="font-sans text-[11.6px] leading-[1.23] text-black transition-colors hover:text-green"
-                >
-                  {item}
                 </a>
               </li>
             ))}

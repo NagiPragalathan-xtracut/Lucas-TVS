@@ -1,6 +1,9 @@
-import { useId, type ReactNode } from 'react'
+import { useId, useState, type ReactNode } from 'react'
+import { Select as BaseSelect } from '@base-ui/react/select'
+import { ChevronDown, Settings } from 'lucide-react'
 import { EnquiryStatusNote } from '../../components/site/EnquiryStatusNote'
 import { PageShell } from '../../components/site/PageShell'
+import { usePrivacyConsent } from '../../components/site/PrivacyConsent'
 import {
   Eyebrow,
   IconChat,
@@ -54,7 +57,9 @@ const FIELD =
  * green photo cards on a pale wave backdrop. See `ReachCard`.
  */
 export default function ContactPage() {
-  const { status, onSubmit } = useEnquiry('Contact page')
+  const [industry, setIndustry] = useState('Automotive')
+  const { status, onSubmit } = useEnquiry('Contact page', () => setIndustry('Automotive'))
+  const { externalContentAllowed, openPrivacyChoices } = usePrivacyConsent()
 
   return (
     <PageShell title="Contact Us">
@@ -106,16 +111,7 @@ export default function ContactPage() {
               </Field>
             </div>
 
-            <Field label="Industry">
-              {(id) => (
-                <select id={id} name="industry" className={`${FIELD} appearance-none`}>
-                  <option>Automotive</option>
-                  <option>Industrial</option>
-                  <option>Defence &amp; Aerospace</option>
-                  <option>Other</option>
-                </select>
-              )}
-            </Field>
+            <IndustrySelect value={industry} onChange={setIndustry} />
 
             <Field label="How can we help?">
               {(id) => (
@@ -173,14 +169,29 @@ export default function ContactPage() {
                 it grows into the rest of the column. The frame is absolutely
                 placed so it always fills the box, whatever height that is. */}
             <div className="relative h-[300px] w-full overflow-hidden rounded-[24px] border-[1.5px] border-line-soft bg-surface-mute lg:h-auto lg:min-h-[300px] lg:flex-1">
-              <iframe
-                src={MAP_EMBED}
-                title="Map — INEL R&D Tech Center, SIPCOT Industrial Complex, Hosur"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                allowFullScreen
-                className="absolute inset-0 h-full w-full border-0"
-              />
+              {externalContentAllowed ? (
+                <iframe
+                  src={MAP_EMBED}
+                  title="Map — INEL R&D Tech Center, SIPCOT Industrial Complex, Hosur"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  allowFullScreen
+                  className="absolute inset-0 h-full w-full border-0"
+                />
+              ) : (
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-6 text-center">
+                  <p className="max-w-[320px] font-body text-[14px] leading-[1.5] text-body">
+                    Google Maps is hidden until you allow optional external content.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={openPrivacyChoices}
+                    className="rounded-full border border-green-deep px-5 py-2 font-body text-[13px] font-medium text-green-deep transition-colors hover:bg-lime-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-deep"
+                  >
+                    Privacy choices
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -299,6 +310,50 @@ function Field({ label, children }: { label: string; children: (id: string) => R
       </label>
       {children(id)}
     </div>
+  )
+}
+
+const INDUSTRY_OPTIONS = ['Automotive', 'Industrial', 'Defence & Aerospace', 'Other']
+
+function IndustrySelect({ value, onChange }: { value: string; onChange: (value: string) => void }) {
+  return (
+    <BaseSelect.Root value={value} onValueChange={(next) => onChange((next as string | null) ?? '')} modal={false}>
+      <input type="hidden" name="industry" value={value} />
+      <BaseSelect.Trigger
+        aria-label={value ? `Industry: ${value}` : 'Select Industry'}
+        className="group flex w-full cursor-pointer items-center gap-3 rounded-[16px] border border-line bg-white/85 px-3.5 py-3.5 text-left backdrop-blur-sm transition-[border-color,box-shadow] duration-200 outline-none hover:border-green-deep/40 focus-visible:border-green-deep focus-visible:shadow-[0_0_0_3px_rgba(35,143,56,0.18)] data-[popup-open]:border-green-deep data-[popup-open]:shadow-[0_0_0_3px_rgba(35,143,56,0.12)]"
+      >
+        <span aria-hidden className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[11px] bg-lime-tint text-green-deep">
+          <Settings strokeWidth={1.8} className="h-[20px] w-[20px]" />
+        </span>
+        <span className="flex min-w-0 grow flex-col">
+          <span className="font-display text-[16px] leading-[1.25] font-semibold text-ink">Select Industry</span>
+          <span className="truncate font-body text-[12.5px] leading-[1.4] font-medium text-green-deep">{value}</span>
+        </span>
+        <ChevronDown
+          aria-hidden
+          strokeWidth={2}
+          className="h-[18px] w-[18px] shrink-0 text-ink transition-transform duration-200 group-data-[popup-open]:rotate-180"
+        />
+      </BaseSelect.Trigger>
+      <BaseSelect.Portal>
+        <BaseSelect.Positioner alignItemWithTrigger={false} sideOffset={8} className="z-50 outline-none">
+          <BaseSelect.Popup className="min-w-[var(--anchor-width)] origin-[var(--transform-origin)] rounded-[16px] border border-line-soft bg-white p-1.5 shadow-[0_18px_44px_rgba(0,0,0,0.12)] outline-none transition-[opacity,transform] duration-150 data-[ending-style]:scale-95 data-[ending-style]:opacity-0 data-[starting-style]:scale-95 data-[starting-style]:opacity-0">
+            <BaseSelect.List>
+              {INDUSTRY_OPTIONS.map((option) => (
+                <BaseSelect.Item
+                  key={option}
+                  value={option}
+                  className="flex cursor-pointer items-center rounded-[10px] px-3.5 py-2.5 font-body text-[14px] text-ink outline-none select-none data-[highlighted]:bg-lime-tint data-[selected]:bg-lime-tint"
+                >
+                  <BaseSelect.ItemText>{option}</BaseSelect.ItemText>
+                </BaseSelect.Item>
+              ))}
+            </BaseSelect.List>
+          </BaseSelect.Popup>
+        </BaseSelect.Positioner>
+      </BaseSelect.Portal>
+    </BaseSelect.Root>
   )
 }
 
