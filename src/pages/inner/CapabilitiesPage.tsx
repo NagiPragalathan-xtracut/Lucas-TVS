@@ -1,5 +1,5 @@
 import { PageShell } from '../../components/site/PageShell'
-import { Eyebrow, Heading, Pill, SplitHeader, StackHeader } from '../../components/site/design'
+import { Eyebrow, Heading, SplitHeader, StackHeader } from '../../components/site/design'
 import {
   BODY_GAP,
   Band,
@@ -58,14 +58,6 @@ export default function CapabilitiesPage() {
         title="Capabilities That Drive"
         accent="Innovation."
         intro="From concept to deployment, our engineering services span embedded systems, electronics, software, safety and validation."
-        actions={
-          <>
-            <Pill to={ROUTES.contact}>Talk to Engineering</Pill>
-            <Pill to={ROUTES.products} tone="outline">
-              View Products
-            </Pill>
-          </>
-        }
       />
 
       <Band>

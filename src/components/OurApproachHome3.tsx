@@ -94,8 +94,8 @@ export function OurApproachHome3() {
         />
 
         <div className="relative grid gap-8 px-5 pt-12 pb-10 sm:gap-10 sm:px-8 sm:pt-[72px] sm:pb-[72px] lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-14 lg:px-12 lg:pt-[84px] lg:pb-[90px]">
-          {/* Copy — holds its place while the stack plays through. */}
-          <div className="lg:sticky lg:top-28 lg:self-start">
+          {/* Center the copy in the viewport while the desktop stack plays through. */}
+          <div className="lg:sticky lg:top-0 lg:flex lg:h-dvh lg:flex-col lg:justify-center lg:self-start">
             <p className="font-sans text-[13px] font-semibold tracking-[3px] text-white/85 uppercase lg:text-[14px]">
               Our Engineering Approach
             </p>
