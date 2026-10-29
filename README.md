@@ -1,4 +1,4 @@
-# Lucas-TVS — marketing site       
+# Lucas-TVS — marketing site        
        
 Implementation of the Figma design   
 [`lucas-TVS` → node `190:74`](https://www.figma.com/design/UjQxqsK3d9TNprVmkDoH3g/lucas-TVS?node-id=190-74&m=dev)
