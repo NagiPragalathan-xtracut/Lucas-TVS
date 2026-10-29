@@ -121,9 +121,9 @@ export default function CapabilitiesPage() {
                   alt={product.name}
                   decoding="async"
                   loading="lazy"
-                  width={640}
-                  height={480}
-                  className="aspect-[4/3] w-full object-cover"
+                  width={1448}
+                  height={1086}
+                  className="aspect-[4/3] w-full object-contain"
                 />
               </span>
               <span className="px-1 pt-1 font-mono text-[11px] tracking-[0.08em] text-green-deep uppercase">

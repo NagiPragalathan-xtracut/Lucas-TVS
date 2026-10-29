@@ -140,12 +140,12 @@ import logoIndeon from '../assets/logo-indeon.webp'
 // Products delivered through the engineering service offerings (14 Oct),
 // cropped from the client's product sheet and set on 640x480 plates of
 // each photo's own background.
-import svcBms from '../assets/ServiceProducts/bms.webp'
-import svcDcDc from '../assets/ServiceProducts/dc-dc-converter.webp'
-import svcObc from '../assets/ServiceProducts/onboard-charger.webp'
-import svcInverter from '../assets/ServiceProducts/traction-inverter.webp'
-import svcMotorController from '../assets/ServiceProducts/integrated-motor-controller.webp'
-import svcVcu from '../assets/ServiceProducts/vehicle-control-unit.webp'
+import svcBms from '../assets/ServiceProducts/bms-hd-v2.png'
+import svcDcDc from '../assets/ServiceProducts/dc-dc-converter-hd-v2.png'
+import svcObc from '../assets/ServiceProducts/onboard-charger-hd.png'
+import svcInverter from '../assets/ServiceProducts/traction-inverter-hd-v2.png'
+import svcMotorController from '../assets/ServiceProducts/integrated-motor-controller-hd.png'
+import svcVcu from '../assets/ServiceProducts/vehicle-control-unit-hd.png'
 
 // Defence & Aerospace › "Defence Electronics" solution photo (14 Oct).
 import defenceElectronics from '../assets/defence-electronics.webp'

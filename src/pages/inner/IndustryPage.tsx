@@ -54,14 +54,6 @@ export default function IndustryPage() {
         title={industry.title}
         accent={industry.accent}
         intro={industry.intro}
-        actions={
-          <>
-            <Pill to={ROUTES.contact}>Talk to Engineering</Pill>
-            <Pill to={ROUTES.capabilities} tone="outline">
-              Explore Capabilities
-            </Pill>
-          </>
-        }
         below={
           <SectorPills
             items={INDUSTRIES.map((i) => ({ label: i.label, to: i.to, current: i.slug === industry.slug }))}

@@ -160,7 +160,7 @@ export default function CareersPage() {
         </ul>
       </Band>
 
-      <div className="pb-10 lg:pb-16">
+      <div className="pt-10 pb-10 lg:pt-16 lg:pb-16">
         <DarkBand>
           <SplitHeader
             dark
