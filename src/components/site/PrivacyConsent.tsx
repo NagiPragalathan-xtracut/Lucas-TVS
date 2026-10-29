@@ -1,7 +1,10 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
 import { ShieldCheck } from 'lucide-react'
 
+export const PRIVACY_POLICY_URL = 'https://lucas-tvs.com/privacy-policy/'
+
 const STORAGE_KEY = 'lucas-tvs-privacy-choice-v1'
+const BANNER_DELAY_MS = 6000
 const GOOGLE_FONTS_ID = 'lucas-tvs-google-fonts'
 const GOOGLE_FONTS_URL =
   'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:wght@600&family=Instrument+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Open+Sans:wght@400;600&family=Poppins:wght@400;500;600&display=swap'
@@ -29,7 +32,15 @@ function readChoice(): boolean | null {
 
 export function PrivacyConsentProvider({ children }: { children: ReactNode }) {
   const [choice, setChoice] = useState<boolean | null>(readChoice)
-  const [open, setOpen] = useState(() => readChoice() === null)
+  const [open, setOpen] = useState(false)
+
+  // First-time visitors see the banner after a short delay, not on load.
+  // Cleared once a choice exists, so an early answer is never re-prompted.
+  useEffect(() => {
+    if (choice !== null) return
+    const timer = window.setTimeout(() => setOpen(true), BANNER_DELAY_MS)
+    return () => window.clearTimeout(timer)
+  }, [choice])
 
   useEffect(() => {
     if (choice !== true) {
@@ -79,7 +90,16 @@ export function PrivacyConsentProvider({ children }: { children: ReactNode }) {
                   Cookie and privacy choices
                 </h2>
                 <p id="privacy-description" className="mt-1 font-body text-[11px] leading-[1.4] text-body sm:text-[12px]">
-                  We save your choice. Optional Google Fonts and Maps may share data with Google and set cookies. Change this any time using Privacy choices.
+                  We save your choice. Optional Google Fonts and Maps may share data with Google and set cookies. Change this any time using Privacy choices. Read our{' '}
+                  <a
+                    href={PRIVACY_POLICY_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium text-green-deep underline underline-offset-2 hover:text-ink"
+                  >
+                    Privacy Policy
+                  </a>
+                  .
                 </p>
               </div>
             </div>
@@ -101,7 +121,7 @@ export function PrivacyConsentProvider({ children }: { children: ReactNode }) {
             </div>
           </div>
         </section>
-      ) : (
+      ) : choice === null ? null : (
         <button
           type="button"
           onClick={openPrivacyChoices}
