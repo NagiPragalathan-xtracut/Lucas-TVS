@@ -1,6 +1,5 @@
 import { useState, type CSSProperties } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
-import { Button } from './primitives'
 import { cx } from '../lib/cx'
 import {
   heroBgEmbeddedSoftware,
@@ -55,7 +54,7 @@ const riseIn = (reduceMotion: boolean | null, delay: number) =>
  * — the homepage sectors carousel's orbit and glowing dot, laid flat — with
  * the active card at the crest, ringed in lime, its bar filling over the
  * slide's run. No prev/next arrows (asked to remove them).
- * Copy, CTA and the BAT card above it are unchanged.
+ * Copy and the BAT investment card remain above the slide picker.
  *
  * Timing is driven by the progress animation itself: an always-rendered
  * timer element runs the same keyframes as the visible bar and its
@@ -174,8 +173,8 @@ export function HeroHome3() {
             Centred, not top-anchored: the padding reserves exactly the band
             the floating header occupies (top-0 + pt-4 + 75px of bar = 91px),
             then `justify-center` splits what's left evenly, so the gap from
-            the header down to the headline matches the gap from the CTA to
-            the bottom of the video. `lg:block` used to override the flex
+            the header down to the headline matches the gap from the investment
+            card to the bottom of the video. `lg:block` used to override the flex
             centring, which is what left the headline pinned 13px under the
             header with 311px of dead space below it. */}
         <div className="shell pointer-events-none absolute inset-0 flex flex-col justify-center pt-24 pb-20 lg:pt-[112px] lg:pb-[196px] xl:pt-[128px] xl:pb-[210px]">
@@ -208,16 +207,12 @@ export function HeroHome3() {
               </p>
             </motion.div>
 
-            <motion.div {...riseIn(reduceMotion, 0.2)} className="order-2 mt-6 self-start lg:mt-8">
-              <Button href="/contact">Talk to Engineering</Button>
-            </motion.div>
-
             {/* Strategic investment (13 Oct): BAT, Germany, called out under
-                the CTA. A real <fieldset>/<legend> so the eyebrow breaks the
+                the headline. A real <fieldset>/<legend> so the eyebrow breaks the
                 top border natively — the card is translucent, so there is
                 no solid fill to mask the line with. 15 Oct: no longer a
                 link, and scaled down overall. */}
-            <motion.div {...riseIn(reduceMotion, 0.3)} className="order-3 mt-6 self-start lg:mt-8">
+            <motion.div {...riseIn(reduceMotion, 0.2)} className="order-2 mt-6 self-start lg:mt-8">
               <fieldset
                 aria-label="Strategic investment: Bavarian Automotive Technologies GmbH, Germany"
                 className="flex items-center gap-3.5 rounded-[12px] border border-lime/40 bg-black/30 px-4 pt-1.5 pb-3.5 backdrop-blur-sm sm:gap-4 sm:px-5 sm:pb-4"
