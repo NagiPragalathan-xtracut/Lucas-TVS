@@ -18,7 +18,7 @@ import { cx } from '../../lib/cx'
    reference's sizes, weights and tracking — so the pages match the drawing
    in every measurement and still match the homepage in voice. Switching to
    the reference faces is two font-family changes in index.css plus the
-   Google Fonts link; nothing here would need to move.
+   @fontsource imports at its top; nothing here would need to move.
 
    Colours: the reference's hexes are close approximations of the brand
    tokens (#B8E62E ≈ lime, #2E7D1F ≈ green-deep, #F5F5F3 ≈ surface-mute,

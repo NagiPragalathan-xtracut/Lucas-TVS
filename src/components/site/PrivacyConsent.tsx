@@ -5,9 +5,6 @@ export const PRIVACY_POLICY_URL = 'https://lucas-tvs.com/privacy-policy/'
 
 const STORAGE_KEY = 'lucas-tvs-privacy-choice-v1'
 const BANNER_DELAY_MS = 6000
-const GOOGLE_FONTS_ID = 'lucas-tvs-google-fonts'
-const GOOGLE_FONTS_URL =
-  'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:wght@600&family=Instrument+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Open+Sans:wght@400;600&family=Poppins:wght@400;500;600&display=swap'
 
 type PrivacyContextValue = {
   externalContentAllowed: boolean
@@ -40,19 +37,6 @@ export function PrivacyConsentProvider({ children }: { children: ReactNode }) {
     if (choice !== null) return
     const timer = window.setTimeout(() => setOpen(true), BANNER_DELAY_MS)
     return () => window.clearTimeout(timer)
-  }, [choice])
-
-  useEffect(() => {
-    if (choice !== true) {
-      document.getElementById(GOOGLE_FONTS_ID)?.remove()
-      return
-    }
-    if (document.getElementById(GOOGLE_FONTS_ID)) return
-    const link = document.createElement('link')
-    link.id = GOOGLE_FONTS_ID
-    link.rel = 'stylesheet'
-    link.href = GOOGLE_FONTS_URL
-    document.head.appendChild(link)
   }, [choice])
 
   const saveChoice = (allowed: boolean) => {
@@ -90,7 +74,7 @@ export function PrivacyConsentProvider({ children }: { children: ReactNode }) {
                   Cookie and privacy choices
                 </h2>
                 <p id="privacy-description" className="mt-1 font-body text-[11px] leading-[1.4] text-body sm:text-[12px]">
-                  We save your choice. Optional Google Fonts and Maps may share data with Google and set cookies. Change this any time using Privacy choices. Read our{' '}
+                  We save your choice. Optional Google Maps may share data with Google and set cookies. Change this any time using Privacy choices. Read our{' '}
                   <a
                     href={PRIVACY_POLICY_URL}
                     target="_blank"
