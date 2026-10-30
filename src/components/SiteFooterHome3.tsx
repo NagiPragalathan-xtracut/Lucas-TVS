@@ -1,8 +1,8 @@
 import { AppLink } from './AppLink'
 import { logoLucasTvsFooter } from '../lib/assets'
-import { SOCIAL_LINKS } from '../lib/routes'
+import { ROUTES, SOCIAL_LINKS } from '../lib/routes'
 import { FooterContactCard } from './site/FooterContactCard'
-import { PRIVACY_POLICY_URL } from './site/PrivacyConsent'
+import { usePrivacyConsent } from './site/PrivacyConsent'
 
 const COLUMNS: { heading: string; links: { label: string; href: string; external?: boolean }[] }[] = [
   {
@@ -63,6 +63,8 @@ const COLUMNS: { heading: string; links: { label: string; href: string; external
  * services-only, so products aren't hosted here.
  */
 export function SiteFooterHome3() {
+  const { openPrivacyChoices } = usePrivacyConsent()
+
   return (
     <footer className="relative overflow-hidden border-t-2 border-line bg-white pt-8 pb-10 lg:pt-[26px]">
       <div className="shell relative">
@@ -129,14 +131,20 @@ export function SiteFooterHome3() {
               24px-tall hit areas, per WCAG 2.5.8 (launch audit). */}
           <p className="font-mono text-[12px] leading-[1.29] tracking-[0.98px] text-black">
             © 2026 Lucas-TVS Limited · All rights reserved ·{' '}
-            <a
-              href={PRIVACY_POLICY_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+            <AppLink
+              href={ROUTES.privacy}
               className="inline-flex min-h-6 items-center underline-offset-2 transition-colors hover:text-green-ink hover:underline"
             >
               Privacy Policy
-            </a>
+            </AppLink>{' '}
+            ·{' '}
+            <button
+              type="button"
+              onClick={openPrivacyChoices}
+              className="cursor-pointer underline-offset-2 transition-colors hover:text-green hover:underline"
+            >
+              Cookie Settings
+            </button>
           </p>
           <ul className="flex flex-wrap items-center gap-x-4 gap-y-2">
             {SOCIAL_LINKS.map((item) => (

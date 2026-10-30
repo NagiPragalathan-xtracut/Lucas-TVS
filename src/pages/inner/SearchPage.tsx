@@ -41,6 +41,7 @@ const INDEX: Entry[] = [
     : []),
   { id: 'p:careers', kind: 'Page', title: 'Careers', to: ROUTES.careers, excerpt: 'Join a young software & product-engineering division inside Lucas-TVS.', keywords: 'jobs roles hiring openings work' },
   { id: 'p:contact', kind: 'Page', title: 'Contact Us', to: ROUTES.contact, excerpt: 'Tell us about your programme and we’ll route it to the engineering team that owns it.', keywords: 'enquiry address phone email hosur' },
+  { id: 'p:privacy', kind: 'Page', title: 'Privacy Policy', to: ROUTES.privacy, excerpt: 'How we collect, use, and share your personal information, and how to manage your privacy settings.', keywords: 'privacy cookies personal data gdpr rights consent' },
   { id: 'p:sustainability', kind: 'Page', title: 'Sustainability', to: ROUTES.sustainability, excerpt: 'For the Lucas-TVS group’s sustainability commitments and reporting, visit the corporate site.', keywords: 'environment esg' },
   ...INDUSTRIES.map((i) => ({
     id: `i:${i.slug}`,

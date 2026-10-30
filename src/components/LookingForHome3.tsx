@@ -7,7 +7,6 @@ import { solutionsCtaBg } from '../lib/assets'
 import { ROUTES } from '../lib/routes'
 import { FIELD_LIMITS, useEnquiry } from '../lib/useEnquiry'
 import { EnquiryStatusNote } from './site/EnquiryStatusNote'
-import { PRIVACY_POLICY_URL } from './site/PrivacyConsent'
 
 const SOLUTIONS = ['Product', 'System', 'Engineering Service', 'Technology']
 const INDUSTRIES = ['Automotive', 'Industrial', 'Defence & Aerospace', 'Not sure yet']
@@ -264,18 +263,17 @@ export function LookingForHome3() {
 
           <EnquiryStatusNote status={status} />
 
-          {/* Same consent line as the Contact form (launch audit). */}
+          {/* Closes the dialog on the way out: unmounting it doesn't fire
+              its close event, which would leave Lenis stopped. */}
           <p className="font-body text-[13px] leading-[1.5] text-body">
             By submitting you agree to our{' '}
-            <a
-              href={PRIVACY_POLICY_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to={ROUTES.privacy}
+              onClick={closeForm}
               className="font-medium text-green-ink underline underline-offset-2 hover:text-ink"
             >
               Privacy Policy
-              <span className="sr-only"> (opens in a new tab)</span>
-            </a>
+            </Link>
             .
           </p>
         </form>

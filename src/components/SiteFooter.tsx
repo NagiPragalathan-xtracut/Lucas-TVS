@@ -1,6 +1,7 @@
 import { Button } from './primitives'
 import { logoLucasTvsFooter } from '../lib/assets'
-import { PRIVACY_POLICY_URL } from './site/PrivacyConsent'
+import { AppLink } from './AppLink'
+import { ROUTES } from '../lib/routes'
 
 const COLUMNS = [
   {
@@ -97,14 +98,9 @@ export function SiteFooter() {
         <div className="mt-4 flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
           <p className="font-mono text-[10px] leading-[1.29] tracking-[0.98px] text-black">
             © 2026 Lucas-TVS Limited · All rights reserved ·{' '}
-            <a
-              href={PRIVACY_POLICY_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline-offset-2 transition-colors hover:text-green hover:underline"
-            >
+            <AppLink href={ROUTES.privacy} className="underline-offset-2 transition-colors hover:text-green hover:underline">
               Privacy Policy
-            </a>
+            </AppLink>
           </p>
           <ul className="flex flex-wrap items-center gap-x-4 gap-y-2">
             {SOCIAL.map((item) => (

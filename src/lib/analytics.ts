@@ -1,74 +1,92 @@
 /**
- * Google Analytics 4 under Consent Mode v2.
+ * Google Analytics 4, behind the "Performance cookies" consent.
  *
- * Nothing loads until the visitor allows optional services in the privacy
- * banner, and nothing loads at all until a measurement ID is configured:
- * set VITE_GA4_ID (e.g. "G-XXXXXXXXXX") in the Vercel project's environment
- * variables and redeploy. Page views on client-side navigation come from
- * GA4's enhanced measurement ("page changes based on browser history
- * events"), which is on by default for a web stream, so the router needs no
- * hook of its own.
+ * Nothing loads until a visitor allows Performance cookies in the privacy
+ * choices (components/site/PrivacyConsent.tsx), and never while their
+ * browser sends Do Not Track / Global Privacy Control. Withdrawing consent
+ * switches GA off with its own kill flag and deletes its cookies.
+ *
+ * Set the GA4 Measurement ID ("G-XXXXXXXXXX") to switch it on. While this
+ * is empty nothing loads at all, and the preferences panel lists no
+ * analytics tool, so the site never claims tracking it doesn't do.
  */
-
-const GA4_ID = import.meta.env.VITE_GA4_ID as string | undefined
-const SCRIPT_ID = 'lucas-tvs-gtag'
-
-type Gtag = (...args: unknown[]) => void
+export const GA_MEASUREMENT_ID = ''
 
 declare global {
   interface Window {
     dataLayer?: unknown[]
-    gtag?: Gtag
+    gtag?: (...args: unknown[]) => void
   }
 }
 
-// gtag.js expects the `arguments` object itself on the data layer, not an
-// array copy — pushing a rest-parameter array silently drops every command.
-const gtag: Gtag = function () {
+let loaded = false
+
+export function setAnalyticsEnabled(enabled: boolean) {
+  if (!GA_MEASUREMENT_ID) return
+  // GA's documented opt-out: while set, gtag.js sends nothing.
+  ;(window as unknown as Record<string, boolean>)[`ga-disable-${GA_MEASUREMENT_ID}`] = !enabled
+
+  if (!enabled) {
+    clearAnalyticsCookies()
+    return
+  }
+  if (loaded) return
+  loaded = true
+
   window.dataLayer = window.dataLayer ?? []
-  // oxlint-disable-next-line prefer-rest-params
-  window.dataLayer.push(arguments)
-}
-
-/** Applies the visitor's privacy choice; safe to call on every change. */
-export function applyAnalyticsConsent(allowed: boolean) {
-  if (!GA4_ID) return
-
-  if (!allowed) {
-    // Already loaded this visit (consent withdrawn): tell gtag to stop
-    // storing anything. Not loaded: there is nothing to do.
-    if (window.gtag) {
-      window.gtag('consent', 'update', { analytics_storage: 'denied' })
-    }
-    return
+  // gtag.js reads the `arguments` object itself, not an array of them.
+  window.gtag = function gtag() {
+    window.dataLayer!.push(arguments)
   }
-
-  if (document.getElementById(SCRIPT_ID)) {
-    window.gtag?.('consent', 'update', { analytics_storage: 'granted' })
-    return
-  }
-
-  window.gtag = gtag
-  gtag('consent', 'default', {
+  window.gtag('consent', 'default', {
+    analytics_storage: 'granted',
     ad_storage: 'denied',
     ad_user_data: 'denied',
     ad_personalization: 'denied',
-    analytics_storage: 'granted',
   })
-  gtag('js', new Date())
-  gtag('config', GA4_ID, { anonymize_ip: true })
+  window.gtag('js', new Date())
+  // Page views are sent by AnalyticsTracker on each route change.
+  window.gtag('config', GA_MEASUREMENT_ID, { send_page_view: false })
 
   const script = document.createElement('script')
-  script.id = SCRIPT_ID
   script.async = true
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(GA4_ID)}`
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`
   document.head.appendChild(script)
 }
 
+export function trackPageView(path: string) {
+  if (!loaded) return
+  window.gtag?.('event', 'page_view', {
+    page_path: path,
+    page_location: window.location.href,
+    page_title: document.title,
+  })
+}
+
+// GA's cookies (_ga, _ga_<id>, _gid) are set on this host or a parent
+// domain; expire them on each, since a cookie only clears on the domain
+// it was set for.
+function clearAnalyticsCookies() {
+  const names = document.cookie
+    .split(';')
+    .map((c) => c.split('=')[0].trim())
+    .filter((name) => name.startsWith('_ga') || name === '_gid')
+  if (names.length === 0) return
+
+  const parts = window.location.hostname.split('.')
+  const domains = ['']
+  for (let i = 0; i < parts.length - 1; i++) domains.push(`; domain=.${parts.slice(i).join('.')}`)
+
+  for (const name of names) {
+    for (const domain of domains) document.cookie = `${name}=; Max-Age=0; path=/${domain}`
+  }
+}
+
 /**
- * Records a GA4 event when analytics is running; a no-op otherwise. Used
- * for the enquiry form's `generate_lead` conversion.
+ * Records a GA4 event once analytics is running; a no-op otherwise. Used
+ * for the enquiry form's `generate_lead` conversion (launch audit).
  */
 export function trackEvent(name: string, params?: Record<string, unknown>) {
+  if (!loaded) return
   window.gtag?.('event', name, params)
 }

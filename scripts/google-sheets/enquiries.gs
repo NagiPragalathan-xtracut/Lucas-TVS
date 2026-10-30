@@ -3,7 +3,12 @@
  *
  * Both enquiry forms on the site (the Contact page and the homepage
  * "Let's Get Started" popup) POST here; each submission becomes one row
- * in the enquiries sheet. The site side is src/lib/useEnquiry.ts.
+ * in the enquiries sheet, and an email to NOTIFY_TO. The site side is
+ * src/lib/useEnquiry.ts.
+ *
+ * The email goes out through Google's MailApp as the account that
+ * deployed this script: no mail password or third-party service. Free
+ * Gmail accounts can send to 100 recipients a day (Workspace: 1,500).
  *
  * This file is not built or deployed with the site. It lives in the sheet:
  *
@@ -18,9 +23,21 @@
  * After editing this script later, use Deploy → Manage deployments → edit
  * → Version: New version, so the /exec URL stays the same. Editing this
  * file in the repo changes nothing live until someone does exactly that.
+ * If the edit needs a new permission (sending email did), run
+ * sendTestEmail once from the editor first so Google asks for it.
  */
 
 const SHEET_ID = '13eL9yGKPZcvFsfJ_l4jzrYp03V_id39XhIie6KcjZNM'
+
+// Who is told about each enquiry. Several addresses: separate with commas.
+// First is the site's published enquiry contact (COMPANY.email in
+// src/lib/routes.ts); second is the Xtracut team.
+const NOTIFY_TO = 'shrihari.km@lucastvs.co.in, raghul@xtracut.com'
+const SENDER_NAME = 'Lucas TVS Website'
+
+// Bump with every change: doGet reports it, so whether the latest copy is
+// the one deployed can be checked from outside the editor.
+const SCRIPT_VERSION = 4
 
 // Column order in the sheet. `key` is the form field name the site sends.
 const COLUMNS = [
@@ -60,12 +77,95 @@ function doPost(e) {
   } finally {
     lock.releaseLock()
   }
-  return json({ ok: true })
+
+  // The row is the record. If the email fails (no permission yet, quota, a
+  // bad address), the enquiry is still saved and the visitor still gets
+  // their thank-you. `emailed` / `emailError` let a test submission see
+  // whether the email went out without opening the Executions log.
+  let emailed = false
+  let emailError
+  try {
+    notify(p, NOTIFY_TO)
+    emailed = true
+  } catch (err) {
+    emailError = String(err)
+    console.error('Enquiry email not sent: ' + emailError)
+  }
+  return json({ ok: true, emailed: emailed, emailError: emailError })
+}
+
+/**
+ * Run this once from the Apps Script editor (select it, then Run). It makes
+ * Google ask for the "send email" permission, then sends a sample enquiry
+ * to your own address, so nothing reaches NOTIFY_TO while you test.
+ */
+function sendTestEmail() {
+  notify(
+    {
+      source: 'Test from the Apps Script editor',
+      name: 'Test Person',
+      email: Session.getEffectiveUser().getEmail(),
+      phone: '+91 00000 00000',
+      company: 'Test Company',
+      industry: 'Automotive',
+      message: 'This is a test of the enquiry email.\nIt has two lines.',
+      page: 'https://example.com/contact',
+    },
+    Session.getEffectiveUser().getEmail(),
+  )
+}
+
+// One email per enquiry: every filled-in field, "Reply" goes to the
+// visitor, and a link to the sheet.
+function notify(p, to) {
+  const fields = COLUMNS.filter((c) => c.key && text(p[c.key]))
+  const when = Utilities.formatDate(new Date(), 'Asia/Kolkata', 'd MMM yyyy, h:mm a') + ' IST'
+  const sheetUrl = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/edit'
+  const visitor = text(p.email)
+  const subject =
+    'New website enquiry: ' + text(p.name) + (text(p.company) ? ' (' + text(p.company) + ')' : '')
+
+  const body =
+    'New enquiry from the Lucas TVS website, ' + when + '\n\n' +
+    fields.map((c) => c.header + ': ' + text(p[c.key])).join('\n') +
+    '\n\nAll enquiries: ' + sheetUrl
+
+  const rows = fields
+    .map(
+      (c) =>
+        '<tr><td style="padding:6px 16px 6px 0;color:#555;vertical-align:top;white-space:nowrap">' +
+        c.header +
+        '</td><td style="padding:6px 0;color:#111">' +
+        html(text(p[c.key])).replace(/\n/g, '<br>') +
+        '</td></tr>',
+    )
+    .join('')
+  const htmlBody =
+    '<div style="font-family:Arial,sans-serif;font-size:14px;line-height:1.5">' +
+    '<p style="margin:0 0 12px">New enquiry from the Lucas TVS website, ' + when + '</p>' +
+    '<table style="border-collapse:collapse">' + rows + '</table>' +
+    '<p style="margin:16px 0 0">Reply to this email to answer ' + html(text(p.name)) + ' directly. ' +
+    '<a href="' + sheetUrl + '">All enquiries</a></p></div>'
+
+  const message = { to: to, subject: subject, body: body, htmlBody: htmlBody, name: SENDER_NAME }
+  // Only a plausible address becomes Reply-To; a malformed one would make
+  // MailApp reject the whole email.
+  if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(visitor)) message.replyTo = visitor
+  MailApp.sendEmail(message)
+}
+
+// Form text for the email (unlike clean(), no formula guard: it isn't a cell).
+function text(value) {
+  return String(value == null ? '' : value).trim().slice(0, 5000)
+}
+
+function html(s) {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 }
 
 // Opening the /exec URL in a browser shows this — a quick deployment check.
 function doGet() {
-  return json({ ok: true, service: 'Lucas TVS enquiries' })
+  return json({ ok: true, service: 'Lucas TVS enquiries', version: SCRIPT_VERSION })
 }
 
 // The tab the client linked (gid=0), falling back to the first tab.

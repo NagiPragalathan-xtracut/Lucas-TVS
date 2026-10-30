@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react'
 import ReactLenis from 'lenis/react'
 import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom'
+import { AnalyticsTracker } from './components/site/AnalyticsTracker'
 import { PrivacyConsentProvider } from './components/site/PrivacyConsent'
 import Home3 from './pages/Home3'
 
@@ -26,6 +27,7 @@ const ArticlePage = lazy(() => import('./pages/inner/ArticlePage'))
 const CareersPage = lazy(() => import('./pages/inner/CareersPage'))
 const ContactPage = lazy(() => import('./pages/inner/ContactPage'))
 const SearchPage = lazy(() => import('./pages/inner/SearchPage'))
+const PrivacyPolicyPage = lazy(() => import('./pages/inner/PrivacyPolicyPage'))
 const NotFoundPage = lazy(() => import('./pages/inner/NotFoundPage'))
 
 export default function App() {
@@ -66,6 +68,7 @@ export default function App() {
           <Route path="/careers" element={<CareersPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/search" element={<SearchPage />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
 
           {/* Anything else. vercel.json already rewrites all paths to
               index.html, so a deep link to a dead URL reaches this rather
@@ -73,6 +76,9 @@ export default function App() {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
         </Suspense>
+        {/* After <Routes>, so each page has set its title before the
+            page view is sent. Loads nothing without Performance consent. */}
+        <AnalyticsTracker />
       </BrowserRouter>
     </ReactLenis>
     </PrivacyConsentProvider>

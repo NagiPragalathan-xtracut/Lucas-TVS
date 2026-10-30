@@ -132,6 +132,11 @@ const STATIC_META: Record<string, PageMeta> = {
       'Pages, engineering services, technologies, products and insights — searched as you type.',
     noindex: true,
   },
+  '/privacy-policy': {
+    title: 'Privacy Policy',
+    description:
+      'How Lucas-TVS collects, uses and protects personal data on this website, and the cookie choices you can make.',
+  },
 }
 
 const SECTOR_LABEL = { Automotive: 'Automotive', Industrial: 'Industrial', Defence: 'Defence & Aerospace' }
