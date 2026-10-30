@@ -240,7 +240,7 @@ export function HeroHome2() {
                   narrow screens. */}
               <h1 className="max-w-[560px] font-display text-[36px] leading-[1.15] font-semibold text-balance text-white sm:text-[48px] lg:max-w-[780px] lg:text-[56px]">
                 Indian Engineering For The World&rsquo;s{' '}
-                <span className="text-lime">Hardest Problems.</span>
+                <span className="text-lime-light">Hardest Problems.</span>
               </h1>
               {/* The sub-line sets to 1081px on one line, so anything under
                   ~541px forces a third row — 460px was giving three. 600px
@@ -281,7 +281,7 @@ export function HeroHome2() {
               <span
                 className={cx(
                   'font-body text-[11px] transition-colors duration-300',
-                  i === active ? 'text-lime' : 'text-white/40 group-hover:text-white/70',
+                  i === active ? 'text-lime-light' : 'text-white/40 group-hover:text-white/70',
                 )}
               >
                 {slide.no}

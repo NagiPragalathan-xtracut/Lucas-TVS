@@ -523,7 +523,7 @@ function ProductsPanel() {
               >
                 <div className="relative flex flex-1 items-center justify-center p-5">
                   {p.featured && (
-                    <span className="absolute top-4 left-4 z-10 rounded-full border border-lime/70 px-3 py-1 font-body text-[10px] font-semibold tracking-[0.14em] text-lime uppercase">
+                    <span className="absolute top-4 left-4 z-10 rounded-full border border-lime/70 px-3 py-1 font-body text-[10px] font-semibold tracking-[0.14em] text-lime-light uppercase">
                       Featured
                     </span>
                   )}
@@ -607,7 +607,7 @@ function ServicesPanel() {
               className="group flex h-full flex-col rounded-[16px] border border-line-soft bg-white p-5 transition-all duration-300 hover:-translate-y-1 hover:border-line hover:shadow-[0_14px_32px_rgba(0,0,0,0.08)]"
             >
               <span className="grid h-11 w-11 place-items-center rounded-[12px] bg-lime-tint transition-colors duration-300 group-hover:bg-lime">
-                <s.icon aria-hidden strokeWidth={1.7} className="h-[21px] w-[21px] text-green-deep" />
+                <s.icon aria-hidden strokeWidth={1.7} className="h-[21px] w-[21px] text-green-deep transition-colors duration-300 group-hover:text-white" />
               </span>
 
               <p className="mt-5 font-body text-[11px] font-medium tracking-[0.1em] text-green-deep uppercase">
@@ -847,7 +847,7 @@ function SliderArrows({
         className={cx(
           base,
           canNext
-            ? 'border-lime bg-lime text-ink shadow-[0_6px_18px_rgba(179,231,24,0.45)] hover:scale-105'
+            ? 'border-lime bg-lime text-white shadow-[0_6px_18px_rgba(29,122,50,0.45)] hover:scale-105'
             : 'cursor-not-allowed border-line-soft bg-white text-line-strong',
         )}
       >
@@ -1013,7 +1013,7 @@ function IndustryPanel({
                 className={cx(
                   'inline-flex items-center gap-2 rounded-full border px-4 py-2.5 font-body text-[14px] font-medium transition-all duration-300',
                   active
-                    ? 'border-lime bg-lime text-ink'
+                    ? 'border-lime bg-lime text-white'
                     : 'border-line bg-white text-ink hover:border-green-deep',
                 )}
               >
@@ -1259,7 +1259,7 @@ export function SolutionsFinderHome3() {
                   className={cx(
                     'inline-flex items-center gap-2.5 rounded-full border px-5 py-3 font-body text-[14px] font-medium transition-all duration-300',
                     active
-                      ? 'border-lime bg-lime text-ink shadow-[0_6px_18px_rgba(179,231,24,0.45)]'
+                      ? 'border-lime bg-lime text-white shadow-[0_6px_18px_rgba(29,122,50,0.45)]'
                       : 'border-line bg-white text-ink hover:border-green-deep',
                   )}
                 >
@@ -1324,7 +1324,7 @@ export function SolutionsFinderHome3() {
           <div className="flex flex-wrap items-center gap-3 lg:shrink-0">
             <AppLink
               href="/contact"
-              className="inline-flex items-center gap-2.5 rounded-full bg-lime px-6 py-3.5 font-body text-[15px] font-medium text-ink transition-transform duration-300 hover:scale-[1.03]"
+              className="inline-flex items-center gap-2.5 rounded-full bg-lime px-6 py-3.5 font-body text-[15px] font-medium text-white transition-transform duration-300 hover:scale-[1.03]"
             >
               Explore Solutions
               <ArrowRight aria-hidden className="h-[18px] w-[18px]" />

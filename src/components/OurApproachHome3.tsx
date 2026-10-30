@@ -104,7 +104,7 @@ export function OurApproachHome3() {
               Our Engineering Approach
             </p>
             <h2 className="mt-3 max-w-[640px] font-display text-[30px] leading-[1.15] font-medium text-white sm:text-[38px] lg:text-[44px]">
-              From Concept To <span className="text-lime">Lifecycle.</span>
+              From Concept To <span className="text-lime-light">Lifecycle.</span>
             </h2>
             <p className="mt-4 max-w-[620px] font-body text-[14px] leading-[1.5] text-white/75 lg:text-[16px]">
               A comprehensive engineering journey that transforms ideas into
@@ -167,7 +167,7 @@ function useIsDesktop() {
 }
 
 const STEP_CARD =
-  'flex h-[104px] min-w-0 items-center gap-3 rounded-[20px] border border-white/12 bg-black/80 px-4 shadow-[0_0_0_1px_rgba(179,231,24,0.16),0_18px_44px_rgba(0,0,0,0.55),0_0_34px_rgba(179,231,24,0.10)] backdrop-blur-md sm:h-[122px] sm:gap-6 sm:rounded-[22px] sm:px-7 lg:h-[130px] lg:gap-7 lg:px-8'
+  'flex h-[104px] min-w-0 items-center gap-3 rounded-[20px] border border-white/12 bg-black/80 px-4 shadow-[0_0_0_1px_rgba(29,122,50,0.16),0_18px_44px_rgba(0,0,0,0.55),0_0_34px_rgba(29,122,50,0.10)] backdrop-blur-md sm:h-[122px] sm:gap-6 sm:rounded-[22px] sm:px-7 lg:h-[130px] lg:gap-7 lg:px-8'
 
 /** One stage: lime ring + icon, title and line, divider, stage number. */
 function StepContent({ step }: { step: (typeof STEPS)[number] }) {
@@ -176,11 +176,11 @@ function StepContent({ step }: { step: (typeof STEPS)[number] }) {
       {/* Ring, not a filled chip: the reference reads as a hollow lime
           outline with the glow spilling both ways, so the glow is split
           into an outer drop and an inner inset. */}
-      <span className="grid h-[52px] w-[52px] shrink-0 place-items-center rounded-full border-2 border-lime shadow-[0_0_18px_rgba(179,231,24,0.45),inset_0_0_16px_rgba(179,231,24,0.18)] transition-transform duration-300 group-hover:scale-105 sm:h-[72px] sm:w-[72px] lg:h-[78px] lg:w-[78px]">
+      <span className="grid h-[52px] w-[52px] shrink-0 place-items-center rounded-full border-2 border-lime shadow-[0_0_18px_rgba(29,122,50,0.45),inset_0_0_16px_rgba(29,122,50,0.18)] transition-transform duration-300 group-hover:scale-105 sm:h-[72px] sm:w-[72px] lg:h-[78px] lg:w-[78px]">
         <step.icon
           aria-hidden
           strokeWidth={1.75}
-          className="h-[22px] w-[22px] text-lime sm:h-[30px] sm:w-[30px] lg:h-[32px] lg:w-[32px]"
+          className="h-[22px] w-[22px] text-lime-light sm:h-[30px] sm:w-[30px] lg:h-[32px] lg:w-[32px]"
         />
       </span>
 
@@ -196,7 +196,7 @@ function StepContent({ step }: { step: (typeof STEPS)[number] }) {
       <span aria-hidden className="h-[44px] w-px shrink-0 bg-white/20 sm:h-[52px] lg:h-[62px]" />
 
       {/* IBM Plex Mono keeps the slashed zero the reference shows. */}
-      <span className="shrink-0 font-mono text-[26px] leading-none font-bold text-lime sm:text-[38px] lg:text-[44px]">
+      <span className="shrink-0 font-mono text-[26px] leading-none font-bold text-lime-light sm:text-[38px] lg:text-[44px]">
         {step.no}
       </span>
     </>

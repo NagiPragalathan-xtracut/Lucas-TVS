@@ -147,7 +147,7 @@ export function usePrivacyConsent() {
 }
 
 const CHOICE_BUTTON =
-  'min-h-9 rounded-full border border-green-deep bg-lime-tint px-2 py-1.5 font-body sm:px-4 sm:py-2 text-[12px] font-medium text-ink transition-colors hover:bg-lime focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-deep sm:text-[13px]'
+  'min-h-9 rounded-full border border-green-deep bg-lime-tint px-2 py-1.5 font-body sm:px-4 sm:py-2 text-[12px] font-medium text-ink transition-colors hover:bg-lime focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-deep sm:text-[13px] hover:text-white'
 
 function PolicyLink() {
   return (

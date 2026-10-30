@@ -99,7 +99,7 @@ export function IndustriesAnimatedHome3() {
         // Brand green on hover. `group-hover` fires from anywhere on the
         // card (the badge alone is a 32px target on a card that drifts as
         // you scroll); `hover` keeps it lit once the cursor is on the badge.
-        cardIconClassName="group-hover:bg-lime group-hover:text-ink group-hover:ring-lime hover:bg-lime hover:text-ink hover:ring-lime"
+        cardIconClassName="group-hover:bg-lime group-hover:text-white group-hover:ring-lime hover:bg-lime hover:text-white hover:ring-lime"
         viewportHeight="100vh"
         titleSize="clamp(20px, 2.4vw, 36px)"
         // Reduce the scroll time on this section (16 Sep review, tightened

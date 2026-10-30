@@ -13,7 +13,7 @@ export function Careers() {
         <div className="absolute inset-0 bg-black/55" />
 
         <div className="relative px-6 py-16 text-center lg:px-[116px] lg:py-[110px]">
-          <p className="font-sans text-[16px] leading-[1.25] font-medium text-lime">
+          <p className="font-sans text-[16px] leading-[1.25] font-medium text-lime-light">
             Careers
           </p>
 

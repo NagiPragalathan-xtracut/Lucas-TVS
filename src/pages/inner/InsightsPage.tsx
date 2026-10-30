@@ -137,7 +137,7 @@ function FeaturedStory({ insight }: { insight: Insight }) {
         />
       )}
       <span aria-hidden className="absolute inset-0 bg-gradient-to-t from-[rgba(20,22,20,0.95)] via-[rgba(20,22,20,0.6)] to-[rgba(20,22,20,0.2)]" />
-      <span className="relative font-mono text-[12px] text-lime uppercase">{cardLabel(insight)}</span>
+      <span className="relative font-mono text-[12px] text-lime-light uppercase">{cardLabel(insight)}</span>
       <span className="relative font-display text-[24px] leading-[1.2] font-semibold text-white lg:text-[32px]">
         {insight.title}
       </span>

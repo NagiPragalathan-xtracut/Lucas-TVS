@@ -207,7 +207,7 @@ function ReasonCard({ reason }: { reason: (typeof REASONS)[number] }) {
       />
       <span
         aria-hidden
-        className="absolute top-[6%] right-[5.6%] grid aspect-square w-[13.4%] place-items-center rounded-full bg-lime text-ink transition-transform duration-300 group-hover:scale-110 motion-reduce:transition-none"
+        className="absolute top-[6%] right-[5.6%] grid aspect-square w-[13.4%] place-items-center rounded-full bg-lime text-white transition-transform duration-300 group-hover:scale-110 motion-reduce:transition-none"
       >
         <ArrowRight strokeWidth={2.25} className="h-[44%] w-[44%] transition-transform duration-300 group-hover:translate-x-[8%]" />
       </span>
@@ -247,11 +247,11 @@ function HiringProcess() {
           <div className="flex items-start justify-between gap-4">
             <span
               aria-hidden
-              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-[1.5px] border-lime text-lime"
+              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-[1.5px] border-lime text-lime-light"
             >
               <step.icon strokeWidth={1.75} className="h-[22px] w-[22px]" />
             </span>
-            <span className="font-mono text-[22px] leading-none font-bold text-lime lg:text-[26px]">
+            <span className="font-mono text-[22px] leading-none font-bold text-lime-light lg:text-[26px]">
               {String(i + 1).padStart(2, '0')}
             </span>
           </div>

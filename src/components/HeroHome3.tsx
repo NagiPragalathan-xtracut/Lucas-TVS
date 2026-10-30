@@ -279,7 +279,7 @@ export function HeroHome3() {
                 {/* 13 Oct: was "End-to-End Engineering, Software & Digital
                     Solutions." with the last two words in lime. */}
                 Engineering the Future of{' '}
-                <span className="text-lime">Intelligent Mobility</span>
+                <span className="text-lime-light">Intelligent Mobility</span>
               </h1>
               <p className="mt-4 max-w-[480px] font-body text-[15px] leading-[1.5] font-medium text-balance text-white/90 [text-shadow:0_1px_8px_rgba(0,0,0,0.55)] lg:mt-5 lg:max-w-[600px] lg:text-[16px]">
                 For Automotive, Industrial and Defence &amp; Aerospace.
@@ -296,7 +296,7 @@ export function HeroHome3() {
                 aria-label="Strategic investment: Bavarian Automotive Technologies GmbH, Germany"
                 className="flex items-center gap-3.5 rounded-[12px] border border-lime/40 bg-black/30 px-4 pt-1.5 pb-3.5 backdrop-blur-sm sm:gap-4 sm:px-5 sm:pb-4"
               >
-                <legend className="mx-auto px-3 font-body text-[10px] leading-none font-medium tracking-[0.24em] text-lime uppercase sm:text-[11px]">
+                <legend className="mx-auto px-3 font-body text-[10px] leading-none font-medium tracking-[0.24em] text-lime-light uppercase sm:text-[11px]">
                   Strategic Investment
                 </legend>
                 <img
@@ -429,9 +429,9 @@ function SlideArc({
         >
           <defs>
             <linearGradient id="hero-arc-glow" x1="0" x2="1" y1="0" y2="0">
-              <stop offset="0" stopColor="#b3e718" stopOpacity="0" />
-              <stop offset="0.5" stopColor="#b3e718" stopOpacity="0.9" />
-              <stop offset="1" stopColor="#b3e718" stopOpacity="0" />
+              <stop offset="0" stopColor="#4fbf68" stopOpacity="0" />
+              <stop offset="0.5" stopColor="#4fbf68" stopOpacity="0.9" />
+              <stop offset="1" stopColor="#4fbf68" stopOpacity="0" />
             </linearGradient>
           </defs>
           <path
@@ -472,7 +472,7 @@ function SlideArc({
         >
           <span className="absolute inset-0 -m-2 rounded-full bg-lime/25 blur-[6px]" />
           <span className="relative flex h-5 w-5 items-center justify-center rounded-full border border-lime/60 bg-black/40">
-            <span className="h-2 w-2 rounded-full bg-lime shadow-[0_0_10px_rgba(179,231,24,0.9)]" />
+            <span className="h-2 w-2 rounded-full bg-lime shadow-[0_0_10px_rgba(29,122,50,0.9)]" />
           </span>
         </span>
 
@@ -495,7 +495,7 @@ function SlideArc({
                 !jumped &&
                   'transition-[left,top,transform,opacity,border-color,background-color,box-shadow] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]',
                 current
-                  ? 'border-lime bg-lime/10 shadow-[0_0_28px_rgba(179,231,24,0.35)]'
+                  ? 'border-lime bg-lime/10 shadow-[0_0_28px_rgba(29,122,50,0.35)]'
                   : 'border-white/15 bg-black/50 hover:border-white/40',
               )}
               style={{

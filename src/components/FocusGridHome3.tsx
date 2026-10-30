@@ -131,7 +131,7 @@ function CornerChevron() {
       aria-hidden
       // Only drawn on the light cards, where lime is 1.4:1 against the
       // pale scrim — green-ink keeps the chevron legible (launch audit).
-      className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-green-ink/50 text-green-ink transition-all duration-300 group-hover:border-lime group-hover:bg-lime group-hover:text-ink"
+      className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-green-ink/50 text-green-ink transition-all duration-300 group-hover:border-lime group-hover:bg-lime group-hover:text-white"
     >
       <Chevron className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-px" />
     </span>
@@ -225,13 +225,13 @@ function Card({ card }: { card: FocusCard }) {
             <br />
             {/* Lime on the dark card; green-ink on the light ones, where
                 lime over the pale scrim was ~1.4:1 (launch audit). */}
-            <span className={dark ? 'text-lime' : 'text-green-ink'}>{card.title[1]}</span>
+            <span className={dark ? 'text-lime-light' : 'text-green-ink'}>{card.title[1]}</span>
           </h3>
 
           {card.featured && card.cta && (
             <AppLink
               href={card.href}
-              className="mt-6 inline-flex items-center gap-2 rounded-full border border-lime px-5 py-2.5 font-body text-[14px] font-medium text-lime transition-colors duration-300 hover:bg-lime hover:text-ink lg:mt-8"
+              className="mt-6 inline-flex items-center gap-2 rounded-full border border-lime px-5 py-2.5 font-body text-[14px] font-medium text-lime-light transition-colors duration-300 hover:bg-lime hover:text-white lg:mt-8"
             >
               {card.cta}
               <ArrowRight aria-hidden className="h-4 w-4" />
@@ -246,7 +246,7 @@ function Card({ card }: { card: FocusCard }) {
                   type="button"
                   aria-label="Previous"
                   onClick={() => go(slide - 1)}
-                  className="grid h-9 w-9 place-items-center rounded-full border border-white/30 text-white transition-colors hover:border-lime hover:text-lime"
+                  className="grid h-9 w-9 place-items-center rounded-full border border-white/30 text-white transition-colors hover:border-lime hover:text-lime-light"
                 >
                   <ChevronLeft aria-hidden className="h-4 w-4" />
                 </button>
@@ -254,7 +254,7 @@ function Card({ card }: { card: FocusCard }) {
                   type="button"
                   aria-label="Next"
                   onClick={() => go(slide + 1)}
-                  className="grid h-9 w-9 place-items-center rounded-full border border-white/30 text-white transition-colors hover:border-lime hover:text-lime"
+                  className="grid h-9 w-9 place-items-center rounded-full border border-white/30 text-white transition-colors hover:border-lime hover:text-lime-light"
                 >
                   <ChevronRight aria-hidden className="h-4 w-4" />
                 </button>

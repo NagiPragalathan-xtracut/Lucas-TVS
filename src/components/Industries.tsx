@@ -108,7 +108,7 @@ export function Industries() {
             </button>
             <button
               type="button"
-              className="flex items-center gap-2 rounded-[7px] bg-lime px-8 py-3 font-sans text-[16px] font-medium text-black"
+              className="flex items-center gap-2 rounded-[7px] bg-lime px-8 py-3 font-sans text-[16px] font-medium text-white"
             >
               Next
               <ChevronDoubleRight className="h-[13px] w-[13px]" />

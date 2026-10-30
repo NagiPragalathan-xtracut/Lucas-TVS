@@ -330,7 +330,7 @@ export function FocusAreas() {
             <div className="max-w-[420px] lg:max-w-[460px]">
               <div className="flex items-center gap-2">
                 <span className="h-px w-6 bg-lime" aria-hidden />
-                <p className="font-body text-[13px] font-medium tracking-[0.02em] text-lime">
+                <p className="font-body text-[13px] font-medium tracking-[0.02em] text-lime-light">
                   Focus Areas
                 </p>
               </div>
@@ -342,7 +342,7 @@ export function FocusAreas() {
                 transition={{ duration: 0.5, ease: EASE }}
               >
                 <h2 className="mt-3 font-display text-[32px] leading-[1.1] font-semibold text-white sm:text-[40px] lg:text-[46px]">
-                  {active.heading[0]} <span className="text-lime">{active.heading[1]}</span>
+                  {active.heading[0]} <span className="text-lime-light">{active.heading[1]}</span>
                 </h2>
                 <p className="mt-4 max-w-[360px] font-body text-[15px] leading-[1.5] text-white/75">
                   {active.blurb}
@@ -419,7 +419,7 @@ export function FocusAreas() {
                     <span className="block font-body text-[15px] leading-[1.25] font-medium text-white">
                       {product.label}
                     </span>
-                    <span className="mt-1.5 inline-flex items-center gap-2 font-body text-[14px] text-lime">
+                    <span className="mt-1.5 inline-flex items-center gap-2 font-body text-[14px] text-lime-light">
                       View Details
                       <ArrowRight
                         aria-hidden
@@ -447,7 +447,7 @@ export function FocusAreas() {
                 type="button"
                 aria-label="Next focus area"
                 onClick={() => goTo(index + 1)}
-                className="grid h-9 w-9 place-items-center rounded-full bg-lime text-ink transition-transform hover:scale-105"
+                className="grid h-9 w-9 place-items-center rounded-full bg-lime text-white transition-transform hover:scale-105"
               >
                 <ChevronRight aria-hidden className="h-4 w-4" />
               </button>
@@ -496,8 +496,8 @@ export function FocusAreas() {
                       'group relative flex shrink-0 snap-start items-center justify-center gap-2.5 rounded-xl px-6 py-3.5 font-body text-[13px] font-medium whitespace-nowrap transition-all duration-300 ease-in-out lg:w-full lg:shrink lg:px-4 lg:text-[14px]',
                       i > 0 && !isActive && !prevIsActive && 'lg:border-l lg:border-white/10',
                       isActive
-                        ? 'bg-lime text-ink shadow-[0_4px_14px_rgba(179,231,24,0.35)]'
-                        : 'text-white/65 hover:bg-white/[0.06] hover:text-lime',
+                        ? 'bg-lime text-white shadow-[0_4px_14px_rgba(29,122,50,0.35)]'
+                        : 'text-white/65 hover:bg-white/[0.06] hover:text-lime-light',
                     )}
                   >
                     <area.tabIcon
@@ -505,7 +505,7 @@ export function FocusAreas() {
                       strokeWidth={1.8}
                       className={cx(
                         'h-4 w-4 transition-colors duration-300 ease-in-out',
-                        isActive ? 'text-ink' : 'text-white/55 group-hover:text-lime',
+                        isActive ? 'text-ink' : 'text-white/55 group-hover:text-lime-light',
                       )}
                     />
                     {area.tab}

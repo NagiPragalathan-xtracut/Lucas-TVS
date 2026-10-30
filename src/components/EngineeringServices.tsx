@@ -103,7 +103,7 @@ export function EngineeringServices() {
                     <item.icon
                       aria-hidden
                       strokeWidth={1.6}
-                      className="h-[30px] w-[30px] text-ink"
+                      className="h-[30px] w-[30px] text-ink transition-colors duration-300 group-hover:text-white"
                     />
                   </span>
 

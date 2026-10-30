@@ -215,7 +215,7 @@ export default function ProductsPage() {
                 <p className="font-display text-[30px] leading-[1.15] font-semibold text-white lg:text-[40px]">
                   Electrification &amp;
                   <br />
-                  <span className="text-lime">Powertrain</span>
+                  <span className="text-lime-light">Powertrain</span>
                 </p>
                 <p className="font-body text-[15px] leading-[1.6] text-white/80">
                   Motors, controllers, inverters, battery management and charging — engineered together

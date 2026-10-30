@@ -71,9 +71,9 @@ export function ArrowCircle({ tone = 'lime' }: { tone?: 'lime' | 'white' | 'lime
       aria-hidden
       className={cx(
         'inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-[1.5px] transition-colors duration-300',
-        tone === 'lime' && 'border-lime text-ink group-hover:bg-lime',
+        tone === 'lime' && 'border-lime text-ink group-hover:bg-lime group-hover:text-white',
         tone === 'white' && 'border-white text-white group-hover:bg-white group-hover:text-ink',
-        tone === 'lime-on-dark' && 'border-lime text-white group-hover:bg-lime group-hover:text-ink',
+        tone === 'lime-on-dark' && 'border-lime text-white group-hover:bg-lime group-hover:text-white',
       )}
     >
       <IconArrowUpRight />
@@ -218,14 +218,14 @@ export function DarkHero({
           {/* Crumb links are 24px-tall hit areas (WCAG 2.5.8) — inline-flex
               with a min height, so the line looks the same (launch audit). */}
           <nav aria-label="Breadcrumb" className="font-mono text-[13px] text-white/80">
-            <Link to={ROUTES.home} className="inline-flex min-h-6 items-center transition-colors hover:text-lime">
+            <Link to={ROUTES.home} className="inline-flex min-h-6 items-center transition-colors hover:text-lime-light">
               Home
             </Link>
             {crumbs.map((crumb, i) => (
               <span key={crumb.label}>
                 <span aria-hidden> / </span>
                 {crumb.to && i < crumbs.length - 1 ? (
-                  <Link to={crumb.to} className="inline-flex min-h-6 items-center transition-colors hover:text-lime">
+                  <Link to={crumb.to} className="inline-flex min-h-6 items-center transition-colors hover:text-lime-light">
                     {crumb.label}
                   </Link>
                 ) : (
@@ -241,7 +241,7 @@ export function DarkHero({
               {accent && (
                 <>
                   {' '}
-                  <span className="text-lime">{accent}</span>
+                  <span className="text-lime-light">{accent}</span>
                 </>
               )}
             </h1>
@@ -726,7 +726,7 @@ export function StepGrid({
         >
           <span
             aria-hidden
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-[1.5px] border-lime text-lime"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-[1.5px] border-lime text-lime-light"
           >
             {step.icon ? (
               <step.icon strokeWidth={1.75} className="h-5 w-5" />
@@ -740,7 +740,7 @@ export function StepGrid({
             </span>
             <span className="font-body text-[13px] text-white/70">{step.sub}</span>
           </span>
-          <span className="border-l border-[#3a3c3a] pl-3.5 font-mono text-[20px] font-bold text-lime lg:pl-5 lg:text-[26px]">
+          <span className="border-l border-[#3a3c3a] pl-3.5 font-mono text-[20px] font-bold text-lime-light lg:pl-5 lg:text-[26px]">
             {String(i + 1).padStart(2, '0')}
           </span>
         </li>
@@ -778,7 +778,7 @@ export function ChipFilter({
             className={cx(
               'rounded-full px-[18px] py-2.5 font-body text-[14px] transition-colors duration-300',
               active
-                ? 'border-[1.5px] border-lime bg-lime text-ink'
+                ? 'border-[1.5px] border-lime bg-lime text-white'
                 : 'border-[1.5px] border-line-soft text-ink hover:border-green-deep',
             )}
           >

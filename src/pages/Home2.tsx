@@ -20,7 +20,7 @@ const WORD_STAGGER_MS = 55
 /**
  * Wraps every word of `heading` in its own span so they can be revealed in
  * sequence. Recurses so inline markup survives — the headings here colour
- * their last phrase with `<span class="text-lime">`, and that wrapper (and
+ * their last phrase with `<span class="text-lime-light">`, and that wrapper (and
  * its class) has to stay intact around the words it holds.
  *
  * Returns the word spans in document order. Whitespace between words is

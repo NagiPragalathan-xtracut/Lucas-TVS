@@ -268,7 +268,7 @@ function TouchCarousel() {
               className="absolute inset-0 h-full w-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/20 to-black/80" />
-            <span className="absolute top-4 left-4 rounded-full bg-black/45 px-2.5 py-1 font-mono text-[12px] text-lime backdrop-blur-sm">
+            <span className="absolute top-4 left-4 rounded-full bg-black/45 px-2.5 py-1 font-mono text-[12px] text-lime-light backdrop-blur-sm">
               {String(i + 1).padStart(2, '0')} / {String(ITEMS.length).padStart(2, '0')}
             </span>
             <div className="absolute inset-x-0 bottom-0 p-5">

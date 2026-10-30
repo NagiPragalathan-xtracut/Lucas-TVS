@@ -255,7 +255,7 @@ export default function AboutPage() {
               const linkInner = link && (
                 <>
                   {link.label}
-                  <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-[1.5px] border-lime text-ink transition-colors duration-300 group-hover:bg-lime">
+                  <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-[1.5px] border-lime text-ink transition-colors duration-300 group-hover:bg-lime group-hover:text-white">
                     <IconArrowUpRight />
                   </span>
                 </>

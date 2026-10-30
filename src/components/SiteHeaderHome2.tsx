@@ -49,7 +49,7 @@ export function SiteHeaderHome2() {
               <li key={item}>
                 <a
                   href={`#${item.toLowerCase()}`}
-                  className="font-body text-[15px] leading-[1.25] text-white/85 transition-colors hover:text-lime"
+                  className="font-body text-[15px] leading-[1.25] text-white/85 transition-colors hover:text-lime-light"
                 >
                   {item}
                 </a>
@@ -98,7 +98,7 @@ export function SiteHeaderHome2() {
                 <a
                   href={`#${item.toLowerCase()}`}
                   onClick={() => setOpen(false)}
-                  className="block rounded-lg px-3 py-2.5 font-body text-[15px] text-white/85 hover:bg-white/10 hover:text-lime"
+                  className="block rounded-lg px-3 py-2.5 font-body text-[15px] text-white/85 hover:bg-white/10 hover:text-lime-light"
                 >
                   {item}
                 </a>

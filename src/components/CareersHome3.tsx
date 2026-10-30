@@ -94,7 +94,7 @@ export function CareersHome3() {
           <div className="mt-7 flex flex-wrap items-center gap-3">
             <AppLink
               href="https://career.lucas-tvs.com"
-              className="inline-flex items-center gap-2.5 rounded-full bg-lime px-6 py-3.5 font-body text-[15px] font-medium text-ink transition-transform duration-300 hover:scale-[1.03]"
+              className="inline-flex items-center gap-2.5 rounded-full bg-lime px-6 py-3.5 font-body text-[15px] font-medium text-white transition-transform duration-300 hover:scale-[1.03]"
             >
               View open roles
               <ArrowRight aria-hidden className="h-[18px] w-[18px]" />

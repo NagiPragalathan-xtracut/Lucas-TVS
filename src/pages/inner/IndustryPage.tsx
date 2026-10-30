@@ -177,7 +177,7 @@ function BatBand() {
         <div className="flex flex-col gap-[18px] lg:w-[600px] lg:shrink-0">
           <Eyebrow tone="light">{BAT.eyebrow}</Eyebrow>
           <p className="font-display text-[30px] leading-[1.15] font-semibold text-white lg:text-[40px]">
-            {BAT.title} <span className="text-lime">{BAT.accent}</span>
+            {BAT.title} <span className="text-lime-light">{BAT.accent}</span>
           </p>
           {BAT.paragraphs.map((text) => (
             <p key={text} className="font-body text-[15px] leading-[1.65] text-white/80">
@@ -203,7 +203,7 @@ function BatBand() {
                 key={tile.title}
                 className="flex flex-col gap-1 rounded-[16px] border border-[#3a3c3a] bg-black/60 p-4"
               >
-                <span className="font-display text-[17px] leading-[1.25] font-semibold text-lime">
+                <span className="font-display text-[17px] leading-[1.25] font-semibold text-lime-light">
                   {tile.title}
                 </span>
                 <span className="font-body text-[13px] text-white/75">{tile.body}</span>
@@ -250,7 +250,7 @@ function DefenceSuppliedBand() {
                 height={480}
                 className="aspect-[2/1] w-full object-contain"
               />
-              <span className="absolute top-3 left-3 rounded-full bg-[#101211] px-2.5 py-1 font-mono text-[12px] tracking-[0.08em] text-lime">
+              <span className="absolute top-3 left-3 rounded-full bg-[#101211] px-2.5 py-1 font-mono text-[12px] tracking-[0.08em] text-lime-light">
                 {String(i + 1).padStart(2, '0')}
               </span>
             </div>

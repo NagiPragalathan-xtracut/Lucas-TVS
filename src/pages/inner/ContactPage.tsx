@@ -193,7 +193,7 @@ export default function ContactPage() {
             <button
               type="submit"
               disabled={status === 'sending'}
-              className="h-[52px] self-start rounded-full bg-lime px-[30px] font-body text-[16px] font-medium text-ink transition-transform duration-300 hover:scale-[1.03] disabled:cursor-wait disabled:opacity-70 disabled:hover:scale-100"
+              className="h-[52px] self-start rounded-full bg-lime px-[30px] font-body text-[16px] font-medium text-white transition-transform duration-300 hover:scale-[1.03] disabled:cursor-wait disabled:opacity-70 disabled:hover:scale-100"
             >
               {status === 'sending' ? 'Sending…' : 'Submit Enquiry →'}
             </button>

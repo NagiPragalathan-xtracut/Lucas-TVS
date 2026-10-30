@@ -38,7 +38,7 @@ export function SolutionShowcase() {
 
         {/* Copy is placed on the same percentage grid Figma uses. */}
         <div className="absolute inset-x-0 top-0 flex h-full flex-col justify-center p-6 sm:top-[23%] sm:h-auto sm:block sm:w-[52%] sm:justify-start sm:px-[4.3%] sm:py-0">
-          <p className="font-sans text-[14px] leading-[1.25] font-medium text-lime lg:text-[16px]">
+          <p className="font-sans text-[14px] leading-[1.25] font-medium text-lime-light lg:text-[16px]">
             Environment Solution
           </p>
           <h2 className="mt-3 font-display text-[28px] leading-[1.1] font-medium whitespace-nowrap text-white sm:text-[36px] lg:mt-[14px] lg:text-[45px]">

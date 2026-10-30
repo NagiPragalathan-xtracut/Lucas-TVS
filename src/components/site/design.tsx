@@ -47,7 +47,7 @@ export function Eyebrow({
       className={cx(
         'font-mono text-[12px] tracking-[0.12em] uppercase lg:text-[13px]',
         tone === 'green' && 'text-green-ink',
-        tone === 'lime' && 'text-lime',
+        tone === 'lime' && 'text-lime-light',
         tone === 'light' && 'text-white/90',
         className,
       )}
@@ -85,7 +85,7 @@ export function Heading({
       {accent && (
         <>
           {' '}
-          <span className={dark ? 'text-lime' : 'text-green-deep'}>{accent}</span>
+          <span className={dark ? 'text-lime-light' : 'text-green-deep'}>{accent}</span>
         </>
       )}
     </h2>
@@ -170,7 +170,7 @@ const PILL =
   'inline-flex items-center justify-center gap-2 rounded-full px-5 py-[13px] font-body text-[14px] font-medium whitespace-nowrap transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 lg:px-6 lg:text-[15px]'
 
 const PILL_TONE = {
-  lime: 'bg-lime text-ink hover:scale-[1.03] focus-visible:outline-ink',
+  lime: 'bg-lime text-white hover:scale-[1.03] focus-visible:outline-ink',
   /** White outline, for dark surfaces. */
   outline: 'border-[1.5px] border-white text-white hover:bg-white hover:text-ink focus-visible:outline-white',
   /** White fill with a hairline, for light surfaces. */
@@ -294,7 +294,7 @@ export function IconTile({
     <span
       className={cx(
         'grid h-12 w-12 shrink-0 place-items-center rounded-[12px]',
-        tone === 'dark' ? 'bg-[#1e211e] text-lime' : 'bg-lime-tint text-ink',
+        tone === 'dark' ? 'bg-[#1e211e] text-lime-light' : 'bg-lime-tint text-ink',
       )}
     >
       {children}

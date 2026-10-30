@@ -96,7 +96,7 @@ export function SiteHeaderHome3() {
                 'font-body text-[15px] leading-[1.25] transition-colors duration-300',
                 solid
                   ? cx('hover:text-green-ink', open ? 'text-green-ink' : 'text-ink')
-                  : cx('hover:text-lime', open ? 'text-lime' : 'text-white/85'),
+                  : cx('hover:text-lime-light', open ? 'text-lime-light' : 'text-white/85'),
               )
               return id ? (
                 <MegaNavItem key={item.to} id={id} label={item.label} mega={mega} className={tone} />
@@ -125,7 +125,7 @@ export function SiteHeaderHome3() {
                 'grid h-10 w-10 shrink-0 place-items-center rounded-full border transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2',
                 solid
                   ? 'border-line text-ink hover:text-green-ink focus-visible:outline-ink'
-                  : 'border-white/25 text-white hover:text-lime focus-visible:outline-white',
+                  : 'border-white/25 text-white hover:text-lime-light focus-visible:outline-white',
               )}
             >
               <Search aria-hidden strokeWidth={2} className="h-[18px] w-[18px]" />
@@ -134,8 +134,8 @@ export function SiteHeaderHome3() {
             <Link
               to={ROUTES.contact}
               className={cx(
-                'hidden items-center justify-center gap-2 rounded-full px-8 py-3.5 font-sans text-[16px] leading-[1.25] font-medium whitespace-nowrap text-ink-slate shadow-[0_4px_4px_0_rgba(211,211,211,0.25),inset_0_0_4px_0_rgba(0,0,0,0.25)] transition-[transform,background-color] duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 lg:inline-flex',
-                solid ? 'bg-lime focus-visible:outline-ink' : 'bg-white focus-visible:outline-white',
+                'hidden items-center justify-center gap-2 rounded-full px-8 py-3.5 font-sans text-[16px] leading-[1.25] font-medium whitespace-nowrap shadow-[0_4px_4px_0_rgba(211,211,211,0.25),inset_0_0_4px_0_rgba(0,0,0,0.25)] transition-[transform,background-color] duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 lg:inline-flex',
+                solid ? 'bg-lime text-white focus-visible:outline-ink' : 'bg-white text-ink-slate focus-visible:outline-white',
               )}
             >
               Talk to Engineering
@@ -189,7 +189,7 @@ export function SiteHeaderHome3() {
                     'block rounded-lg px-3 py-2.5 font-body text-[15px]',
                     solid
                       ? 'text-ink hover:bg-surface-mute hover:text-green-ink'
-                      : 'text-white hover:bg-white/10 hover:text-lime',
+                      : 'text-white hover:bg-white/10 hover:text-lime-light',
                   )}
                 >
                   {item.label}
@@ -201,8 +201,8 @@ export function SiteHeaderHome3() {
                 to={ROUTES.contact}
                 onClick={() => setOpen(false)}
                 className={cx(
-                  'inline-flex w-full items-center justify-center gap-2 rounded-full px-8 py-4 font-sans text-[16px] leading-[1.25] font-medium whitespace-nowrap text-ink-slate shadow-[0_4px_4px_0_rgba(211,211,211,0.25),inset_0_0_4px_0_rgba(0,0,0,0.25)] transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2',
-                  solid ? 'bg-lime focus-visible:outline-ink' : 'bg-white focus-visible:outline-white',
+                  'inline-flex w-full items-center justify-center gap-2 rounded-full px-8 py-4 font-sans text-[16px] leading-[1.25] font-medium whitespace-nowrap shadow-[0_4px_4px_0_rgba(211,211,211,0.25),inset_0_0_4px_0_rgba(0,0,0,0.25)] transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2',
+                  solid ? 'bg-lime text-white focus-visible:outline-ink' : 'bg-white text-ink-slate focus-visible:outline-white',
                 )}
               >
                 Talk to Engineering

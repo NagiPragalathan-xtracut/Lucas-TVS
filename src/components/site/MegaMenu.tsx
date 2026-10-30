@@ -157,7 +157,7 @@ function ArrowRing() {
   return (
     <span
       aria-hidden
-      className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-[1.5px] border-lime text-ink transition-colors duration-200 group-hover:bg-lime"
+      className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-[1.5px] border-lime text-ink transition-colors duration-200 group-hover:bg-lime group-hover:text-white"
     >
       <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2">
         <path d="M7 17L17 7M9 7h8v8" />
@@ -311,7 +311,7 @@ function ProductsMenu() {
           to={productPath(featured.slug)}
           className="group relative m-3 ml-0 flex flex-col overflow-hidden rounded-[16px] bg-[radial-gradient(125%_125%_at_58%_40%,#183f2d_0%,#123322_40%,#0b2417_75%,#091f14_100%)] p-5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime"
         >
-          <span className="self-start rounded-full border border-lime/70 px-3 py-1 font-body text-[12px] font-semibold tracking-[0.14em] text-lime uppercase">
+          <span className="self-start rounded-full border border-lime/70 px-3 py-1 font-body text-[12px] font-semibold tracking-[0.14em] text-lime-light uppercase">
             Featured
           </span>
           <img

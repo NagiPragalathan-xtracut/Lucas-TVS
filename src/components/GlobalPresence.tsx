@@ -67,7 +67,7 @@ export function GlobalPresence() {
                 (i > 0 ? 'lg:border-l lg:border-line' : '')
               }
             >
-              <dt className="font-plex text-[34px] leading-none font-semibold tracking-[-1.6px] text-lime lg:text-[45.7px]">
+              <dt className="font-plex text-[34px] leading-none font-semibold tracking-[-1.6px] text-lime-light lg:text-[45.7px]">
                 {stat.value}
               </dt>
               <dd className="mt-4 font-body text-[13px] leading-[1.27] tracking-[1.38px] text-black uppercase lg:text-[15px]">

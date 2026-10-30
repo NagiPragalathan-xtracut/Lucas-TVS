@@ -51,7 +51,7 @@ export function Sustainability() {
                   index={i}
                   className="rounded-[11px] border border-line-strong bg-white p-[21px]"
                 >
-                  <dt className="font-body text-[40px] leading-none text-lime lg:text-[46.7px]">
+                  <dt className="font-body text-[40px] leading-none text-lime-light lg:text-[46.7px]">
                     {metric.value}
                   </dt>
                   <dd>

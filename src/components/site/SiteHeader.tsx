@@ -99,7 +99,7 @@ export function SiteHeader() {
           : 'border-lime font-semibold text-white'
         : solid
           ? cx('border-transparent hover:text-green-ink', open ? 'text-green-ink' : 'text-ink')
-          : cx('border-transparent hover:text-lime', open ? 'text-lime' : 'text-white/90'),
+          : cx('border-transparent hover:text-lime-light', open ? 'text-lime-light' : 'text-white/90'),
     )
 
   return (
@@ -169,7 +169,7 @@ export function SiteHeader() {
                 'grid h-11 w-11 shrink-0 place-items-center rounded-full border transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2',
                 solid
                   ? 'border-line text-ink hover:text-green-ink focus-visible:outline-ink'
-                  : 'border-white/25 text-white hover:text-lime focus-visible:outline-white',
+                  : 'border-white/25 text-white hover:text-lime-light focus-visible:outline-white',
               )}
             >
               <Search aria-hidden strokeWidth={2} className="h-[18px] w-[18px]" />
@@ -178,8 +178,8 @@ export function SiteHeader() {
             <Link
               to={ROUTES.contact}
               className={cx(
-                'hidden rounded-full px-[22px] py-3 font-body text-[15px] font-medium whitespace-nowrap text-ink transition-[transform,background-color] duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 lg:inline-flex',
-                solid ? 'bg-lime focus-visible:outline-ink' : 'bg-white focus-visible:outline-white',
+                'hidden rounded-full px-[22px] py-3 font-body text-[15px] font-medium whitespace-nowrap transition-[transform,background-color] duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 lg:inline-flex',
+                solid ? 'bg-lime text-white focus-visible:outline-ink' : 'bg-white text-ink focus-visible:outline-white',
               )}
             >
               Talk to Engineering
@@ -197,7 +197,7 @@ export function SiteHeader() {
                   <span
                     key={y}
                     className={cx(
-                      'absolute left-0 h-[2px] w-full rounded bg-ink transition-all duration-200',
+                      'absolute left-0 h-[2px] w-full rounded bg-white transition-all duration-200',
                       open && i === 0 && 'top-[6px] rotate-45',
                       open && i === 1 && 'opacity-0',
                       open && i === 2 && 'top-[6px] -rotate-45',
@@ -236,7 +236,7 @@ export function SiteHeader() {
                           ? 'bg-lime-tint text-green-ink'
                           : 'text-ink hover:bg-surface-mute'
                         : isActive(item)
-                          ? 'bg-white/10 text-lime'
+                          ? 'bg-white/10 text-lime-light'
                           : 'text-white hover:bg-white/10',
                     )}
                   >
@@ -273,8 +273,8 @@ export function SiteHeader() {
             <Link
               to={ROUTES.contact}
               className={cx(
-                'mt-3 flex w-full items-center justify-center rounded-full px-6 py-3.5 font-body text-[15px] font-medium text-ink',
-                solid ? 'bg-lime' : 'bg-white',
+                'mt-3 flex w-full items-center justify-center rounded-full px-6 py-3.5 font-body text-[15px] font-medium',
+                solid ? 'bg-lime text-white' : 'bg-white text-ink',
               )}
             >
               Talk to Engineering

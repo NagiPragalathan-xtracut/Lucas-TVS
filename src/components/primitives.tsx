@@ -18,7 +18,7 @@ export function Eyebrow({
         'font-sans text-[16px] leading-[1.25] font-medium',
         // 'green' is for light surfaces: green-ink clears WCAG AA there (5.4:1),
         // where lime (1.46:1) and plain green (2.28:1) do not.
-        tone === 'lime' ? 'text-lime' : 'text-green-ink',
+        tone === 'lime' ? 'text-lime-light' : 'text-green-ink',
         className,
       )}
     >
@@ -54,7 +54,7 @@ export function Button({
         'transition-transform duration-200 hover:-translate-y-0.5',
         'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink',
         variant === 'solid' &&
-          'bg-lime text-ink-slate shadow-[0_4px_4px_0_rgba(211,211,211,0.25),inset_0_0_4px_0_rgba(0,0,0,0.25)]',
+          'bg-lime text-white shadow-[0_4px_4px_0_rgba(211,211,211,0.25),inset_0_0_4px_0_rgba(0,0,0,0.25)]',
         variant === 'outline' &&
           'border-2 border-white text-white shadow-[0_4px_4px_0_rgba(211,211,211,0.25)]',
         variant === 'ghost' && 'border border-line bg-white text-ink-slate',
@@ -89,7 +89,7 @@ export function ChevronPill({
       role="img"
       aria-label={label}
     >
-      <ChevronDoubleRight className={cx('text-ink', iconClassName)} />
+      <ChevronDoubleRight className={cx('text-white', iconClassName)} />
     </span>
   )
 }

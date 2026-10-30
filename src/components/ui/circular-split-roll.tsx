@@ -268,7 +268,7 @@ function CircularSplitRollComp({
   orbitRingRadius = 130,
   orbitDotRadius = 150,
   orbitRingOffsetX = 0,
-  orbitColorFrom = "#b3e718",
+  orbitColorFrom = "#1d7a32",
   orbitColorTo = "#238f38",
 }: CircularSplitRollCompProps) {
   const rootRef = useRef<HTMLElement | null>(null);
@@ -422,7 +422,7 @@ function CircularSplitRollComp({
                 y: ringPosition.y,
                 scale: gsap.utils.interpolate(0.55, 1, focusStrength),
                 opacity: gsap.utils.interpolate(0.4, 1, focusStrength),
-                filter: `drop-shadow(0 0 ${gsap.utils.interpolate(0, 10, focusStrength)}px rgba(179,231,24,${gsap.utils.interpolate(0, 0.85, focusStrength)}))`,
+                filter: `drop-shadow(0 0 ${gsap.utils.interpolate(0, 10, focusStrength)}px rgba(29,122,50,${gsap.utils.interpolate(0, 0.85, focusStrength)}))`,
               });
             }
           });
@@ -758,7 +758,7 @@ function CircularSplitRollComp({
                       {item.href ? (
                         <span
                           aria-hidden
-                          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-lime text-ink transition-transform duration-300 group-hover:translate-x-0.5"
+                          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-lime text-white transition-transform duration-300 group-hover:translate-x-0.5"
                         >
                           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-[18px] w-[18px]">
                             <path d="M7 17 17 7M8 7h9v9" />

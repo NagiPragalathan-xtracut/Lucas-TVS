@@ -129,7 +129,7 @@ export function LookingForHome3() {
             <button
               type="button"
               onClick={openForm}
-              className="inline-flex h-[56px] items-center justify-center gap-2 self-start rounded-full sm:self-center bg-lime px-8 font-body text-[17px] font-medium text-ink shadow-[0_8px_22px_rgba(179,231,24,0.45)] transition-transform duration-300 hover:scale-[1.03] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-deep"
+              className="inline-flex h-[56px] items-center justify-center gap-2 self-start rounded-full sm:self-center bg-lime px-8 font-body text-[17px] font-medium text-white shadow-[0_8px_22px_rgba(29,122,50,0.45)] transition-transform duration-300 hover:scale-[1.03] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-deep"
             >
               Let’s Get Started
               <ArrowRight aria-hidden strokeWidth={2} className="h-[18px] w-[18px]" />
@@ -255,7 +255,7 @@ export function LookingForHome3() {
           <button
             type="submit"
             disabled={status === 'sending'}
-            className="inline-flex h-[50px] items-center justify-center gap-2 self-start rounded-full bg-lime px-7 font-body text-[15px] font-medium text-ink transition-transform duration-300 hover:scale-[1.03] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-deep disabled:cursor-wait disabled:opacity-70 disabled:hover:scale-100"
+            className="inline-flex h-[50px] items-center justify-center gap-2 self-start rounded-full bg-lime px-7 font-body text-[15px] font-medium text-white transition-transform duration-300 hover:scale-[1.03] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-deep disabled:cursor-wait disabled:opacity-70 disabled:hover:scale-100"
           >
             {status === 'sending' ? 'Sending…' : 'Send Request'}
             <ArrowRight aria-hidden strokeWidth={2} className="h-4 w-4" />

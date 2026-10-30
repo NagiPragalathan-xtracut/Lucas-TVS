@@ -46,15 +46,19 @@
 ------------------------------------------------------------------- */
 @theme {
   /* Brand */
-  --color-lime: #b3e718;
-  --color-lime-tint: #f3fad7;
+  --color-lime: #1d7a32;
+  --color-lime-tint: #e8f3ea;
+  /* Logo green (#1d7a32) is the brand fill; on dark surfaces green *text*
+     uses this lighter tint of the same hue (~9:1 on black), since the
+     logo green itself is ~3.9:1 there. */
+  --color-lime-light: #4fbf68;
   --color-green: #22c55e;
   --color-green-deep: #238f38;
   /* Green for *text* on light surfaces (30 Oct, launch audit). green-deep
      is 4.15:1 on white and 3.78:1 on surface-mute — fine for large heading
      accents and fills, short of WCAG AA (4.5:1) for body-size labels. This
      is the same hue a step darker: 5.41:1 on white, 4.92:1 on
-     surface-mute, 4.66:1 on #eee. Lime stays the accent on dark surfaces. */
+     surface-mute, 4.66:1 on #eee. Now the same value as lime (logo green). */
   --color-green-ink: #1d7a32;
 
   /* Ink */
@@ -233,7 +237,7 @@
   .watermark {
     background: linear-gradient(
       180deg,
-      rgba(179, 231, 24, 0.31) 0%,
+      rgba(29, 122, 50, 0.31) 0%,
       rgba(255, 255, 255, 0.31) 100%
     );
     -webkit-background-clip: text;

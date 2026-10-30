@@ -62,7 +62,7 @@ export function Awards() {
 
               <hr className="mt-[22px] w-[280px] max-w-full border-0 border-t border-white/40" />
 
-              <p className="mt-3 font-body text-[14px] leading-[1.3] font-medium text-lime">
+              <p className="mt-3 font-body text-[14px] leading-[1.3] font-medium text-lime-light">
                 {award.label}
               </p>
               <h3 className="mt-1 font-body text-[15px] leading-[1.35] text-white">
