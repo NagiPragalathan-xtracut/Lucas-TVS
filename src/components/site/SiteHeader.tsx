@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { Search } from 'lucide-react'
 import { cx } from '../../lib/cx'
 import { logoLucasTvs } from '../../lib/assets'
 import { NAV, ROUTES } from '../../lib/routes'
@@ -94,10 +95,10 @@ export function SiteHeader() {
       'border-b-2 py-1 font-body text-[15px] transition-colors duration-300',
       active
         ? solid
-          ? 'border-green-deep font-semibold text-green-deep'
+          ? 'border-green-deep font-semibold text-green-ink'
           : 'border-lime font-semibold text-white'
         : solid
-          ? cx('border-transparent hover:text-green-deep', open ? 'text-green-deep' : 'text-ink')
+          ? cx('border-transparent hover:text-green-ink', open ? 'text-green-ink' : 'text-ink')
           : cx('border-transparent hover:text-lime', open ? 'text-lime' : 'text-white/90'),
     )
 
@@ -158,6 +159,22 @@ export function SiteHeader() {
           </ul>
 
           <div className="flex items-center justify-end gap-3 xl:flex-1 xl:basis-0">
+            {/* Site search (30 Oct, launch audit): /search existed but had no
+                way in. Same icon as the homepage header. */}
+            <Link
+              to={ROUTES.search}
+              aria-label="Search the site"
+              aria-current={isActive({ to: ROUTES.search }) ? 'page' : undefined}
+              className={cx(
+                'grid h-11 w-11 shrink-0 place-items-center rounded-full border transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2',
+                solid
+                  ? 'border-line text-ink hover:text-green-ink focus-visible:outline-ink'
+                  : 'border-white/25 text-white hover:text-lime focus-visible:outline-white',
+              )}
+            >
+              <Search aria-hidden strokeWidth={2} className="h-[18px] w-[18px]" />
+            </Link>
+
             <Link
               to={ROUTES.contact}
               className={cx(
@@ -216,7 +233,7 @@ export function SiteHeader() {
                       'block rounded-lg px-3 py-3 font-body text-[15px] font-medium transition-colors',
                       solid
                         ? isActive(item)
-                          ? 'bg-lime-tint text-green-deep'
+                          ? 'bg-lime-tint text-green-ink'
                           : 'text-ink hover:bg-surface-mute'
                         : isActive(item)
                           ? 'bg-white/10 text-lime'
@@ -240,7 +257,7 @@ export function SiteHeader() {
                               'block rounded-lg px-3 py-3 font-body text-[14px] transition-colors',
                               solid
                                 ? 'text-body hover:bg-surface-mute hover:text-ink'
-                                : 'text-white/75 hover:bg-white/10 hover:text-white',
+                                : 'text-white/90 hover:bg-white/10 hover:text-white',
                             )}
                           >
                             {child.label}

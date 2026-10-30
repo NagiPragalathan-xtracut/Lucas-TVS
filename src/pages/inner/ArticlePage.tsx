@@ -40,7 +40,7 @@ export default function ArticlePage() {
 
       <Band>
         <article className="mx-auto flex max-w-[760px] flex-col gap-5">
-          <p className="font-mono text-[12px] tracking-[0.12em] text-green-deep uppercase lg:text-[13px]">
+          <p className="font-mono text-[12px] tracking-[0.12em] text-green-ink uppercase lg:text-[13px]">
             {cardLabel(insight)}
           </p>
           <p className="font-display text-[21px] leading-[1.4] font-medium tracking-[-0.01em] text-ink lg:text-[27px]">
@@ -82,7 +82,7 @@ export default function ArticlePage() {
               >
                 <ImageSlot src={item.image} label="Cover image" className="h-[190px] w-full rounded-[14px] lg:h-[200px]" />
                 <span className="flex grow flex-col gap-2 px-1.5 pb-1.5">
-                  <span className="font-mono text-[11px] text-green-deep uppercase">{cardLabel(item)}</span>
+                  <span className="font-mono text-[12px] text-green-ink uppercase">{cardLabel(item)}</span>
                   <span className="font-display text-[18px] leading-[1.3] font-semibold text-ink">{item.title}</span>
                   <span className="font-body text-[13px] leading-[1.5] text-body">{item.summary}</span>
                   <span className="mt-auto flex items-center gap-2 pt-1 font-body text-[14px] font-medium text-ink">

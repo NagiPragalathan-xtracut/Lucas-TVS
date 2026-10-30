@@ -115,7 +115,10 @@ export function WhyChooseUsHome3() {
         className="gap-12 lg:flex lg:items-start lg:justify-between"
       >
         <div className="lg:max-w-[590px]">
-          <Eyebrow className="!text-[18px]">Why Choose us</Eyebrow>
+          {/* tone="green": lime on this white band was 1.46:1 (launch audit). */}
+          <Eyebrow tone="green" className="!text-[18px]">
+            Why Choose us
+          </Eyebrow>
           <h2 className="mt-3 font-display text-[28px] leading-[1.15] font-medium text-ink sm:text-[34px] lg:text-[40px]">
             Why Engineering Teams Choose Us
           </h2>
@@ -155,15 +158,21 @@ export function WhyChooseUsHome3() {
               onMouseEnter={() => canHover && setHovered(i)}
             >
               {canHover || !isFeature ? (
+                // Below the fold; both fill a fixed-size card, so no
+                // width/height is needed to hold the layout.
                 <img
                   src={item.image}
                   alt={item.alt}
+                  loading="lazy"
+                  decoding="async"
                   className="absolute inset-0 h-full w-full object-cover"
                 />
               ) : (
                 <img
                   src={item.image}
                   alt={item.alt}
+                  loading="lazy"
+                  decoding="async"
                   className="absolute max-w-none"
                   style={{
                     height: '163.71%',

@@ -29,6 +29,21 @@ export const ROUTES = {
   search: '/search',
 } as const
 
+/**
+ * 30 Oct (launch audit): Insights is hidden site-wide. /insights and its
+ * nine articles are still placeholder (cover-image boxes, lorem copy,
+ * "The full article is on its way"), so nothing on the live site links to
+ * them and the search index leaves them out. The routes themselves stay
+ * registered in App.tsx (and are noindexed), so a stray old link still
+ * lands somewhere.
+ *
+ * This is the one switch: the homepage "Insights & Events" section, the
+ * search index's Insight entries and the Insight filter chip all read it.
+ * Set it to true once real articles exist — and add a footer/nav link back
+ * here if the client wants one.
+ */
+export const SHOW_INSIGHTS: boolean = false
+
 export function productPath(slug: string) {
   return `${ROUTES.products}/${slug}`
 }
@@ -47,7 +62,9 @@ export type NavItem = {
 /**
  * Desktop/mobile navigation: About · Capabilities · Industries · Careers.
  * Products, Quality and Insights were dropped from the bar on review
- * (13 Oct); their pages still exist and stay linked from the footer.
+ * (13 Oct); their pages still exist. Products is back as a child of
+ * Capabilities (30 Oct); Products, Quality and Sustainability are linked
+ * from the footer. Insights is hidden for now — see `SHOW_INSIGHTS`.
  * Industries gains a dropdown because the wireframes give it three child
  * pages and a landing page.
  */
@@ -61,6 +78,12 @@ export const NAV: NavItem[] = [
         label: 'Engineering Services',
         to: ROUTES.capabilities,
         blurb: 'Eight service families across the product lifecycle',
+      },
+      {
+        // 30 Oct (launch audit): /products had no way in from the nav.
+        label: 'Products & Platforms',
+        to: ROUTES.products,
+        blurb: 'Hardware and systems for mobility, industry and defence',
       },
       {
         label: 'Technologies',
@@ -106,6 +129,11 @@ export type FooterColumn = {
 /**
  * Footer columns, matching the wireframe footer. `to` is an internal
  * route; `href` is an external link and renders with target="_blank".
+ *
+ * 30 Oct (launch audit): Products & Platforms, Quality & Standards and
+ * Sustainability had no link anywhere in the header or footer — reachable
+ * only by typing the URL. They are added here (and to SiteFooterHome3's
+ * own copy of these columns). Insights stays out; see `SHOW_INSIGHTS`.
  */
 export const FOOTER_COLUMNS: FooterColumn[] = [
   {
@@ -121,6 +149,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
     links: [
       { label: 'About', to: ROUTES.about },
       { label: 'Careers', to: ROUTES.careers },
+      { label: 'Sustainability', to: ROUTES.sustainability },
       { label: 'Contact', to: ROUTES.contact },
     ],
   },
@@ -129,11 +158,13 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
     links: [
       { label: 'Engineering Services', to: ROUTES.capabilities },
       { label: 'Technologies', to: ROUTES.technologies },
+      { label: 'Quality & Standards', to: ROUTES.quality },
     ],
   },
   {
     heading: 'Products',
     links: [
+      { label: 'Products & Platforms', to: ROUTES.products },
       {
         label: 'Lucas-TVS Products',
         href: 'https://lucas-tvs.com/automotive-solutions-products/',

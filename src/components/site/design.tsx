@@ -46,7 +46,7 @@ export function Eyebrow({
     <p
       className={cx(
         'font-mono text-[12px] tracking-[0.12em] uppercase lg:text-[13px]',
-        tone === 'green' && 'text-green-deep',
+        tone === 'green' && 'text-green-ink',
         tone === 'lime' && 'text-lime',
         tone === 'light' && 'text-white/90',
         className,

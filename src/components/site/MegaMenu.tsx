@@ -149,7 +149,7 @@ export function MegaNavItem({
 
 function Eyebrow({ children }: { children: ReactNode }) {
   return (
-    <p className="font-mono text-[11px] tracking-[0.12em] text-green-deep uppercase">{children}</p>
+    <p className="font-mono text-[12px] tracking-[0.12em] text-green-ink uppercase">{children}</p>
   )
 }
 
@@ -262,7 +262,7 @@ function ProductsMenu() {
             <div key={sector} className="flex flex-col gap-3">
               <Link
                 to={to}
-                className="group inline-flex items-center gap-2 self-start font-mono text-[11px] tracking-[0.12em] text-green-deep uppercase hover:text-ink"
+                className="group inline-flex items-center gap-2 self-start font-mono text-[12px] tracking-[0.12em] text-green-ink uppercase hover:text-ink"
               >
                 {label}
                 <span aria-hidden className="transition-transform duration-200 group-hover:translate-x-0.5">
@@ -274,7 +274,7 @@ function ProductsMenu() {
                   <li key={product.slug}>
                     <Link
                       to={productPath(product.slug)}
-                      className="-mx-2 block rounded-[8px] px-2 py-[7px] font-body text-[14px] leading-[1.35] text-ink transition-colors duration-150 hover:bg-lime-tint hover:text-green-deep"
+                      className="-mx-2 block rounded-[8px] px-2 py-[7px] font-body text-[14px] leading-[1.35] text-ink transition-colors duration-150 hover:bg-lime-tint hover:text-green-ink"
                     >
                       {product.name}
                     </Link>
@@ -294,10 +294,10 @@ function ProductsMenu() {
             <ArrowRing />
           </Link>
           <div className="flex items-center gap-5 font-body text-[13px] text-body">
-            <a href={CATALOGUE_URL.lucasTvs} target="_blank" rel="noopener noreferrer" className="hover:text-green-deep">
+            <a href={CATALOGUE_URL.lucasTvs} target="_blank" rel="noopener noreferrer" className="hover:text-green-ink">
               Lucas TVS catalogue ↗
             </a>
-            <a href={CATALOGUE_URL.inel} target="_blank" rel="noopener noreferrer" className="hover:text-green-deep">
+            <a href={CATALOGUE_URL.inel} target="_blank" rel="noopener noreferrer" className="hover:text-green-ink">
               INEL products ↗
             </a>
           </div>
@@ -311,7 +311,7 @@ function ProductsMenu() {
           to={productPath(featured.slug)}
           className="group relative m-3 ml-0 flex flex-col overflow-hidden rounded-[16px] bg-[radial-gradient(125%_125%_at_58%_40%,#183f2d_0%,#123322_40%,#0b2417_75%,#091f14_100%)] p-5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime"
         >
-          <span className="self-start rounded-full border border-lime/70 px-3 py-1 font-body text-[10px] font-semibold tracking-[0.14em] text-lime uppercase">
+          <span className="self-start rounded-full border border-lime/70 px-3 py-1 font-body text-[12px] font-semibold tracking-[0.14em] text-lime uppercase">
             Featured
           </span>
           <img
@@ -321,7 +321,7 @@ function ProductsMenu() {
             decoding="async"
             className="mx-auto my-3 h-[130px] w-auto object-contain transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none"
           />
-          <span className="font-mono text-[10.5px] tracking-[0.12em] text-white/70 uppercase">
+          <span className="font-mono text-[12px] tracking-[0.12em] text-white/70 uppercase">
             {featured.category}
           </span>
           <span className="mt-1 flex items-center justify-between gap-3">

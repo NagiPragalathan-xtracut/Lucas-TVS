@@ -12,9 +12,9 @@ import { WhyChooseUsHome3 } from '../components/WhyChooseUsHome3'
 import { CareersHome3 } from '../components/CareersHome3'
 import { InsightsHome3 } from '../components/InsightsHome3'
 import { SiteFooterHome3 } from '../components/SiteFooterHome3'
-
-/** Home3's "Insights & Events" section — hidden for now (14 Oct). */
-const SHOW_INSIGHTS = false
+/** Home3's "Insights & Events" section — hidden since 14 Oct. The flag now
+    lives in routes.ts so the homepage, search and links all switch together. */
+import { SHOW_INSIGHTS } from '../lib/routes'
 
 const WORD_STAGGER_MS = 55
 
@@ -181,8 +181,8 @@ export default function Home3() {
               sustainability, which is why it was in; Shrihari's call is to
               let the parent site carry it. */}
           <CareersHome3 />
-          {/* Insights & Events hidden 14 Oct. Set SHOW_INSIGHTS to true to
-              bring it back. */}
+          {/* Insights & Events hidden 14 Oct. Set SHOW_INSIGHTS (routes.ts)
+              to true to bring it back. */}
           {SHOW_INSIGHTS && <InsightsHome3 />}
         </div>
       </main>

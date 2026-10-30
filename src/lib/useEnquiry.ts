@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react'
+import { trackEvent } from './analytics'
 
 /**
  * The Google Apps Script web app that appends each enquiry to the client's
@@ -11,9 +12,31 @@ export const ENQUIRY_ENDPOINT =
 export type EnquiryStatus = 'idle' | 'sending' | 'sent' | 'error'
 
 /**
+ * Longest value each field may carry (30 Oct, launch audit). The forms set
+ * the same numbers as `maxLength` on their inputs, so a person can't type
+ * past them; this is the backstop for pasted or scripted values. Anything
+ * not listed is capped at `DEFAULT_LIMIT` — the Apps Script caps every
+ * cell at 2000 as well.
+ */
+export const FIELD_LIMITS: Record<string, number> = {
+  name: 100,
+  company: 120,
+  email: 254,
+  phone: 30,
+  message: 2000,
+  requirement: 2000,
+}
+const DEFAULT_LIMIT = 2000
+
+/** Trimmed and cut to the field's limit. */
+function tidy(key: string, value: FormDataEntryValue) {
+  return String(value).trim().slice(0, FIELD_LIMITS[key] ?? DEFAULT_LIMIT)
+}
+
+/**
  * Submit handler and status for an enquiry form. Every named field in the
- * form is sent as-is, plus which form it came from (`source`) and the page
- * URL. The form is cleared once the sheet confirms the row was written;
+ * form is sent trimmed and length-capped (see `FIELD_LIMITS`), plus which
+ * form it came from (`source`) and the page URL. The form is cleared once the sheet confirms the row was written;
  * `onSent` is for clearing any controlled fields `form.reset()` can't.
  *
  * Posted as urlencoded so the browser sends it without a CORS preflight,
@@ -29,7 +52,7 @@ export function useEnquiry(source: string, onSent?: () => void) {
     const form = e.currentTarget
 
     const body = new URLSearchParams()
-    new FormData(form).forEach((value, key) => body.append(key, String(value)))
+    new FormData(form).forEach((value, key) => body.append(key, tidy(key, value)))
     body.append('source', source)
     body.append('page', window.location.href)
 
@@ -39,6 +62,7 @@ export function useEnquiry(source: string, onSent?: () => void) {
       const reply = (await res.json()) as { ok?: boolean }
       if (!res.ok || !reply.ok) throw new Error('Enquiry not saved')
       form.reset()
+      trackEvent('generate_lead', { form_source: source })
       onSent?.()
       setStatus('sent')
     } catch {

@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Launch Audit: Fix Status</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm 18mm 16mm; }
+  :root { --ink:#1a1d21; --body:#4a5058; --line:#dfe2e6; --mute:#f5f6f7; --green:#1d7a32; --amber:#9a5b00; --red:#b42318; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Inter, Arial, sans-serif; color: var(--ink); font-size: 10.5pt; line-height: 1.45; margin: 0; background:#fff; }
+  h1 { font-size: 22pt; margin: 0 0 4pt; }
+  h2 { font-size: 14pt; margin: 20pt 0 6pt; page-break-after: avoid; }
+  h3 { font-size: 11.5pt; margin: 14pt 0 4pt; page-break-after: avoid; }
+  .meta { color: var(--body); margin-bottom: 14pt; }
+  p { margin: 0 0 8pt; }
+  table { width: 100%; border-collapse: collapse; margin: 4pt 0 10pt; font-size: 9.5pt; }
+  th, td { border-bottom: 1px solid var(--line); padding: 6pt 6pt; vertical-align: top; text-align: left; }
+  th { background: var(--mute); font-weight: 600; }
+  tr { page-break-inside: avoid; }
+  td.n { width: 22pt; color: var(--body); }
+  td.where { width: 78pt; color: var(--body); }
+  td.status { width: 62pt; white-space: nowrap; }
+  .s { font-weight: 700; font-size: 8.5pt; padding: 2pt 6pt; border-radius: 10pt; display: inline-block; }
+  .fixed { color: var(--green); background: #e7f4ea; }
+  .partial { color: var(--amber); background: #fdf1de; }
+  .open { color: var(--red); background: #fdeceb; }
+  .summary td { font-size: 10pt; }
+  .issue { font-weight: 600; }
+  ul { margin: 0 0 8pt 16pt; padding: 0; }
+  li { margin-bottom: 3pt; }
+  code { font-family: Consolas, monospace; font-size: 9pt; background: var(--mute); padding: 0 3pt; border-radius: 3pt; }
+  .note { color: var(--body); font-size: 9pt; }
+</style>
+</head>
+<body>
+
+<h1>software.lucas-tvs.com: Launch Audit, Fix Status</h1>
+<div class="meta">Oct 30, 2026 · Status update on the 24-item launch audit · Changes are in the repo working tree, not yet deployed</div>
+
+<h2>Verdict</h2>
+<p>All four critical issues are fixed in code. 20 of the 24 items are fixed. Three are partly fixed because they need an account, key or ID only Lucas-TVS can supply. One is open because it needs the client to confirm the address. Every change builds cleanly (<code>npm run build</code>) and was checked on a local production build. The header, caching and 404 behaviour can only be confirmed after the next Vercel deploy.</p>
+
+<table class="summary">
+  <tr><th>Severity</th><th>Items</th><th>Fixed</th><th>Partly fixed</th><th>Open</th></tr>
+  <tr><td>Critical</td><td>4</td><td>4</td><td>0</td><td>0</td></tr>
+  <tr><td>High</td><td>6</td><td>4</td><td>2</td><td>0</td></tr>
+  <tr><td>Medium</td><td>8</td><td>7</td><td>1</td><td>0</td></tr>
+  <tr><td>Low</td><td>6</td><td>5</td><td>0</td><td>1</td></tr>
+  <tr><td><b>Total</b></td><td><b>24</b></td><td><b>20</b></td><td><b>3</b></td><td><b>1</b></td></tr>
+</table>
+
+<h3>Measured on the local production build</h3>
+<table>
+  <tr><th>Check</th><th>Audit</th><th>Now</th></tr>
+  <tr><td>Hero video data on desktop</td><td>76 MB after 111 s; re-fetched on every rotation</td><td>~0.8 MB after 40 s; each clip fetched once</td></tr>
+  <tr><td>Five hero MP4s</td><td>18.6 MB</td><td>4.3 MB (0.5–1.2 MB each)</td></tr>
+  <tr><td>Hero on phones, Save-Data, reduced motion</td><td>Videos</td><td>Still image only, no video downloaded</td></tr>
+  <tr><td>Largest live-page PNGs (11 files)</td><td>~27 MB</td><td>~1 MB as WebP</td></tr>
+  <tr><td>Main JavaScript bundle</td><td>981 KB, one file</td><td>660 KB, with each inner page split into its own chunk</td></tr>
+  <tr><td>Routes with their own title, description, canonical and OG tags</td><td>1</td><td>43</td></tr>
+  <tr><td>Smallest visible text on /contact</td><td>10 px</td><td>12 px</td></tr>
+</table>
+<p class="note">Lighthouse was not re-run: PageSpeed Insights tests the live URL, so scores update after the deploy.</p>
+
+<h2>Fix list</h2>
+
+<h3>Critical: fix before any promotion</h3>
+<table>
+  <tr><th></th><th>Issue</th><th>Where</th><th>What was done</th><th>Status</th></tr>
+  <tr><td class="n">1</td><td class="issue">Lorem-ipsum certifications</td><td class="where">/quality</td>
+    <td>"Certified processes" section hidden behind <code>SHOW_CERTIFICATIONS = false</code>. No other placeholder copy on the page. <b>To re-enable:</b> supply the real certificate PDFs.</td>
+    <td class="status"><span class="s fixed">Fixed</span></td></tr>
+  <tr><td class="n">2</td><td class="issue">Placeholder Insights</td><td class="where">/insights and 9 articles</td>
+    <td>Hidden. Removed every link (404 page, homepage section), left Insights out of site search, set all Insights routes to <code>noindex</code> and left them out of the sitemap. Two flags bring it back: <code>SHOW_INSIGHTS</code> in routes.ts and <code>INSIGHTS_HIDDEN</code> in seo.ts.</td>
+    <td class="status"><span class="s fixed">Fixed</span></td></tr>
+  <tr><td class="n">3</td><td class="issue">Hero videos re-download forever</td><td class="where">Homepage hero</td>
+    <td>Each video now mounts once (no <code>src</code> swapping). The active slide preloads in full and the rest load metadata only. Playback pauses while the tab is hidden. Phones, Save-Data and reduced motion get the poster still. Clips re-encoded to 1280 px with no audio (18.6 → 4.3 MB). The slide dots now have a 24 px tap area.</td>
+    <td class="status"><span class="s fixed">Fixed</span></td></tr>
+  <tr><td class="n">4</td><td class="issue">No caching on fingerprinted files</td><td class="where">Sitewide</td>
+    <td><code>/assets/*</code> is now served with <code>public, max-age=31536000, immutable</code> (vercel.json). Confirm the response header after deploy.</td>
+    <td class="status"><span class="s fixed">Fixed</span></td></tr>
+</table>
+
+<h3>High</h3>
+<table>
+  <tr><th></th><th>Issue</th><th>Where</th><th>What was done</th><th>Status</th></tr>
+  <tr><td class="n">5</td><td class="issue">Missing security headers</td><td class="where">Sitewide</td>
+    <td>Added X-Content-Type-Options, X-Frame-Options DENY, Referrer-Policy, Permissions-Policy and HSTS. CSP ships as <code>Content-Security-Policy-Report-Only</code>, covering the Apps Script, Maps and GA4 origins. <b>Next step:</b> after a week with no console reports, rename the key to <code>Content-Security-Policy</code>.</td>
+    <td class="status"><span class="s fixed">Fixed</span></td></tr>
+  <tr><td class="n">6</td><td class="issue">Enquiry form open to abuse</td><td class="where">/contact</td>
+    <td>Done:
+      <ul><li>Fields are capped and trimmed in the browser.</li>
+      <li>The repo's Apps Script copy rejects a filled honeypot, escapes values starting with = + - @, and caps each cell at 2,000 characters.</li></ul>
+      <b>Still needed:</b> the script owner must paste in and redeploy the script. Moving submission to a Vercel function with Cloudflare Turnstile (and Resend email) needs Turnstile and Resend keys and a decision on who owns the data.</td>
+    <td class="status"><span class="s partial">Partly fixed</span></td></tr>
+  <tr><td class="n">7</td><td class="issue">No analytics or conversion tracking</td><td class="where">Sitewide</td>
+    <td>GA4 loader under Consent Mode v2 is built. It loads only after "Allow optional" and stops on "Reject". A <code>generate_lead</code> event fires on every successful enquiry. <b>Still needed:</b> set <code>VITE_GA4_ID</code> in Vercel, mark <code>generate_lead</code> as a key event in GA4, and verify Search Console.</td>
+    <td class="status"><span class="s partial">Partly fixed</span></td></tr>
+  <tr><td class="n">8</td><td class="issue">Crawlers and link previews see one page</td><td class="where">Sitewide</td>
+    <td>A build step writes static HTML for all 43 routes, each with its own title, description, canonical URL, Open Graph and Twitter tags. There is a 1200×630 OG image, and the homepage carries Organization JSON-LD. Tags also update on client-side navigation.</td>
+    <td class="status"><span class="s fixed">Fixed</span></td></tr>
+  <tr><td class="n">9</td><td class="issue">No robots.txt, sitemap or real 404</td><td class="where">Sitewide</td>
+    <td>Added robots.txt and a generated sitemap.xml (29 URLs; leaves out /search, the old homepage variants and Insights). Removed the catch-all rewrite, so unknown paths fall through to 404.html (noindex) with HTTP 404. /home3 now redirects permanently to /. <b>Confirm after deploy:</b> status codes and <code>/products?sector=…</code> links.</td>
+    <td class="status"><span class="s fixed">Fixed</span></td></tr>
+  <tr><td class="n">10</td><td class="issue">Oversized images</td><td class="where">Homepage sectors, sitewide</td>
+    <td>11 large PNGs (three sector images, Capabilities product shots, page backdrops) converted to WebP at about twice display size: ~27 MB → ~1 MB. Homepage images now set width and height, and below-the-fold images use <code>loading="lazy"</code>.</td>
+    <td class="status"><span class="s fixed">Fixed</span></td></tr>
+</table>
+
+<h3>Medium</h3>
+<table>
+  <tr><th></th><th>Issue</th><th>Where</th><th>What was done</th><th>Status</th></tr>
+  <tr><td class="n">11</td><td class="issue">Low colour contrast</td><td class="where">Sitewide</td>
+    <td>New text-only token <code>green-ink</code> (#1d7a32):
+      <ul><li>Lime eyebrows: 1.46 → 5.41:1.</li>
+      <li>Footer headings and "About Us": 2.28 → 5.41:1.</li>
+      <li>Small green labels: 4.15 → 5.41:1.</li>
+      <li>Mobile menu links: up to 18.4:1.</li>
+      <li>Hero sub-line: raised to 90% white with a soft shadow.</li></ul></td>
+    <td class="status"><span class="s fixed">Fixed</span></td></tr>
+  <tr><td class="n">12</td><td class="issue">iPhone zooms into form fields</td><td class="where">/contact, homepage enquiry, /products search</td>
+    <td>All inputs, selects and textareas are now 16 px on phones.</td>
+    <td class="status"><span class="s fixed">Fixed</span></td></tr>
+  <tr><td class="n">13</td><td class="issue">Touch targets too small</td><td class="where">Sitewide</td>
+    <td>Footer links, the bottom-row links, breadcrumbs, hero dots and focus-grid dots now have tap areas of at least 24 px.</td>
+    <td class="status"><span class="s fixed">Fixed</span></td></tr>
+  <tr><td class="n">14</td><td class="issue">Form compliance gaps</td><td class="where">/contact</td>
+    <td>Required fields are marked with an asterisk and set <code>required</code> and <code>aria-required</code>. A "By submitting you agree to our Privacy Policy" line sits beside submit. Fields have maxlength caps (name 100, company 120, email 254, phone 30, message 2,000). The homepage enquiry pop-up got the same caps and consent line.</td>
+    <td class="status"><span class="s fixed">Fixed</span></td></tr>
+  <tr><td class="n">15</td><td class="issue">One 981 KB JavaScript bundle</td><td class="where">Sitewide</td>
+    <td>Every page except the homepage now loads with React.lazy, which cut the main bundle to 660 KB. Further gains would mean deferring the homepage's animation libraries (GSAP, Framer Motion).</td>
+    <td class="status"><span class="s partial">Partly fixed</span></td></tr>
+  <tr><td class="n">16</td><td class="issue">Hidden pages</td><td class="where">Navigation</td>
+    <td>"Products &amp; Platforms" added under Capabilities in the inner-page mobile menu. Both footers link to Products, Quality and Sustainability. Both headers have a search icon. /products lists all 15 products and has its own H1, "Products &amp; Platforms." The desktop header still has no direct Products link.</td>
+    <td class="status"><span class="s fixed">Fixed</span></td></tr>
+  <tr><td class="n">17</td><td class="issue">Menu skips Electrification &amp; Powertrain</td><td class="where">Menu, homepage</td>
+    <td>The homepage Electrification card now links to <code>/technologies#electrification</code>, so all five focus areas link to Technologies. The menu links to the Technologies page and doesn't list focus areas separately.</td>
+    <td class="status"><span class="s fixed">Fixed</span></td></tr>
+  <tr><td class="n">18</td><td class="issue">Broken definition lists</td><td class="where">Footer contact card, /contact</td>
+    <td>Each row is now a valid <code>&lt;dl&gt;</code> holding a <code>&lt;dt&gt;</code> and a <code>&lt;dd&gt;</code>.</td>
+    <td class="status"><span class="s fixed">Fixed</span></td></tr>
+</table>
+
+<h3>Low</h3>
+<table>
+  <tr><th></th><th>Issue</th><th>Where</th><th>What was done</th><th>Status</th></tr>
+  <tr><td class="n">19</td><td class="issue">Missing app icons</td><td class="where">Site root</td>
+    <td>Added favicon.ico, apple-touch-icon.png, 192 and 512 px icons, site.webmanifest and a theme-color meta tag.</td>
+    <td class="status"><span class="s fixed">Fixed</span></td></tr>
+  <tr><td class="n">20</td><td class="issue">Tiny text</td><td class="where">Footer, labels</td>
+    <td>All text is at least 12 px, including the footer Privacy Policy link (measured on /contact).</td>
+    <td class="status"><span class="s fixed">Fixed</span></td></tr>
+  <tr><td class="n">21</td><td class="issue">No llms.txt or security.txt</td><td class="where">Site root</td>
+    <td>Added both. security.txt points to the contact page; switch it to a security mailbox if one exists.</td>
+    <td class="status"><span class="s fixed">Fixed</span></td></tr>
+  <tr><td class="n">22</td><td class="issue">Footer address names INEL R&amp;D Tech Center</td><td class="where">Footer</td>
+    <td>Unchanged. Lucas-TVS needs to confirm the correct address for this division.</td>
+    <td class="status"><span class="s open">Open</span></td></tr>
+  <tr><td class="n">23</td><td class="issue">Cookie banner covers a third of a phone</td><td class="where">Mobile</td>
+    <td>Compact layout on phones with shorter copy, no icon and buttons side by side. It now takes 16% of a 390×844 screen.</td>
+    <td class="status"><span class="s fixed">Fixed</span></td></tr>
+  <tr><td class="n">24</td><td class="issue">Sticky header hides anchored headings</td><td class="where">Anchored sections</td>
+    <td>Every element with an id now gets <code>scroll-margin-top: 104px</code>.</td>
+    <td class="status"><span class="s fixed">Fixed</span></td></tr>
+</table>
+
+<h2>Needs Lucas-TVS or the account owner</h2>
+<ul>
+  <li><b>Real certificate PDFs</b>, to bring the /quality certifications back (item 1).</li>
+  <li><b>Real articles</b>, to bring Insights back (item 2).</li>
+  <li><b>Apps Script redeploy:</b> paste <code>scripts/google-sheets/enquiries.gs</code> into the live script and publish a new version. Also answer the audit's open question about which Google account owns the script and the sheet (item 6).</li>
+  <li><b>Turnstile and Resend keys</b>, plus an enquiries inbox Lucas-TVS owns, to move the form to a Vercel function (item 6).</li>
+  <li><b>GA4 measurement ID</b> (<code>VITE_GA4_ID</code>) and <b>Search Console verification</b> (item 7).</li>
+  <li><b>Confirmation of the footer address</b> (item 22) and, optionally, a security contact mailbox (item 21).</li>
+  <li><b>Client review:</b> /products now shows all 15 products by default, and the homepage Electrification card links to /technologies instead of the external products page.</li>
+</ul>
+
+<h2>Verify after deploy</h2>
+<ul>
+  <li><code>curl -I</code> a file under <code>/assets/</code>: it should return <code>Cache-Control: public, max-age=31536000, immutable</code>.</li>
+  <li><code>curl -I /made-up-page</code>: it should return HTTP 404. <code>/about</code> should return 200 with its own title, and <code>/about/</code> should redirect to <code>/about</code>.</li>
+  <li>Check the security headers with securityheaders.com, then watch the console for CSP report-only warnings for a week.</li>
+  <li>Re-run PageSpeed Insights (mobile and desktop), and paste a page link into LinkedIn or WhatsApp to check the preview card.</li>
+</ul>
+
+<h2>Method</h2>
+<p>Fixes were made in the repository and checked with <code>npm run build</code> and the TypeScript compiler. The production build was then served locally (<code>vite preview</code>) and tested in a browser:</p>
+<ul>
+  <li><b>Hero video:</b> network transfer and playback state at 1366 px and 640 px widths.</li>
+  <li><b>Static HTML:</b> per-route head tags in the prerendered pages.</li>
+  <li><b>Contact form:</b> font sizes, required flags, maxlength and the privacy link.</li>
+  <li><b>Pages:</b> no lorem-ipsum or Insights links on /, /quality, /products and /search; valid definition lists; minimum text size; footer link heights.</li>
+  <li><b>Console:</b> no console errors.</li>
+</ul>
+<p><b>Not covered:</b> Vercel-only behaviour (headers, caching, 404 status), Lighthouse scores, physical devices, and a live form submission.</p>
+
+</body>
+</html>

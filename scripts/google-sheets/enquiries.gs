@@ -16,7 +16,8 @@
  *      into ENQUIRY_ENDPOINT in src/lib/useEnquiry.ts.
  *
  * After editing this script later, use Deploy → Manage deployments → edit
- * → Version: New version, so the /exec URL stays the same.
+ * → Version: New version, so the /exec URL stays the same. Editing this
+ * file in the repo changes nothing live until someone does exactly that.
  */
 
 const SHEET_ID = '13eL9yGKPZcvFsfJ_l4jzrYp03V_id39XhIie6KcjZNM'
@@ -39,8 +40,10 @@ const COLUMNS = [
 function doPost(e) {
   const p = (e && e.parameter) || {}
 
-  // Honeypot: a field hidden from people. Only bots fill it, so their
-  // submissions are dropped while still looking accepted.
+  // Honeypot: a field hidden from people (`website` in both forms). Only
+  // bots fill it, so their submissions are dropped — nothing is written —
+  // while still looking accepted, which gives a bot no signal to adapt to.
+  // First thing in doPost, before any validation or sheet access.
   if (p.website) return json({ ok: true })
   if (!p.name || !p.email) return json({ ok: false, error: 'Name and email are required.' })
 
@@ -71,10 +74,18 @@ function enquirySheet() {
   return ss.getSheets().find((s) => s.getSheetId() === 0) || ss.getSheets()[0]
 }
 
+// Every cell value is capped at this many characters. The site already
+// caps its own fields at or below this (useEnquiry.ts FIELD_LIMITS), so in
+// practice only a hand-crafted POST is ever cut.
+const MAX_CELL_LENGTH = 2000
+
 // Text from the public internet: cap its length, and stop anything that
-// starts like a formula (= + - @) from being run as one by Sheets.
+// starts like a formula (= + - @) from being run as one by Sheets — a
+// leading apostrophe makes Sheets store it as plain text. Checked after
+// trimming, so leading whitespace can't smuggle a formula past it.
+// (30 Oct, launch audit: cap lowered from 5000 to 2000.)
 function clean(value) {
-  const s = String(value == null ? '' : value).trim().slice(0, 5000)
+  const s = String(value == null ? '' : value).trim().slice(0, MAX_CELL_LENGTH)
   return /^[=+\-@]/.test(s) ? "'" + s : s
 }
 

@@ -54,6 +54,9 @@ export function CareersHome3() {
         <img
           src={careersScene}
           alt="Engineer working at a holographic display showing AI simulation, electrification, embedded systems, software defined vehicle and defence electronics around a car"
+          width={2000}
+          height={782}
+          loading="lazy"
           decoding="async"
           className="h-[230px] w-full object-cover object-[68%_center] sm:h-[320px] lg:absolute lg:inset-0 lg:h-full"
         />
@@ -69,7 +72,7 @@ export function CareersHome3() {
         <div className="relative grid items-center gap-10 p-6 sm:p-8 lg:min-h-[520px] lg:grid-cols-[minmax(0,540px)_minmax(0,1fr)] lg:gap-8 lg:p-12 xl:p-14">
           {/* Copy ------------------------------------------------------- */}
           <div>
-          <p className="font-body text-[12px] font-semibold tracking-[0.18em] text-green-deep uppercase">
+          <p className="font-body text-[12px] font-semibold tracking-[0.18em] text-green-ink uppercase">
             Careers
           </p>
 
@@ -77,7 +80,9 @@ export function CareersHome3() {
               colour at the sentence, not at a line. */}
           <h2 className="mt-4 font-display text-[30px] leading-[1.15] font-semibold text-ink sm:text-[34px] lg:text-[36px]">
             Solve hard engineering problems.{' '}
-            <span className="text-green">Build what&rsquo;s next.</span>
+            {/* green-deep, not green: 4.15:1 vs 2.28:1 on white — this is large
+                text, so 3:1 is the bar (launch audit). */}
+            <span className="text-green-deep">Build what&rsquo;s next.</span>
           </h2>
 
           <p className="mt-4 max-w-[430px] font-body text-[15px] leading-[1.55] text-body">
@@ -123,7 +128,7 @@ export function CareersHome3() {
             <ul className="flex w-max animate-[marquee_12s_linear_infinite] motion-reduce:animate-none">
               {[...HIGHLIGHTS, ...HIGHLIGHTS].map((h, i) => (
                 <li key={i} className="w-[50cqw] shrink-0 pr-4">
-                  <h.icon strokeWidth={1.6} className="h-[22px] w-[22px] text-green-deep" />
+                  <h.icon strokeWidth={1.6} className="h-[22px] w-[22px] text-green-ink" />
                   <p className="mt-3 font-body text-[12px] leading-[1.35] text-ink">
                     <span className="block whitespace-nowrap">{h.lines[0]}</span>
                     <span className="block whitespace-nowrap">{h.lines[1]}</span>
@@ -142,7 +147,7 @@ export function CareersHome3() {
                 <h.icon
                   aria-hidden
                   strokeWidth={1.6}
-                  className="h-[22px] w-[22px] text-green-deep"
+                  className="h-[22px] w-[22px] text-green-ink"
                 />
                 {/* Each written line is held to one rendered line.
                     Without this the column decides where the text breaks:

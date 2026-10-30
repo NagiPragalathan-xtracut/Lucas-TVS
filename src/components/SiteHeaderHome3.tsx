@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Search } from 'lucide-react'
 import { cx } from '../lib/cx'
 import { logoLucasTvs } from '../lib/assets'
 import { NAV, ROUTES } from '../lib/routes'
@@ -77,6 +78,8 @@ export function SiteHeaderHome3() {
               <img
                 src={logoLucasTvs}
                 alt="Lucas-TVS"
+                width={480}
+                height={138}
                 className={cx(
                   'h-[38px] w-auto transition-[filter] duration-300 lg:h-[49px]',
                   !solid && 'brightness-0 invert',
@@ -92,7 +95,7 @@ export function SiteHeaderHome3() {
               const tone = cx(
                 'font-body text-[15px] leading-[1.25] transition-colors duration-300',
                 solid
-                  ? cx('hover:text-green-deep', open ? 'text-green-deep' : 'text-ink')
+                  ? cx('hover:text-green-ink', open ? 'text-green-ink' : 'text-ink')
                   : cx('hover:text-lime', open ? 'text-lime' : 'text-white/85'),
               )
               return id ? (
@@ -111,7 +114,23 @@ export function SiteHeaderHome3() {
               `Link` carrying the same classes. White over the dark bar, lime
               once the bar turns white — a white pill on white would vanish.
               The focus ring follows: white on dark, ink on white. */}
-          <div className="ml-auto flex items-center justify-end gap-6 xl:flex-1 xl:basis-0">
+          <div className="ml-auto flex items-center justify-end gap-3 lg:gap-4 xl:flex-1 xl:basis-0">
+            {/* Site search (30 Oct, launch audit): /search existed but had no
+                way in. An icon rather than a nav item, so the bar's four
+                links stay as reviewed. */}
+            <Link
+              to={ROUTES.search}
+              aria-label="Search the site"
+              className={cx(
+                'grid h-10 w-10 shrink-0 place-items-center rounded-full border transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2',
+                solid
+                  ? 'border-line text-ink hover:text-green-ink focus-visible:outline-ink'
+                  : 'border-white/25 text-white hover:text-lime focus-visible:outline-white',
+              )}
+            >
+              <Search aria-hidden strokeWidth={2} className="h-[18px] w-[18px]" />
+            </Link>
+
             <Link
               to={ROUTES.contact}
               className={cx(
@@ -155,7 +174,10 @@ export function SiteHeaderHome3() {
           <ul
             className={cx(
               'mt-2 grid gap-1 rounded-[10px] border p-4 shadow-lg backdrop-blur-md xl:hidden',
-              solid ? 'border-line-soft bg-white' : 'border-white/10 bg-black/80',
+              // black/90 + full-white links (were black/80 + white/85): the
+              // sheet opens over the hero video, and the links read faint
+              // against its brighter frames (launch audit).
+              solid ? 'border-line-soft bg-white' : 'border-white/10 bg-black/90',
             )}
           >
             {LINKS.map((item) => (
@@ -166,8 +188,8 @@ export function SiteHeaderHome3() {
                   className={cx(
                     'block rounded-lg px-3 py-2.5 font-body text-[15px]',
                     solid
-                      ? 'text-ink hover:bg-surface-mute hover:text-green-deep'
-                      : 'text-white/85 hover:bg-white/10 hover:text-lime',
+                      ? 'text-ink hover:bg-surface-mute hover:text-green-ink'
+                      : 'text-white hover:bg-white/10 hover:text-lime',
                   )}
                 >
                   {item.label}

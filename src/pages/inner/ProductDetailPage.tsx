@@ -71,7 +71,7 @@ export default function ProductDetailPage() {
               {product.name}
             </h2>
             <p className="font-body text-[15px] leading-[1.65] text-body lg:text-[16px]">{product.blurb}</p>
-            <p className="pt-1 font-mono text-[12px] tracking-[0.1em] text-green-deep uppercase">Engineering focus</p>
+            <p className="pt-1 font-mono text-[12px] tracking-[0.1em] text-green-ink uppercase">Engineering focus</p>
             <TagList items={product.highlights} />
             <p className="rounded-[14px] border-[1.5px] border-dashed border-line-soft px-4 py-3 font-body text-[13px] leading-[1.55] text-body">
               Specifications, variants and datasheets are not published here yet. Talk to the

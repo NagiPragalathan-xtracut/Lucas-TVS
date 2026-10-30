@@ -46,16 +46,19 @@ export function SiteFooter() {
         >
           {FOOTER_COLUMNS.map((column) => (
             <div key={column.heading}>
-              <h2 className="font-display text-[15px] leading-[1.27] tracking-[1.74px] text-green uppercase lg:text-[17px]">
+              {/* green-ink, not green: 5.41:1 on white vs 2.28:1 (launch audit). */}
+              <h2 className="font-display text-[15px] leading-[1.27] tracking-[1.74px] text-green-ink uppercase lg:text-[17px]">
                 {column.heading}
               </h2>
-              <ul className="mt-6 space-y-4 lg:mt-[34px]">
+              {/* Links are 24px-tall hit areas (WCAG 2.5.8); the gap shrinks to
+                  match, so the column keeps its original rhythm. */}
+              <ul className="mt-5 space-y-2.5 lg:mt-[30px]">
                 {column.links.map((link) => (
                   <li key={link.label}>
                     {link.to ? (
                       <Link
                         to={link.to}
-                        className="font-sans text-[15px] leading-[1.23] text-body transition-colors hover:text-ink"
+                        className="inline-flex min-h-6 items-center font-sans text-[15px] leading-[1.23] text-body transition-colors hover:text-ink"
                       >
                         {link.label}
                       </Link>
@@ -64,7 +67,7 @@ export function SiteFooter() {
                         href={link.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="font-sans text-[15px] leading-[1.23] text-body transition-colors hover:text-ink"
+                        className="inline-flex min-h-6 items-center font-sans text-[15px] leading-[1.23] text-body transition-colors hover:text-ink"
                       >
                         {link.label}
                       </a>
@@ -87,13 +90,15 @@ export function SiteFooter() {
         </p>
 
         <div className="mt-4 flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
-          <p className="font-mono text-[10px] leading-[1.29] tracking-[0.98px] text-black">
+          {/* 12px floor for legibility (was 10px); the links in this row are
+              24px-tall hit areas, per WCAG 2.5.8 (launch audit). */}
+          <p className="font-mono text-[12px] leading-[1.29] tracking-[0.98px] text-black">
             © 2026 Lucas-TVS Limited · All rights reserved ·{' '}
             <a
               href={PRIVACY_POLICY_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="underline-offset-2 transition-colors hover:text-green hover:underline"
+              className="inline-flex min-h-6 items-center underline-offset-2 transition-colors hover:text-green-ink hover:underline"
             >
               Privacy Policy
             </a>
@@ -106,7 +111,7 @@ export function SiteFooter() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Lucas TVS on ${item.label} (opens in a new tab)`}
-                  className="font-sans text-[11.6px] leading-[1.23] text-black transition-colors hover:text-green"
+                  className="inline-flex min-h-6 items-center font-sans text-[12px] leading-[1.23] text-black transition-colors hover:text-green-ink"
                 >
                   {item.label}
                 </a>

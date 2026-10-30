@@ -250,7 +250,7 @@ function DefenceSuppliedBand() {
                 height={480}
                 className="aspect-[2/1] w-full object-contain"
               />
-              <span className="absolute top-3 left-3 rounded-full bg-[#101211] px-2.5 py-1 font-mono text-[11px] tracking-[0.08em] text-lime">
+              <span className="absolute top-3 left-3 rounded-full bg-[#101211] px-2.5 py-1 font-mono text-[12px] tracking-[0.08em] text-lime">
                 {String(i + 1).padStart(2, '0')}
               </span>
             </div>
@@ -267,7 +267,7 @@ function DefenceSuppliedBand() {
                   >
                     <span
                       aria-hidden
-                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[9px] bg-lime-tint text-green-deep"
+                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[9px] bg-lime-tint text-green-ink"
                     >
                       <product.icon strokeWidth={1.8} className="h-[17px] w-[17px]" />
                     </span>

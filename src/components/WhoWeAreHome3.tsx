@@ -36,7 +36,7 @@ export function WhoWeAreHome3() {
           export of the same scene.
         */}
         <div className="mb-8 lg:absolute lg:top-[6px] lg:left-[36px] lg:z-10 lg:mb-0 lg:w-[540px]">
-          <p className="font-body text-[18px] leading-none font-medium text-green lg:text-[20px]">
+          <p className="font-body text-[18px] leading-none font-medium text-green-ink lg:text-[20px]">
             About Us
           </p>
           <h2 className="mt-4 max-w-[514px] font-display text-[28px] leading-[1.15] font-medium text-ink sm:text-[34px] lg:mt-6 lg:text-[40px]">
@@ -71,14 +71,24 @@ export function WhoWeAreHome3() {
               full-frame export — as a plain rectangle, so no corner tab of
               sky shows above the photo. From lg the notched export returns,
               with the copy sitting in its notch. */}
+          {/* Both below the hero, so lazy — which also means the one
+              `display: none` at the current width is never fetched. */}
           <img
             src={aboutWhoWeAre}
             alt="A scooter, car, truck, loader, tank and military tanker in front of mountains, with aircraft overhead, beside an electric motor, control units and a circuit board and a vehicle design on a display screen"
+            width={1600}
+            height={931}
+            loading="lazy"
+            decoding="async"
             className="aspect-[4/3] w-full object-cover object-[70%_center] sm:aspect-[16/10] lg:hidden"
           />
           <img
             src={aboutEngineering}
             alt="A scooter, car, truck, loader, tank and military tanker in front of mountains, with aircraft overhead, beside an electric motor, control units and a circuit board and a vehicle design on a display screen"
+            width={1257}
+            height={716}
+            loading="lazy"
+            decoding="async"
             className="hidden h-auto w-full lg:block lg:object-fill"
           />
 

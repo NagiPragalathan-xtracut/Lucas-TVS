@@ -159,8 +159,8 @@ function SideStory({ insight }: { insight: Insight }) {
         className="h-24 w-24 shrink-0 rounded-[12px] lg:h-[150px] lg:w-[150px]"
       />
       <span className="flex flex-col gap-2">
-        <span className="font-mono text-[11px] text-body uppercase">{cardLabel(insight)}</span>
-        <span className="font-display text-[16px] leading-[1.3] font-semibold text-ink transition-colors duration-300 group-hover:text-green-deep lg:text-[18px]">
+        <span className="font-mono text-[12px] text-body uppercase">{cardLabel(insight)}</span>
+        <span className="font-display text-[16px] leading-[1.3] font-semibold text-ink transition-colors duration-300 group-hover:text-green-ink lg:text-[18px]">
           {insight.title}
         </span>
         <span className="font-body text-[13px] leading-[1.5] text-body">{insight.summary}</span>
@@ -182,7 +182,7 @@ function GridCard({ insight }: { insight: Insight }) {
         className="h-[190px] w-full rounded-[14px] lg:h-[200px]"
       />
       <span className="flex grow flex-col gap-2 px-1.5 pb-1.5">
-        <span className="font-mono text-[11px] text-green-deep uppercase">{cardLabel(insight)}</span>
+        <span className="font-mono text-[12px] text-green-ink uppercase">{cardLabel(insight)}</span>
         <span className="font-display text-[18px] leading-[1.3] font-semibold text-ink">{insight.title}</span>
         <span className="font-body text-[13px] leading-[1.5] text-body">{insight.summary}</span>
         <span className="mt-auto flex items-center gap-2 pt-1 font-body text-[14px] font-medium text-ink">

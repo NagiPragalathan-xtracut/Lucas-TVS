@@ -1,0 +1,4 @@
+Contact: https://software.lucas-tvs.com/contact
+Expires: 2027-10-30T00:00:00.000Z
+Canonical: https://software.lucas-tvs.com/.well-known/security.txt
+Preferred-Languages: en

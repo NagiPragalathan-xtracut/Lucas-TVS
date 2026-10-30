@@ -83,7 +83,14 @@ export default function ProductsPage() {
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase()
-    if (sector === ALL && category === ALL_CATEGORIES && !q) return productsIn('Automotive')
+    // At rest the grid used to show the automotive range only, because the
+    // defence and industrial bands below carried the rest. With those bands
+    // switched off (SHOW_HIDDEN_SECTIONS), that left eight products — and
+    // their detail pages — with no way in until a chip was clicked (30 Oct,
+    // launch audit). So "All Products" means all of them unless the bands
+    // are back.
+    if (sector === ALL && category === ALL_CATEGORIES && !q)
+      return SHOW_HIDDEN_SECTIONS ? productsIn('Automotive') : PRODUCTS
     return PRODUCTS.filter(
       (p) =>
         (sector === ALL || p.sector === sector) &&
@@ -95,19 +102,21 @@ export default function ProductsPage() {
   return (
     <PageShell title="Products & Platforms">
       {/* The Capabilities page's hero, as the client asked (30 Sep) — same
-          photograph, heading, line and buttons. It replaces this page's own
-          "Hardware That Ships at Volume." hero. Two things differ, because
-          they have to on this page: the breadcrumb names this page, and
-          "View Products" drops to the grid below instead of linking to the
-          page it's already on. */}
+          photograph and buttons. It replaces this page's own "Hardware That
+          Ships at Volume." hero. What differs, because it has to on this
+          page: the breadcrumb names this page, "View Products" drops to
+          the grid below instead of linking to the page it's already on, and
+          (30 Oct, launch audit) the H1 and line are this page's own — two
+          pages sharing "Capabilities That Drive Innovation." as their H1
+          read as duplicates to search engines and screen-reader users. */}
       <DarkHero
         image={focusAiDigital}
         position="65% center"
         heightClass="min-h-[564px] lg:min-h-[640px]"
         crumbs={[{ label: 'Products & Platforms' }]}
-        title="Capabilities That Drive"
-        accent="Innovation."
-        intro="From concept to deployment, our engineering services span embedded systems, electronics, software, safety and validation."
+        title="Products &"
+        accent="Platforms."
+        intro="High-performance hardware and systems for next-generation mobility, industry and defence — backed by the Lucas-TVS group."
         actions={
           <>
             <Pill to={ROUTES.contact}>Talk to Engineering</Pill>
@@ -124,7 +133,11 @@ export default function ProductsPage() {
           eyebrow="Explore our products"
           title="Built for"
           accent="electrified platforms."
-          body="Featured automotive hardware, engineered and manufactured at scale."
+          body={
+            SHOW_HIDDEN_SECTIONS
+              ? 'Featured automotive hardware, engineered and manufactured at scale.'
+              : 'Automotive, industrial and defence hardware, engineered and manufactured at scale.'
+          }
         />
 
         <div className={`${BODY_GAP} flex flex-col gap-5 lg:gap-10`}>
@@ -149,13 +162,13 @@ export default function ProductsPage() {
                 <select
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  className="h-11 w-full appearance-none rounded-full border-[1.5px] border-line-soft bg-white pr-10 pl-[18px] font-body text-[13px] text-ink focus:border-green-deep focus:outline-none sm:w-auto"
+                  className="h-11 w-full appearance-none rounded-full border-[1.5px] border-line-soft bg-white pr-10 pl-[18px] font-body text-[16px] text-ink focus:border-green-deep focus:outline-none sm:w-auto lg:text-[13px]"
                 >
                   {CATEGORIES.map((c) => (
                     <option key={c}>{c}</option>
                   ))}
                 </select>
-                <span aria-hidden className="pointer-events-none absolute top-1/2 right-4 -translate-y-1/2 text-[11px] text-ink">
+                <span aria-hidden className="pointer-events-none absolute top-1/2 right-4 -translate-y-1/2 text-[12px] text-ink">
                   ▾
                 </span>
               </label>
@@ -183,7 +196,7 @@ export default function ProductsPage() {
                   setQuery('')
                   setCategory(ALL_CATEGORIES)
                 }}
-                className="font-medium text-green-deep underline-offset-4 hover:underline"
+                className="font-medium text-green-ink underline-offset-4 hover:underline"
               >
                 Clear filters
               </button>

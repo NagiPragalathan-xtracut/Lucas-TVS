@@ -124,7 +124,7 @@ export default function CapabilitiesPage() {
                   className="aspect-[4/3] w-full object-contain"
                 />
               </span>
-              <span className="px-1 pt-1 font-mono text-[11px] tracking-[0.08em] text-green-deep uppercase">
+              <span className="px-1 pt-1 font-mono text-[12px] tracking-[0.08em] text-green-ink uppercase">
                 {product.category}
               </span>
               <span className="px-1 pb-1 font-display text-[18px] leading-[1.25] font-semibold text-ink">

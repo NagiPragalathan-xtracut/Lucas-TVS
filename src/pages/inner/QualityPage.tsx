@@ -25,8 +25,8 @@ import { approachBackdrop, awardsBackdrop } from '../../lib/assets'
 
 /**
  * Certificates, as drawn: the reference fills all four with lorem ipsum —
- * the client has not supplied any. They are rendered as drawn, with no
- * link behind "View certificate" until there is a certificate to view.
+ * the client has not supplied any. Kept so the layout is ready, but the
+ * whole band is switched off for launch; see `SHOW_CERTIFICATIONS`.
  */
 const CERTIFICATES = Array.from({ length: 4 }, (_, i) => ({
   id: i,
@@ -40,6 +40,17 @@ const CERTIFICATES = Array.from({ length: 4 }, (_, i) => ({
  * deleted, so it can come back.
  */
 const SHOW_RECOGNITION: boolean = false
+
+/**
+ * 30 Oct (launch audit): the "Certified processes." band is hidden. All
+ * four cards were lorem ipsum with a grey "Certificate" box and a "View
+ * certificate" label that went nowhere — placeholder copy that must not
+ * ship. It returns when the client supplies the real certificate PDFs:
+ * fill `CERTIFICATES` with the real names/issuers, link "View
+ * certificate" to each PDF (new tab), swap the ImageSlot for a thumbnail,
+ * then set this to true.
+ */
+const SHOW_CERTIFICATIONS: boolean = false
 
 /**
  * Quality & Standards, built to the Quality artboards of the 29 Sep
@@ -115,30 +126,34 @@ export default function QualityPage() {
         <StepGrid steps={VALIDATION_LEVELS} />
       </DarkBand>
 
-      <Band>
-        <SplitHeader
-          eyebrow="Certifications"
-          title="Certified"
-          accent="processes."
-          body="Independent certifications that demonstrate our quality and safety management."
-        />
-        <ul className={`${BODY_GAP} grid grid-cols-2 gap-3.5 lg:grid-cols-4 lg:gap-4`}>
-          {CERTIFICATES.map((cert) => (
-            <li
-              key={cert.id}
-              className="flex flex-col gap-2.5 rounded-[20px] border-[1.5px] border-line-soft bg-white p-4"
-            >
-              <ImageSlot label="Certificate" className="h-[150px] w-full rounded-[14px] lg:h-[200px]" />
-              <span className="font-display text-[16px] leading-[1.3] font-semibold text-ink">{cert.name}</span>
-              <span className="font-body text-[13px] text-body">{cert.body}</span>
-              <span className="flex items-center gap-2 font-body text-[13px] font-medium text-body-soft">
-                View certificate
-                <IconArrowUpRight />
-              </span>
-            </li>
-          ))}
-        </ul>
-      </Band>
+      {/* Hidden for launch — placeholder certificates. Returns when the real
+          certificate PDFs are supplied; see `SHOW_CERTIFICATIONS`. */}
+      {SHOW_CERTIFICATIONS && (
+        <Band>
+          <SplitHeader
+            eyebrow="Certifications"
+            title="Certified"
+            accent="processes."
+            body="Independent certifications that demonstrate our quality and safety management."
+          />
+          <ul className={`${BODY_GAP} grid grid-cols-2 gap-3.5 lg:grid-cols-4 lg:gap-4`}>
+            {CERTIFICATES.map((cert) => (
+              <li
+                key={cert.id}
+                className="flex flex-col gap-2.5 rounded-[20px] border-[1.5px] border-line-soft bg-white p-4"
+              >
+                <ImageSlot label="Certificate" className="h-[150px] w-full rounded-[14px] lg:h-[200px]" />
+                <span className="font-display text-[16px] leading-[1.3] font-semibold text-ink">{cert.name}</span>
+                <span className="font-body text-[13px] text-body">{cert.body}</span>
+                <span className="flex items-center gap-2 font-body text-[13px] font-medium text-body-soft">
+                  View certificate
+                  <IconArrowUpRight />
+                </span>
+              </li>
+            ))}
+          </ul>
+        </Band>
+      )}
 
       {SHOW_RECOGNITION && (
         <Band tone="mute">

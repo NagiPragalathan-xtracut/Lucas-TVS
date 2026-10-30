@@ -668,6 +668,8 @@ function CircularSplitRollComp({
                       alt={item.alt}
                       className="pointer-events-none block h-full w-full select-none object-cover absolute inset-0"
                       draggable="false"
+                      loading="lazy"
+                      decoding="async"
                     />
 
                     {/* The chevron inherits `currentColor`, so a consumer can
@@ -737,6 +739,8 @@ function CircularSplitRollComp({
                     alt={item.alt}
                     className="absolute inset-0 block h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
                     draggable="false"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
                   {!item.hideCaption && (
@@ -788,6 +792,8 @@ function CircularSplitRollComp({
                   alt={item.alt}
                   className="block h-full w-full object-cover absolute inset-0"
                   draggable="false"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
 

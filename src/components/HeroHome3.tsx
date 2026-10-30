@@ -1,4 +1,4 @@
-import { useState, type CSSProperties } from 'react'
+import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { cx } from '../lib/cx'
 import {
@@ -36,6 +36,49 @@ const SLIDES: { id: string; label: string; image: string; video?: string; thumb:
 const AUTOPLAY_MS = 5000
 const EASE = [0.16, 1, 0.3, 1] as const
 
+/* Below this width the hero shows its stills only — no clip is fetched. */
+const STILLS_ONLY_QUERY = '(max-width: 767px)'
+
+function subscribeMedia(onChange: () => void) {
+  const mq = window.matchMedia(STILLS_ONLY_QUERY)
+  mq.addEventListener('change', onChange)
+  return () => mq.removeEventListener('change', onChange)
+}
+
+function subscribeVisibility(onChange: () => void) {
+  document.addEventListener('visibilitychange', onChange)
+  return () => document.removeEventListener('visibilitychange', onChange)
+}
+
+/** Data Saver / Lite mode. Not in every browser (or in TS's DOM lib). */
+function prefersSaveData() {
+  const nav = navigator as Navigator & { connection?: { saveData?: boolean } }
+  return nav.connection?.saveData === true
+}
+
+/**
+ * Whether the hero should run its clips at all. No on a phone-width
+ * viewport, under Data Saver, and under reduced motion — those get the
+ * slide stills only, which are already on the page as the posters.
+ */
+function useHeroVideoAllowed(reduceMotion: boolean | null) {
+  const narrow = useSyncExternalStore(
+    subscribeMedia,
+    () => window.matchMedia(STILLS_ONLY_QUERY).matches,
+    () => true,
+  )
+  return !narrow && !reduceMotion && !prefersSaveData()
+}
+
+/** True while the tab is in the background. */
+function useDocumentHidden() {
+  return useSyncExternalStore(
+    subscribeVisibility,
+    () => document.hidden,
+    () => false,
+  )
+}
+
 const riseIn = (reduceMotion: boolean | null, delay: number) =>
   reduceMotion
     ? {}
@@ -62,20 +105,53 @@ const riseIn = (reduceMotion: boolean | null, delay: number) =>
  * `animation-play-state`), so the bar and the slide change never drift,
  * and pausing resumes from where it stopped rather than restarting.
  * Under reduced motion nothing autoplays and the active bar shows full.
+ *
+ * Clips (30 Oct, launch audit): each slide's <video> is mounted once and
+ * kept, and only play/pause follows the active slide. They used to mount
+ * and unmount with their slide, which re-fetched the whole file on every
+ * rotation — 76 MB in under two minutes. Inactive clips preload metadata
+ * only, everything pauses while the tab is hidden, and phones, Data Saver
+ * and reduced motion get the stills alone (see `useHeroVideoAllowed`).
  */
 export function HeroHome3() {
   const reduceMotion = useReducedMotion()
   const [active, setActive] = useState(0)
   const [paused, setPaused] = useState(false)
+  const videoAllowed = useHeroVideoAllowed(reduceMotion)
+  const hidden = useDocumentHidden()
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([])
 
   const goTo = (i: number) => setActive((i + SLIDES.length) % SLIDES.length)
+
+  // Play the active slide's clip and pause the rest (all of them while the
+  // tab is hidden). A clip that has already played keeps its buffer, so
+  // coming back to it costs nothing. `videoAllowed` is a dependency because
+  // the refs only fill once the clips mount.
+  useEffect(() => {
+    videoRefs.current.forEach((video, i) => {
+      if (!video) return
+      if (i === active && !hidden) {
+        if (video.paused) video.play().catch(() => {})
+      } else {
+        video.pause()
+      }
+    })
+  }, [active, hidden, videoAllowed])
+
+  // Rewind on arrival (not on tab return), matching the old remount.
+  useEffect(() => {
+    const video = videoRefs.current[active]
+    if (video) video.currentTime = 0
+  }, [active])
 
   const progressStyle = {
     animationName: 'hero-progress',
     animationDuration: `${AUTOPLAY_MS}ms`,
     animationTimingFunction: 'linear',
     animationFillMode: 'forwards',
-    animationPlayState: paused ? 'paused' : 'running',
+    // Hold the slide timer while the tab is hidden too, so the clip and the
+    // bar resume together.
+    animationPlayState: paused || hidden ? 'paused' : 'running',
   } as const
 
   return (
@@ -100,7 +176,7 @@ export function HeroHome3() {
             const current = i === active
             // A slide with a clip plays it instead of the push-in; the still
             // stays underneath as its poster and as the reduced-motion view.
-            const playVideo = Boolean(slide.video) && !reduceMotion
+            const playVideo = Boolean(slide.video) && videoAllowed
             return (
               <div
                 key={slide.id}
@@ -123,17 +199,20 @@ export function HeroHome3() {
                     current && !reduceMotion && !playVideo ? 'scale-[1.06]' : 'scale-100',
                   )}
                 />
-                {/* Mounted only while its slide is up, so the clips never
-                    download or decode in the background. */}
-                {playVideo && current && (
+                {/* Mounted once and never re-keyed or re-sourced, so each
+                    clip downloads once; the effect above plays and pauses
+                    it. Inactive ones fetch metadata only until their turn. */}
+                {playVideo && (
                   <video
+                    ref={(el) => {
+                      videoRefs.current[i] = el
+                    }}
                     src={slide.video}
                     poster={slide.image}
-                    autoPlay
                     muted
                     loop
                     playsInline
-                    preload="auto"
+                    preload={current ? 'auto' : 'metadata'}
                     className="absolute inset-0 h-full w-full object-cover"
                   />
                 )}
@@ -202,7 +281,7 @@ export function HeroHome3() {
                 Engineering the Future of{' '}
                 <span className="text-lime">Intelligent Mobility</span>
               </h1>
-              <p className="mt-4 max-w-[480px] font-body text-[15px] leading-[1.5] font-medium text-balance text-white/75 lg:mt-5 lg:max-w-[600px] lg:text-[16px]">
+              <p className="mt-4 max-w-[480px] font-body text-[15px] leading-[1.5] font-medium text-balance text-white/90 [text-shadow:0_1px_8px_rgba(0,0,0,0.55)] lg:mt-5 lg:max-w-[600px] lg:text-[16px]">
                 For Automotive, Industrial and Defence &amp; Aerospace.
               </p>
             </motion.div>
@@ -253,7 +332,9 @@ export function HeroHome3() {
               {SLIDES[active].label}
             </motion.span>
           </p>
-          <div className="flex gap-2">
+          {/* Each dot sits in a 24px-tall, at-least-24px-wide button so the
+              touch target clears WCAG 2.5.8; the dot itself stays 8px. */}
+          <div className="flex">
             {SLIDES.map((slide, i) => (
               <button
                 key={slide.id}
@@ -261,11 +342,16 @@ export function HeroHome3() {
                 onClick={() => goTo(i)}
                 aria-label={`Go to ${slide.label}`}
                 aria-current={i === active}
-                className={cx(
-                  'h-2 rounded-full transition-all duration-300',
-                  i === active ? 'w-6 bg-lime' : 'w-2 bg-white/40',
-                )}
-              />
+                className="flex h-6 min-w-6 items-center justify-center px-1"
+              >
+                <span
+                  aria-hidden
+                  className={cx(
+                    'block h-2 rounded-full transition-all duration-300',
+                    i === active ? 'w-6 bg-lime' : 'w-2 bg-white/40',
+                  )}
+                />
+              </button>
             ))}
           </div>
         </div>

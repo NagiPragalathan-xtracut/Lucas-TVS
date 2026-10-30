@@ -9,7 +9,6 @@ const DESTINATIONS = [
   { label: 'Capabilities', to: ROUTES.capabilities },
   { label: 'Products & Platforms', to: ROUTES.products },
   { label: 'Industries', to: ROUTES.industries },
-  { label: 'Insights', to: ROUTES.insights },
   { label: 'Careers', to: ROUTES.careers },
   { label: 'Contact Us', to: ROUTES.contact },
   { label: 'Search', to: ROUTES.search },

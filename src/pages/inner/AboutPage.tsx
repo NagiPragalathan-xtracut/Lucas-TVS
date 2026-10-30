@@ -185,7 +185,7 @@ function HeritageTimeline() {
           </span>
 
           <div className="my-[7px] flex flex-col gap-1.5 rounded-[16px] border-[1.5px] border-line-soft bg-white px-5 py-4 sm:flex-row sm:items-center sm:gap-5 sm:px-6">
-            <span className="shrink-0 font-display text-[22px] leading-[1.2] font-semibold text-green-deep sm:w-[76px] lg:text-[24px]">
+            <span className="shrink-0 font-display text-[22px] leading-[1.2] font-semibold text-green-ink sm:w-[76px] lg:text-[24px]">
               {row.year}
             </span>
             <span aria-hidden className="hidden h-10 w-px shrink-0 bg-line sm:block" />
@@ -288,7 +288,7 @@ export default function AboutPage() {
                         <span>
                           {segs.map((seg, j) =>
                             seg.b ? (
-                              <strong key={j} className="font-semibold text-green-deep">
+                              <strong key={j} className="font-semibold text-green-ink">
                                 {seg.t}
                               </strong>
                             ) : (
@@ -365,7 +365,7 @@ function WhoWeAreSection() {
             onClick={() => setExpanded((v) => !v)}
             aria-expanded={expanded}
             aria-controls="who-we-are-more"
-            className="inline-flex items-center gap-2 self-start font-body text-[15px] font-medium text-green-deep transition-colors hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green-deep"
+            className="inline-flex items-center gap-2 self-start font-body text-[15px] font-medium text-green-ink transition-colors hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green-deep"
           >
             {expanded ? 'Read less' : 'Read more'}
             <ArrowRight

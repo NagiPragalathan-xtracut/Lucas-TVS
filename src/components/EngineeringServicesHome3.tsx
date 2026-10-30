@@ -81,7 +81,10 @@ export function EngineeringServicesHome3() {
       <div className="shell relative">
         <header className="gap-12 lg:flex lg:items-start lg:justify-between">
           <div className="lg:max-w-[590px]">
-            <Eyebrow className="!text-[18px]">Engineering Services</Eyebrow>
+            {/* tone="green": lime on this light band was 1.46:1 (launch audit). */}
+            <Eyebrow tone="green" className="!text-[18px]">
+              Engineering Services
+            </Eyebrow>
             <h2 className="mt-3 font-display text-[28px] leading-[1.15] font-medium text-ink sm:text-[34px] lg:text-[40px]">
               Capabilities That Drive Innovation.
             </h2>
@@ -148,6 +151,10 @@ export function EngineeringServicesHome3() {
             <img
               src={rndFeature}
               alt="Engineer monitoring an automated motor assembly cell"
+              width={1100}
+              height={901}
+              loading="lazy"
+              decoding="async"
               className="absolute inset-0 h-full w-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/[0.74] to-transparent" />

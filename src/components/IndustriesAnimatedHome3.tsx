@@ -1,6 +1,6 @@
 import CircularSplitRoll from '@/components/ui/circular-split-roll'
 import {
-  sectorAutomotive,
+  sectorAutomotiveCard,
   sectorIndustrial,
   sectorDefenceAerospace,
 } from '../lib/assets'
@@ -11,7 +11,7 @@ const INDUSTRIES = [
     title: 'Automotive',
     description:
       'Accelerating the transition to connected, electric, autonomous and software-defined mobility.',
-    image: sectorAutomotive,
+    image: sectorAutomotiveCard,
     alt: 'Electric SUV driving on a highway with a city skyline behind it',
     href: ROUTES.automotive,
   },
@@ -88,7 +88,7 @@ export function IndustriesAnimatedHome3() {
         header={HEADER}
         radius={260}
         // Landscape, not the shared 240px square: the refreshed sector art
-        // (1-3sectors.png) is 2043x770, and a square card cropped almost all
+        // (1-3sectors) is 2043x770, and a square card cropped almost all
         // of it away. Sized from the Figma frame — card ~620x360 at a
         // 1810px-wide section.
         // Below 1025px: one landscape photo card per row on a phone (three

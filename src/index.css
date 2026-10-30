@@ -32,6 +32,12 @@
   --color-lime-tint: #f3fad7;
   --color-green: #22c55e;
   --color-green-deep: #238f38;
+  /* Green for *text* on light surfaces (30 Oct, launch audit). green-deep
+     is 4.15:1 on white and 3.78:1 on surface-mute — fine for large heading
+     accents and fills, short of WCAG AA (4.5:1) for body-size labels. This
+     is the same hue a step darker: 5.41:1 on white, 4.92:1 on
+     surface-mute, 4.66:1 on #eee. Lime stays the accent on dark surfaces. */
+  --color-green-ink: #1d7a32;
 
   /* Ink */
   --color-ink: #2b2b2b;
@@ -118,6 +124,13 @@
     color: var(--color-ink);
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
+  }
+
+  /* Anchor targets clear the fixed header (30 Oct, launch audit). Without
+     this, /technologies#<id> and friends land with the heading tucked under
+     the sticky bar. 104px matches PageShell's own scroll offset. */
+  [id] {
+    scroll-margin-top: 104px;
   }
 
   /* The design is a light-only canvas; opt out of UA dark inversion. */

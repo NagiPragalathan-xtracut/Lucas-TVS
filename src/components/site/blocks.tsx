@@ -215,15 +215,17 @@ export function DarkHero({
 
       <div className={cx(FRAME, 'relative flex flex-col justify-end pt-[128px] pb-9 lg:pt-[140px] lg:pb-14')}>
         <div className="flex max-w-[350px] flex-col gap-5 sm:max-w-[640px] lg:max-w-[820px]">
+          {/* Crumb links are 24px-tall hit areas (WCAG 2.5.8) — inline-flex
+              with a min height, so the line looks the same (launch audit). */}
           <nav aria-label="Breadcrumb" className="font-mono text-[13px] text-white/80">
-            <Link to={ROUTES.home} className="transition-colors hover:text-lime">
+            <Link to={ROUTES.home} className="inline-flex min-h-6 items-center transition-colors hover:text-lime">
               Home
             </Link>
             {crumbs.map((crumb, i) => (
               <span key={crumb.label}>
                 <span aria-hidden> / </span>
                 {crumb.to && i < crumbs.length - 1 ? (
-                  <Link to={crumb.to} className="transition-colors hover:text-lime">
+                  <Link to={crumb.to} className="inline-flex min-h-6 items-center transition-colors hover:text-lime">
                     {crumb.label}
                   </Link>
                 ) : (
@@ -318,7 +320,7 @@ export function Statement({
             key={i}
             className="flex items-start gap-4 rounded-[20px] bg-surface-mute p-5 lg:gap-6 lg:px-[30px] lg:py-[26px]"
           >
-            <span className="pt-0.5 font-mono text-[15px] font-bold text-green-deep">
+            <span className="pt-0.5 font-mono text-[15px] font-bold text-green-ink">
               {String(i + 1).padStart(2, '0')}
             </span>
             <p className="font-body text-[16px] leading-[1.65] text-body">{text}</p>
@@ -438,7 +440,7 @@ export function CapabilityChips({ items, className }: { items: string[]; classNa
           >
             <span
               aria-hidden
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px] bg-lime-tint text-green-deep"
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px] bg-lime-tint text-green-ink"
             >
               <Icon strokeWidth={1.8} className="h-[18px] w-[18px]" />
             </span>
@@ -549,7 +551,7 @@ export function ProductTile({ product }: { product: ProductTileData }) {
       ) : (
         <ImageSlot label="Product image" className="h-[150px] w-full rounded-[12px] lg:h-[160px]" />
       )}
-      <span className="font-mono text-[11px] tracking-[0.08em] text-body uppercase transition-colors duration-300 group-hover:text-white/80 group-focus-visible:text-white/80">
+      <span className="font-mono text-[12px] tracking-[0.08em] text-body uppercase transition-colors duration-300 group-hover:text-white/80 group-focus-visible:text-white/80">
         {product.category}
       </span>
       <span className="flex items-center justify-between gap-2">
@@ -647,7 +649,7 @@ export function SolutionRow({ solution, flip }: { solution: SolutionRowData; fli
           {solution.description}
         </p>
         <div className="flex items-center gap-3 pt-1">
-          <p className="font-mono text-[12px] tracking-[0.12em] text-green-deep uppercase">
+          <p className="font-mono text-[12px] tracking-[0.12em] text-green-ink uppercase">
             Capabilities
           </p>
           <span aria-hidden className="h-[2px] w-8 rounded-full bg-lime" />
@@ -812,7 +814,8 @@ export function PillSearch({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="h-11 w-full rounded-full border-[1.5px] border-line-soft bg-white px-[18px] font-body text-[13px] text-ink placeholder:text-body focus:border-green-deep focus:outline-none"
+        // 16px below lg so iOS Safari does not zoom the page on focus.
+        className="h-11 w-full rounded-full border-[1.5px] border-line-soft bg-white px-[18px] font-body text-[16px] text-ink placeholder:text-body focus:border-green-deep focus:outline-none lg:text-[13px]"
       />
     </div>
   )

@@ -16,7 +16,9 @@ export function Eyebrow({
     <p
       className={cx(
         'font-sans text-[16px] leading-[1.25] font-medium',
-        tone === 'lime' ? 'text-lime' : 'text-green',
+        // 'green' is for light surfaces: green-ink clears WCAG AA there (5.4:1),
+        // where lime (1.46:1) and plain green (2.28:1) do not.
+        tone === 'lime' ? 'text-lime' : 'text-green-ink',
         className,
       )}
     >

@@ -2,13 +2,27 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#238f38" />
+    <!--
+      Everything between seo:start and seo:end is the homepage's head.
+      scripts/prerender-head.mjs replaces this block in each route's copy of
+      the built HTML with that route's tags (src/lib/seo.ts), and PageShell
+      keeps them in step on client-side navigation. Edit the values in
+      seo.ts — this block only matters for the dev server and `/`.
+    -->
+    <!-- seo:start -->
     <title>Lucas-TVS — Engineering the Future</title>
     <meta
       name="description"
-      content="Advanced software, embedded systems, power electronics and product engineering solutions for global OEMs and EV innovators."
+      content="Embedded systems, software-defined platforms, electronics, controls and validation — engineering for Automotive, Industrial and Defence &amp; Aerospace programmes."
     />
+    <link rel="canonical" href="https://software.lucas-tvs.com/" />
+    <!-- seo:end -->
   </head>
   <body>
     <div id="root"></div>

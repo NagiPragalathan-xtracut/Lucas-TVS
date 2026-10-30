@@ -47,7 +47,7 @@ import focusElectrification from '../assets/Tabs/tab1.png'
 import focusSoftwareDefined from '../assets/Tabs/tab2.png'
 import focusAutomation from '../assets/Tabs/tab3.png'
 import focusMissionCritical from '../assets/Tabs/tab4.png'
-import focusAiDigital from '../assets/Tabs/tab5.png'
+import focusAiDigital from '../assets/Tabs/tab5.webp'
 
 // Focus areas — product shots for the hotspot tiles, four per tab in the
 // order they appear in the column. All transparent PNGs, so they sit
@@ -140,12 +140,12 @@ import logoIndeon from '../assets/logo-indeon.webp'
 // Products delivered through the engineering service offerings (14 Oct),
 // cropped from the client's product sheet and set on 640x480 plates of
 // each photo's own background.
-import svcBms from '../assets/ServiceProducts/bms-supplied.png'
-import svcDcDc from '../assets/ServiceProducts/dc-dc-converter-supplied.png'
-import svcObc from '../assets/ServiceProducts/onboard-charger-hd.png'
-import svcInverter from '../assets/ServiceProducts/traction-inverter-supplied.png'
-import svcMotorController from '../assets/ServiceProducts/integrated-motor-controller-hd.png'
-import svcVcu from '../assets/ServiceProducts/vehicle-control-unit-hd.png'
+import svcBms from '../assets/ServiceProducts/bms-supplied.webp'
+import svcDcDc from '../assets/ServiceProducts/dc-dc-converter-supplied.webp'
+import svcObc from '../assets/ServiceProducts/onboard-charger-hd.webp'
+import svcInverter from '../assets/ServiceProducts/traction-inverter-supplied.webp'
+import svcMotorController from '../assets/ServiceProducts/integrated-motor-controller-hd.webp'
+import svcVcu from '../assets/ServiceProducts/vehicle-control-unit-hd.webp'
 
 // Defence & Aerospace › "Defence Electronics" solution photo (14 Oct).
 import defenceElectronics from '../assets/defence-electronics.webp'
@@ -243,12 +243,17 @@ import industryCommercial from '../assets/rectangle12.webp'
 import industryIndustrial from '../assets/rectangle14.webp'
 
 // Industries we serve — three sectors -----------------------------------
-import sectorAutomotive from '../assets/1sectors.png'
-import sectorIndustrial from '../assets/2sectors.png'
-import sectorDefenceAerospace from '../assets/3sectors.png'
+// 30 Oct: WebP instead of the 2043x770 PNGs (~2.3 MB each). The homepage
+// sector cards show them at ~300-700px wide, so the card copies are 1280px
+// (~90 KB). Automotive is also the Insights/Article page hero, so it keeps a
+// full-width copy for that and a separate card-sized one for the homepage.
+import sectorAutomotive from '../assets/1sectors.webp'
+import sectorAutomotiveCard from '../assets/1sectors-card.webp'
+import sectorIndustrial from '../assets/2sectors.webp'
+import sectorDefenceAerospace from '../assets/3sectors.webp'
 
 // Header mega menu — the same three sector photographs as 800px WebP
-// thumbnails (~50 KB each, against ~2.3 MB for the PNGs above), since the
+// thumbnails (~50 KB each; the originals above were ~2.3 MB PNGs), since the
 // menu sits in the header of every page.
 import menuSectorAutomotive from '../assets/Menu/menu-sector-automotive.webp'
 import menuSectorIndustrial from '../assets/Menu/menu-sector-industrial.webp'
@@ -266,7 +271,7 @@ import tabConsumer from '../assets/chat-gpt-image-aug62026085929-pm1.webp'
 import focusAreasElectrificationPowertrain from '../assets/focus-areas-electrification-powertrain.png'
 
 // Our Engineering Approach (Home2 only) ---------------------------------
-import approachBackdrop from '../assets/Group 1000002316.png'
+import approachBackdrop from '../assets/Group 1000002316.webp'
 
 // One Integrated Engineering Stack (Home2 only) -------------------------
 // `software.png` is the original flat artwork (text baked in); the section
@@ -449,6 +454,7 @@ export {
   industryCommercial,
   industryIndustrial,
   sectorAutomotive,
+  sectorAutomotiveCard,
   sectorIndustrial,
   sectorDefenceAerospace,
   menuSectorAutomotive,

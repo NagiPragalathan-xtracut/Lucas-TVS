@@ -90,6 +90,10 @@ export function OurApproachHome3() {
         <img
           src={approachBackdrop}
           alt=""
+          width={1396}
+          height={966}
+          loading="lazy"
+          decoding="async"
           className="absolute inset-0 h-full w-full object-cover object-left"
         />
 

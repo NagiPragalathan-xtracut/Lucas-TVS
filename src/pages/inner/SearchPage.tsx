@@ -8,7 +8,7 @@ import { INDUSTRIES } from '../../data/industries'
 import { PRODUCTS } from '../../data/products'
 import { TECHNOLOGIES } from '../../data/technologies'
 import { INSIGHTS } from '../../data/insights'
-import { ROUTES, insightPath, productPath } from '../../lib/routes'
+import { ROUTES, SHOW_INSIGHTS, insightPath, productPath } from '../../lib/routes'
 import { approachBackdrop } from '../../lib/assets'
 
 type Kind = 'Page' | 'Industry' | 'Capability' | 'Technology' | 'Product' | 'Insight'
@@ -34,7 +34,11 @@ const INDEX: Entry[] = [
   { id: 'p:rd', kind: 'Page', title: 'Engineering & R&D', to: ROUTES.engineering, excerpt: 'Labs for electronics, embedded software and validation — including HIL rigs for faster, safer testing.', keywords: 'r&d research hosur tech center lab' },
   { id: 'p:products', kind: 'Page', title: 'Products & Platforms', to: ROUTES.products, excerpt: 'High-performance hardware and systems for next-generation mobility, industry and defence — backed by the Lucas-TVS group.', keywords: 'catalogue hardware' },
   { id: 'p:quality', kind: 'Page', title: 'Quality & Standards', to: ROUTES.quality, excerpt: 'Proven processes, international standards and rigorous validation — so every product performs as designed.', keywords: 'certification deming iso validation mil sil hil' },
-  { id: 'p:insights', kind: 'Page', title: 'Insights & Resources', to: ROUTES.insights, excerpt: 'Stay updated with the latest developments in engineering, software and defence technologies.', keywords: 'news articles case studies whitepapers events' },
+  // Insights (the landing page and every article) is indexed only while
+  // SHOW_INSIGHTS is on — today it is placeholder content; see routes.ts.
+  ...(SHOW_INSIGHTS
+    ? [{ id: 'p:insights', kind: 'Page' as const, title: 'Insights & Resources', to: ROUTES.insights, excerpt: 'Stay updated with the latest developments in engineering, software and defence technologies.', keywords: 'news articles case studies whitepapers events' }]
+    : []),
   { id: 'p:careers', kind: 'Page', title: 'Careers', to: ROUTES.careers, excerpt: 'Join a young software & product-engineering division inside Lucas-TVS.', keywords: 'jobs roles hiring openings work' },
   { id: 'p:contact', kind: 'Page', title: 'Contact Us', to: ROUTES.contact, excerpt: 'Tell us about your programme and we’ll route it to the engineering team that owns it.', keywords: 'enquiry address phone email hosur' },
   { id: 'p:sustainability', kind: 'Page', title: 'Sustainability', to: ROUTES.sustainability, excerpt: 'For the Lucas-TVS group’s sustainability commitments and reporting, visit the corporate site.', keywords: 'environment esg' },
@@ -86,7 +90,7 @@ const INDEX: Entry[] = [
     excerpt: p.blurb,
     keywords: `${p.category} ${p.sector} ${p.highlights.join(' ')}`,
   })),
-  ...INSIGHTS.map((n) => ({
+  ...(SHOW_INSIGHTS ? INSIGHTS : []).map((n) => ({
     id: `n:${n.slug}`,
     kind: 'Insight' as const,
     title: n.title,
@@ -96,7 +100,16 @@ const INDEX: Entry[] = [
   })),
 ]
 
-const KINDS: ('All' | Kind)[] = ['All', 'Page', 'Industry', 'Capability', 'Technology', 'Product', 'Insight']
+// The "Insight" chip only appears while there are Insight entries to filter to.
+const KINDS: ('All' | Kind)[] = [
+  'All',
+  'Page',
+  'Industry',
+  'Capability',
+  'Technology',
+  'Product',
+  ...(SHOW_INSIGHTS ? (['Insight'] as const) : []),
+]
 
 const SUGGESTIONS = ['Battery', 'AUTOSAR', 'Functional safety', 'IIoT', 'Defence electronics', 'Careers']
 
@@ -150,7 +163,7 @@ export default function SearchPage() {
         crumbs={[{ label: 'Search' }]}
         title="Search the"
         accent="site."
-        intro="Pages, engineering services, technologies, products and insights — searched as you type."
+        intro={`Pages, engineering services, technologies${SHOW_INSIGHTS ? ', products and insights' : ' and products'} — searched as you type.`}
       />
 
       <Band tone="mute">
@@ -193,7 +206,7 @@ export default function SearchPage() {
           ) : results.length === 0 ? (
             <p className="rounded-[18px] border-[1.5px] border-dashed border-line-soft bg-white p-8 text-center font-body text-[15px] text-body">
               Nothing matches “{query}”{kind !== 'All' ? ` in ${kind}` : ''}. Try a broader term, or{' '}
-              <Link to={ROUTES.contact} className="font-medium text-green-deep underline-offset-4 hover:underline">
+              <Link to={ROUTES.contact} className="font-medium text-green-ink underline-offset-4 hover:underline">
                 ask the engineering team
               </Link>
               .
@@ -211,7 +224,7 @@ export default function SearchPage() {
                       className="group flex h-full items-start justify-between gap-4 rounded-[18px] border-[1.5px] border-line-soft bg-white p-5 transition-colors duration-300 hover:border-green-deep/50"
                     >
                       <span className="flex min-w-0 flex-col gap-1.5">
-                        <span className="font-mono text-[11px] tracking-[0.08em] text-green-deep uppercase">{r.kind}</span>
+                        <span className="font-mono text-[12px] tracking-[0.08em] text-green-ink uppercase">{r.kind}</span>
                         <span className="font-display text-[18px] leading-[1.3] font-semibold text-ink">{r.title}</span>
                         <span className="line-clamp-2 font-body text-[13px] leading-[1.55] text-body">{r.excerpt}</span>
                       </span>

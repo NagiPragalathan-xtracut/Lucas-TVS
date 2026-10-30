@@ -24,7 +24,7 @@ export function EnquiryStatusNote({ status }: { status: EnquiryStatus }) {
         className="rounded-[12px] border-[1.5px] border-dashed border-line bg-surface-mute px-4 py-3 font-body text-[13px] leading-[1.5] text-body"
       >
         Sorry, your enquiry could not be sent. Please try again, or email us at{' '}
-        <a href={`mailto:${COMPANY.email}`} className="font-medium text-green-deep underline underline-offset-2">
+        <a href={`mailto:${COMPANY.email}`} className="font-medium text-green-ink underline underline-offset-2">
           {COMPANY.email}
         </a>
         .

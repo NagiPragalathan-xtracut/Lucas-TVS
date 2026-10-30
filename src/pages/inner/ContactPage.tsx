@@ -3,7 +3,7 @@ import { Select as BaseSelect } from '@base-ui/react/select'
 import { ChevronDown, Settings } from 'lucide-react'
 import { EnquiryStatusNote } from '../../components/site/EnquiryStatusNote'
 import { PageShell } from '../../components/site/PageShell'
-import { usePrivacyConsent } from '../../components/site/PrivacyConsent'
+import { PRIVACY_POLICY_URL, usePrivacyConsent } from '../../components/site/PrivacyConsent'
 import {
   Eyebrow,
   IconChat,
@@ -26,7 +26,7 @@ import {
 } from '../../components/site/blocks'
 import { COMPANY, ROUTES } from '../../lib/routes'
 import { reachCareers, reachEngineering, rndFeature, solutionsPanelWaves } from '../../lib/assets'
-import { useEnquiry } from '../../lib/useEnquiry'
+import { FIELD_LIMITS, useEnquiry } from '../../lib/useEnquiry'
 
 const ADDRESS =
   'India Nippon Electricals Limited (INEL) R&D Tech Center, Plot No-137, Phase-1, SIPCOT Industrial Complex, Hosur, Tamil Nadu - 635126'
@@ -37,8 +37,10 @@ const ADDRESS =
  */
 const MAP_EMBED = `https://www.google.com/maps?q=${encodeURIComponent(ADDRESS)}&output=embed`
 
+// 16px text: anything smaller and iOS Safari zooms the page when a field
+// takes focus (launch audit; was 15px).
 const FIELD =
-  'h-[50px] w-full rounded-[12px] border-[1.5px] border-line-soft bg-white px-4 font-body text-[15px] text-ink transition-colors duration-200 focus:border-green-deep focus:outline-none'
+  'h-[50px] w-full rounded-[12px] border-[1.5px] border-line-soft bg-white px-4 font-body text-[16px] text-ink transition-colors duration-200 focus:border-green-deep focus:outline-none'
 
 /**
  * Contact Us, built to the Contact artboards of the 29 Sep reference.
@@ -96,24 +98,69 @@ export default function ContactPage() {
               Tell us about your programme
             </h2>
 
+            {/* Required fields carry a visible asterisk (see `Field`) as well
+                as `required`; lengths are capped to match what useEnquiry
+                sends and the sheet keeps (launch audit). */}
+            <p className="-mt-2 font-body text-[13px] text-body">
+              Fields marked <RequiredMark /> are required.
+            </p>
+
             <div className="grid gap-4 md:grid-cols-2">
-              <Field label="Full name">
-                {(id) => <input id={id} name="name" required autoComplete="name" className={FIELD} />}
+              <Field label="Full name" required>
+                {(id) => (
+                  <input
+                    id={id}
+                    name="name"
+                    required
+                    aria-required
+                    maxLength={FIELD_LIMITS.name}
+                    autoComplete="name"
+                    className={FIELD}
+                  />
+                )}
               </Field>
               <Field label="Company">
-                {(id) => <input id={id} name="company" autoComplete="organization" className={FIELD} />}
+                {(id) => (
+                  <input
+                    id={id}
+                    name="company"
+                    maxLength={FIELD_LIMITS.company}
+                    autoComplete="organization"
+                    className={FIELD}
+                  />
+                )}
               </Field>
-              <Field label="Work email">
-                {(id) => <input id={id} name="email" type="email" required autoComplete="email" className={FIELD} />}
+              <Field label="Work email" required>
+                {(id) => (
+                  <input
+                    id={id}
+                    name="email"
+                    type="email"
+                    required
+                    aria-required
+                    maxLength={FIELD_LIMITS.email}
+                    autoComplete="email"
+                    className={FIELD}
+                  />
+                )}
               </Field>
               <Field label="Phone">
-                {(id) => <input id={id} name="phone" type="tel" autoComplete="tel" className={FIELD} />}
+                {(id) => (
+                  <input
+                    id={id}
+                    name="phone"
+                    type="tel"
+                    maxLength={FIELD_LIMITS.phone}
+                    autoComplete="tel"
+                    className={FIELD}
+                  />
+                )}
               </Field>
             </div>
 
             <IndustrySelect value={industry} onChange={setIndustry} />
 
-            <Field label="How can we help?">
+            <Field label="How can we help?" required>
               {(id) => (
                 // 144px, not the reference's written 120: its textarea is
                 // content-box, so the drawn box is 120 plus padding and
@@ -123,7 +170,9 @@ export default function ContactPage() {
                   id={id}
                   name="message"
                   required
-                  className="h-[144px] w-full resize-none rounded-[12px] border-[1.5px] border-line-soft bg-white px-4 py-3 font-body text-[15px] text-ink transition-colors duration-200 focus:border-green-deep focus:outline-none"
+                  aria-required
+                  maxLength={FIELD_LIMITS.message}
+                  className="h-[144px] w-full resize-none rounded-[12px] border-[1.5px] border-line-soft bg-white px-4 py-3 font-body text-[16px] text-ink transition-colors duration-200 focus:border-green-deep focus:outline-none"
                 />
               )}
             </Field>
@@ -142,29 +191,41 @@ export default function ContactPage() {
 
             <EnquiryStatusNote status={status} />
 
-            <p className="font-body text-[12px] text-body">
-              By submitting, you agree to our privacy policy. We typically respond within two working
-              days.
+            {/* The consent line names and links the policy it refers to
+                (launch audit) — the group's policy, in a new tab. */}
+            <p className="font-body text-[13px] leading-[1.5] text-body">
+              By submitting you agree to our{' '}
+              <a
+                href={PRIVACY_POLICY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-green-ink underline underline-offset-2 hover:text-ink"
+              >
+                Privacy Policy
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+              . We typically respond within two working days.
             </p>
           </form>
 
           {/* Details --------------------------------------------------- */}
           <div className="flex min-w-0 grow flex-col gap-5">
-            <dl className="flex flex-col gap-[22px] rounded-[24px] bg-lime-tint p-[22px] lg:p-8">
+            {/* A plain wrapper: each Detail row is its own <dl> (see there). */}
+            <div className="flex flex-col gap-[22px] rounded-[24px] bg-lime-tint p-[22px] lg:p-8">
               <Detail icon={<IconPin />} label="Address">
                 {ADDRESS}
               </Detail>
               <Detail icon={<IconPhone />} label="Phone">
-                <a href={COMPANY.phoneHref} className="transition-colors hover:text-green-deep">
+                <a href={COMPANY.phoneHref} className="transition-colors hover:text-green-ink">
                   {COMPANY.phone}
                 </a>
               </Detail>
               <Detail icon={<IconMail />} label="Email">
-                <a href={`mailto:${COMPANY.email}`} className="break-all transition-colors hover:text-green-deep">
+                <a href={`mailto:${COMPANY.email}`} className="break-all transition-colors hover:text-green-ink">
                   {COMPANY.email}
                 </a>
               </Detail>
-            </dl>
+            </div>
             {/* Fixed height on a phone, where the columns stack; from lg
                 it grows into the rest of the column. The frame is absolutely
                 placed so it always fills the box, whatever height that is. */}
@@ -186,7 +247,7 @@ export default function ContactPage() {
                   <button
                     type="button"
                     onClick={openPrivacyChoices}
-                    className="rounded-full border border-green-deep px-5 py-2 font-body text-[13px] font-medium text-green-deep transition-colors hover:bg-lime-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-deep"
+                    className="rounded-full border border-green-deep px-5 py-2 font-body text-[13px] font-medium text-green-ink transition-colors hover:bg-lime-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-deep"
                   >
                     Privacy choices
                   </button>
@@ -301,12 +362,34 @@ function ReachCard({
   )
 }
 
-function Field({ label, children }: { label: string; children: (id: string) => ReactNode }) {
+/**
+ * The visible required marker. Decorative to assistive tech — the input's
+ * own `required` is what a screen reader announces.
+ */
+function RequiredMark() {
+  return (
+    <span aria-hidden className="font-semibold text-[#b42318]">
+      *
+    </span>
+  )
+}
+
+function Field({
+  label,
+  required = false,
+  children,
+}: {
+  label: string
+  /** Shows the asterisk; the input itself still needs `required`. */
+  required?: boolean
+  children: (id: string) => ReactNode
+}) {
   const id = useId()
   return (
     <div className="flex flex-col gap-2">
       <label htmlFor={id} className="font-body text-[14px] leading-[1.65] font-medium text-ink">
         {label}
+        {required && <> <RequiredMark /></>}
       </label>
       {children(id)}
     </div>
@@ -323,12 +406,12 @@ function IndustrySelect({ value, onChange }: { value: string; onChange: (value: 
         aria-label={value ? `Industry: ${value}` : 'Select Industry'}
         className="group flex w-full cursor-pointer items-center gap-3 rounded-[16px] border border-line bg-white/85 px-3.5 py-3.5 text-left backdrop-blur-sm transition-[border-color,box-shadow] duration-200 outline-none hover:border-green-deep/40 focus-visible:border-green-deep focus-visible:shadow-[0_0_0_3px_rgba(35,143,56,0.18)] data-[popup-open]:border-green-deep data-[popup-open]:shadow-[0_0_0_3px_rgba(35,143,56,0.12)]"
       >
-        <span aria-hidden className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[11px] bg-lime-tint text-green-deep">
+        <span aria-hidden className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[11px] bg-lime-tint text-green-ink">
           <Settings strokeWidth={1.8} className="h-[20px] w-[20px]" />
         </span>
         <span className="flex min-w-0 grow flex-col">
           <span className="font-display text-[16px] leading-[1.25] font-semibold text-ink">Select Industry</span>
-          <span className="truncate font-body text-[12.5px] leading-[1.4] font-medium text-green-deep">{value}</span>
+          <span className="truncate font-body text-[13px] leading-[1.4] font-medium text-green-ink">{value}</span>
         </span>
         <ChevronDown
           aria-hidden
@@ -361,10 +444,12 @@ function Detail({ icon, label, children }: { icon: ReactNode; label: string; chi
   return (
     <div className="flex items-start gap-3.5">
       <span className="grid h-12 w-12 shrink-0 place-items-center rounded-[12px] bg-white text-ink">{icon}</span>
-      <div className="flex flex-col gap-1">
-        <dt className="font-mono text-[11px] tracking-[0.1em] text-green-deep uppercase">{label}</dt>
+      {/* Its own <dl>, so the icon tile beside it is not a stray child of
+          a description list (launch audit). */}
+      <dl className="flex flex-col gap-1">
+        <dt className="font-mono text-[12px] tracking-[0.1em] text-green-ink uppercase">{label}</dt>
         <dd className="font-body text-[15px] leading-[1.55] text-ink">{children}</dd>
-      </div>
+      </dl>
     </div>
   )
 }

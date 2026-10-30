@@ -53,10 +53,13 @@ const CARDS: FocusCard[] = [
   {
     id: 'electrification',
     title: ['Electrification &', 'Powertrain'],
-    href: 'https://lucas-tvs.com/automotive-solutions-products/',
+    // 30 Oct (launch audit): was the external Lucas-TVS products page, which
+    // left this the one focus area of five with no way into /technologies.
+    // It now goes to its own section there, like the other four.
+    href: '/technologies#electrification',
     tone: 'dark',
     featured: true,
-    cta: 'View Product',
+    cta: 'Explore Electrification',
     slides: [
       {
         image: focusGridElectrification,
@@ -126,7 +129,9 @@ function CornerChevron() {
   return (
     <span
       aria-hidden
-      className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-lime/60 text-lime transition-all duration-300 group-hover:bg-lime group-hover:text-ink"
+      // Only drawn on the light cards, where lime is 1.4:1 against the
+      // pale scrim — green-ink keeps the chevron legible (launch audit).
+      className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-green-ink/50 text-green-ink transition-all duration-300 group-hover:border-lime group-hover:bg-lime group-hover:text-ink"
     >
       <Chevron className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-px" />
     </span>
@@ -218,7 +223,9 @@ function Card({ card }: { card: FocusCard }) {
           >
             {card.title[0]}
             <br />
-            <span className="text-lime">{card.title[1]}</span>
+            {/* Lime on the dark card; green-ink on the light ones, where
+                lime over the pale scrim was ~1.4:1 (launch audit). */}
+            <span className={dark ? 'text-lime' : 'text-green-ink'}>{card.title[1]}</span>
           </h3>
 
           {card.featured && card.cta && (
@@ -252,19 +259,26 @@ function Card({ card }: { card: FocusCard }) {
                   <ChevronRight aria-hidden className="h-4 w-4" />
                 </button>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center">
                 {card.slides.map((s, i) => (
+                  // The button is a 24px hit area (WCAG 2.5.8); the dot
+                  // drawn inside it keeps its original 8px look.
                   <button
                     key={s.image}
                     type="button"
                     aria-label={`Slide ${i + 1}`}
                     aria-current={i === slide}
                     onClick={() => go(i)}
-                    className={cx(
-                      'h-2 rounded-full transition-all duration-300',
-                      i === slide ? 'w-5 bg-lime' : 'w-2 bg-white/35 hover:bg-white/60',
-                    )}
-                  />
+                    className="group/dot grid h-6 min-w-6 place-items-center"
+                  >
+                    <span
+                      aria-hidden
+                      className={cx(
+                        'h-2 rounded-full transition-all duration-300',
+                        i === slide ? 'w-5 bg-lime' : 'w-2 bg-white/35 group-hover/dot:bg-white/60',
+                      )}
+                    />
+                  </button>
                 ))}
               </div>
             </div>

@@ -4,6 +4,7 @@ import { useLenis } from 'lenis/react'
 import { SiteHeader } from './SiteHeader'
 import { SiteFooter } from './SiteFooter'
 import { useHeadingBlurIn } from '../../lib/useHeadingBlurIn'
+import { HOME_TITLE, useRouteHead } from '../../lib/seo'
 
 /**
  * The frame every inner page renders inside: header, the page's own
@@ -20,7 +21,10 @@ import { useHeadingBlurIn } from '../../lib/useHeadingBlurIn'
  *     the next.
  *
  * `title` sets document.title. Pages pass the bare page name; the suffix
- * is added here so it stays consistent.
+ * is added here so it stays consistent. The rest of the head — meta
+ * description, canonical, Open Graph, robots — follows the route via
+ * `useRouteHead` (src/lib/seo.ts), matching what the build prerenders into
+ * each route's HTML.
  */
 export function PageShell({
   title,
@@ -36,15 +40,21 @@ export function PageShell({
   useHeadingBlurIn(contentRef, pathname)
 
   useEffect(() => {
-    // Put back whatever was there on the way out. The homepage sets no
+    // Put the homepage title back on the way out. The homepage sets no
     // title of its own, so without this, following the logo from an inner
     // page left the tab reading "About Us — Lucas-TVS" over the homepage.
-    const previous = document.title
+    // (It used to restore "whatever was there before", which stopped
+    // working once each route's HTML was prerendered with its own <title>:
+    // landing on /about and then going home put "About Us" back.)
     document.title = `${title} — Lucas-TVS`
     return () => {
-      document.title = previous
+      document.title = HOME_TITLE
     }
   }, [title])
+
+  // After the title effect, so an unknown path (the 404 page) can reuse
+  // the title just set for its og:title.
+  useRouteHead(pathname)
 
   useEffect(() => {
     // Lenis owns the scroll position; setting window.scrollTo alone leaves

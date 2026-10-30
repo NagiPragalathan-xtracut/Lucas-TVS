@@ -5,15 +5,18 @@ import { Select as BaseSelect } from '@base-ui/react/select'
 import { ArrowRight, Box, Check, ChevronDown, FileText, Settings, X, type LucideIcon } from 'lucide-react'
 import { solutionsCtaBg } from '../lib/assets'
 import { ROUTES } from '../lib/routes'
-import { useEnquiry } from '../lib/useEnquiry'
+import { FIELD_LIMITS, useEnquiry } from '../lib/useEnquiry'
 import { EnquiryStatusNote } from './site/EnquiryStatusNote'
+import { PRIVACY_POLICY_URL } from './site/PrivacyConsent'
 
 const SOLUTIONS = ['Product', 'System', 'Engineering Service', 'Technology']
 const INDUSTRIES = ['Automotive', 'Industrial', 'Defence & Aerospace', 'Not sure yet']
 const REQUIREMENTS = ['Development', 'Validation & Testing', 'Integration', 'Support']
 
+// 16px text: smaller and iOS Safari zooms the page when a field takes
+// focus (launch audit; was 15px).
 const FIELD =
-  'h-[48px] w-full rounded-[12px] border-[1.5px] border-line-soft bg-white px-4 font-body text-[15px] text-ink transition-colors duration-200 placeholder:text-body-soft focus:border-green-deep focus:outline-none'
+  'h-[48px] w-full rounded-[12px] border-[1.5px] border-line-soft bg-white px-4 font-body text-[16px] text-ink transition-colors duration-200 placeholder:text-body-soft focus:border-green-deep focus:outline-none'
 
 /**
  * Home3's solutions CTA, rebuilt to the client's 14 Oct reference: a pale
@@ -71,6 +74,8 @@ export function LookingForHome3() {
           src={solutionsCtaBg}
           alt=""
           aria-hidden
+          width={1991}
+          height={789}
           decoding="async"
           loading="lazy"
           className="pointer-events-none absolute inset-0 h-full w-full object-cover object-[78%_center]"
@@ -80,7 +85,7 @@ export function LookingForHome3() {
         <div className="relative max-w-[1040px] p-6 sm:p-10 lg:px-14 lg:py-16">
           <div className="flex items-center gap-3">
             <span aria-hidden className="h-px w-10 bg-green-deep" />
-            <p className="font-body text-[12px] font-semibold tracking-[0.18em] text-green-deep uppercase">
+            <p className="font-body text-[12px] font-semibold tracking-[0.18em] text-green-ink uppercase">
               Explore our solutions
             </p>
           </div>
@@ -133,7 +138,7 @@ export function LookingForHome3() {
             <span aria-hidden className="hidden h-8 w-px bg-line sm:block" />
             <Link
               to={ROUTES.contact}
-              className="group inline-flex items-center gap-2 self-start font-body text-[15px] sm:self-center text-ink transition-colors hover:text-green-deep focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green-deep"
+              className="group inline-flex items-center gap-2 self-start font-body text-[15px] sm:self-center text-ink transition-colors hover:text-green-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green-deep"
             >
               Not sure? Talk to our engineering team
               <ArrowRight
@@ -162,7 +167,7 @@ export function LookingForHome3() {
         <form onSubmit={onSubmit} className="flex flex-col gap-5 p-6 sm:p-8">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="font-body text-[12px] font-semibold tracking-[0.16em] text-green-deep uppercase">
+              <p className="font-body text-[12px] font-semibold tracking-[0.16em] text-green-ink uppercase">
                 Talk to the engineering team
               </p>
               <h3 id="looking-for-title" className="mt-2 font-display text-[24px] leading-[1.2] font-semibold text-ink">
@@ -206,15 +211,29 @@ export function LookingForHome3() {
 
           <div className="grid gap-4 sm:grid-cols-2">
             <Field label="Full name">
-              {(id) => <input id={id} name="name" required autoComplete="name" className={FIELD} />}
+              {(id) => (
+                <input id={id} name="name" required maxLength={FIELD_LIMITS.name} autoComplete="name" className={FIELD} />
+              )}
             </Field>
             <Field label="Work email">
-              {(id) => <input id={id} name="email" type="email" required autoComplete="email" className={FIELD} />}
+              {(id) => (
+                <input
+                  id={id}
+                  name="email"
+                  type="email"
+                  required
+                  maxLength={FIELD_LIMITS.email}
+                  autoComplete="email"
+                  className={FIELD}
+                />
+              )}
             </Field>
           </div>
 
           <Field label="Company">
-            {(id) => <input id={id} name="company" autoComplete="organization" className={FIELD} />}
+            {(id) => (
+              <input id={id} name="company" maxLength={FIELD_LIMITS.company} autoComplete="organization" className={FIELD} />
+            )}
           </Field>
 
           <Field label="What do you need?">
@@ -223,8 +242,9 @@ export function LookingForHome3() {
                 id={id}
                 name="message"
                 rows={3}
+                maxLength={FIELD_LIMITS.message}
                 placeholder="e.g. a 48V inverter for a two-wheeler programme"
-                className="w-full resize-none rounded-[12px] border-[1.5px] border-line-soft bg-white px-4 py-3 font-body text-[15px] text-ink transition-colors duration-200 placeholder:text-body-soft focus:border-green-deep focus:outline-none"
+                className="w-full resize-none rounded-[12px] border-[1.5px] border-line-soft bg-white px-4 py-3 font-body text-[16px] text-ink transition-colors duration-200 placeholder:text-body-soft focus:border-green-deep focus:outline-none"
               />
             )}
           </Field>
@@ -243,6 +263,21 @@ export function LookingForHome3() {
           </button>
 
           <EnquiryStatusNote status={status} />
+
+          {/* Same consent line as the Contact form (launch audit). */}
+          <p className="font-body text-[13px] leading-[1.5] text-body">
+            By submitting you agree to our{' '}
+            <a
+              href={PRIVACY_POLICY_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-green-ink underline underline-offset-2 hover:text-ink"
+            >
+              Privacy Policy
+              <span className="sr-only"> (opens in a new tab)</span>
+            </a>
+            .
+          </p>
         </form>
       </dialog>
     </section>
@@ -288,7 +323,7 @@ function PickCard({
       >
         <span
           aria-hidden
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[11px] bg-lime-tint text-green-deep"
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[11px] bg-lime-tint text-green-ink"
         >
           <Icon strokeWidth={1.8} className="h-[20px] w-[20px]" />
         </span>
@@ -297,7 +332,7 @@ function PickCard({
             {title}
           </span>
           <span
-            className={`truncate font-body text-[12.5px] leading-[1.4] ${value ? 'font-medium text-green-deep' : 'text-body'}`}
+            className={`truncate font-body text-[13px] leading-[1.4] ${value ? 'font-medium text-green-ink' : 'text-body'}`}
           >
             {value || hint}
           </span>
@@ -317,11 +352,11 @@ function PickCard({
                 <BaseSelect.Item
                   key={o}
                   value={o}
-                  className="flex cursor-pointer items-center justify-between gap-3 rounded-[10px] px-3.5 py-2.5 font-body text-[14px] text-ink outline-none select-none data-[highlighted]:bg-lime-tint data-[selected]:font-medium data-[selected]:text-green-deep"
+                  className="flex cursor-pointer items-center justify-between gap-3 rounded-[10px] px-3.5 py-2.5 font-body text-[14px] text-ink outline-none select-none data-[highlighted]:bg-lime-tint data-[selected]:font-medium data-[selected]:text-green-ink"
                 >
                   <BaseSelect.ItemText>{o}</BaseSelect.ItemText>
                   <BaseSelect.ItemIndicator>
-                    <Check aria-hidden strokeWidth={2.4} className="h-4 w-4 text-green-deep" />
+                    <Check aria-hidden strokeWidth={2.4} className="h-4 w-4 text-green-ink" />
                   </BaseSelect.ItemIndicator>
                 </BaseSelect.Item>
               ))}
