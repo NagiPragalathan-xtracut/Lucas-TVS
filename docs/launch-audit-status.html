@@ -38,15 +38,15 @@
 <div class="meta">Oct 30, 2026 · Status update on the 24-item launch audit · Changes are in the repo working tree, not yet deployed</div>
 
 <h2>Verdict</h2>
-<p>All four critical issues are fixed in code. 19 of the 24 items are fixed. Four are partly fixed, three of them because they need an account, key or ID only Lucas-TVS can supply. One is open because it needs the client to confirm the address. Every change builds cleanly (<code>npm run build</code>) and was checked on a local production build. The header, caching and 404 behaviour can only be confirmed after the next Vercel deploy.</p>
+<p>All four critical issues are fixed in code. 20 of the 24 items are fixed. Three are partly fixed, mostly because they need an account, key or ID only Lucas-TVS can supply. One is open because it needs the client to confirm the address. Every change builds cleanly (<code>npm run build</code>) and was checked on a local production build. The header, caching and 404 behaviour can only be confirmed after the next Vercel deploy.</p>
 
 <table class="summary">
   <tr><th>Severity</th><th>Items</th><th>Fixed</th><th>Partly fixed</th><th>Open</th></tr>
   <tr><td>Critical</td><td>4</td><td>4</td><td>0</td><td>0</td></tr>
   <tr><td>High</td><td>6</td><td>4</td><td>2</td><td>0</td></tr>
   <tr><td>Medium</td><td>8</td><td>7</td><td>1</td><td>0</td></tr>
-  <tr><td>Low</td><td>6</td><td>4</td><td>1</td><td>1</td></tr>
-  <tr><td><b>Total</b></td><td><b>24</b></td><td><b>19</b></td><td><b>4</b></td><td><b>1</b></td></tr>
+  <tr><td>Low</td><td>6</td><td>5</td><td>0</td><td>1</td></tr>
+  <tr><td><b>Total</b></td><td><b>24</b></td><td><b>20</b></td><td><b>3</b></td><td><b>1</b></td></tr>
 </table>
 
 <h3>Measured on the local production build</h3>
@@ -157,8 +157,8 @@
     <td>Unchanged. Lucas-TVS needs to confirm the correct address for this division.</td>
     <td class="status"><span class="s open">Open</span></td></tr>
   <tr><td class="n">23</td><td class="issue">Cookie banner covers a third of a phone</td><td class="where">Mobile</td>
-    <td>The banner was replaced by the new category-based consent banner (Reject all / Manage / Accept all, with a preferences dialog). On a 390×844 screen it now takes 26%, down from about a third. A further compact phone layout is optional polish.</td>
-    <td class="status"><span class="s partial">Partly fixed</span></td></tr>
+    <td>The new category-based consent banner (Reject all / Manage / Accept all, with a preferences dialog) has a compact phone layout: shorter copy, no icon, three equal buttons in one row and 12 px minimum text. It takes 16% of a 390×844 screen.</td>
+    <td class="status"><span class="s fixed">Fixed</span></td></tr>
   <tr><td class="n">24</td><td class="issue">Sticky header hides anchored headings</td><td class="where">Anchored sections</td>
     <td>Every element with an id now gets <code>scroll-margin-top: 104px</code>.</td>
     <td class="status"><span class="s fixed">Fixed</span></td></tr>
