@@ -27,6 +27,8 @@ export const ROUTES = {
   careers: '/careers',
   contact: '/contact',
   search: '/search',
+  /** The client's current site uses this path; kept so its links still land. */
+  privacy: '/privacy-policy',
 } as const
 
 export function productPath(slug: string) {

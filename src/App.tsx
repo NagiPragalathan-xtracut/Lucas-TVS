@@ -1,5 +1,6 @@
 import ReactLenis from 'lenis/react'
 import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom'
+import { AnalyticsTracker } from './components/site/AnalyticsTracker'
 import { PrivacyConsentProvider } from './components/site/PrivacyConsent'
 import Home from './pages/Home'
 import NewHome from './pages/NewHome'
@@ -21,6 +22,7 @@ import ArticlePage from './pages/inner/ArticlePage'
 import CareersPage from './pages/inner/CareersPage'
 import ContactPage from './pages/inner/ContactPage'
 import SearchPage from './pages/inner/SearchPage'
+import PrivacyPolicyPage from './pages/inner/PrivacyPolicyPage'
 import NotFoundPage from './pages/inner/NotFoundPage'
 
 export default function App() {
@@ -57,12 +59,16 @@ export default function App() {
           <Route path="/careers" element={<CareersPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/search" element={<SearchPage />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
 
           {/* Anything else. vercel.json already rewrites all paths to
               index.html, so a deep link to a dead URL reaches this rather
               than the host's own 404. */}
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
+        {/* After <Routes>, so each page has set its title before the
+            page view is sent. Loads nothing without Performance consent. */}
+        <AnalyticsTracker />
       </BrowserRouter>
     </ReactLenis>
     </PrivacyConsentProvider>

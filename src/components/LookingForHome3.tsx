@@ -243,6 +243,20 @@ export function LookingForHome3() {
           </button>
 
           <EnquiryStatusNote status={status} />
+
+          {/* Closes the dialog on the way out: unmounting it doesn't fire
+              its close event, which would leave Lenis stopped. */}
+          <p className="font-body text-[12px] text-body">
+            By submitting, you agree to our{' '}
+            <Link
+              to={ROUTES.privacy}
+              onClick={closeForm}
+              className="underline underline-offset-2 transition-colors hover:text-green-deep"
+            >
+              privacy policy
+            </Link>
+            .
+          </p>
         </form>
       </dialog>
     </section>

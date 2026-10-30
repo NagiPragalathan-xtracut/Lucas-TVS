@@ -1,4 +1,5 @@
 import { useId, useState, type ReactNode } from 'react'
+import { Link } from 'react-router-dom'
 import { Select as BaseSelect } from '@base-ui/react/select'
 import { ChevronDown, Settings } from 'lucide-react'
 import { EnquiryStatusNote } from '../../components/site/EnquiryStatusNote'
@@ -37,6 +38,13 @@ const ADDRESS =
  */
 const MAP_EMBED = `https://www.google.com/maps?q=${encodeURIComponent(ADDRESS)}&output=embed`
 
+/**
+ * The same search on google.com in a new tab — offered while the embed is
+ * blocked (no Targeting consent), since opening it is the visitor's own
+ * click rather than something the page loads for them.
+ */
+const MAP_LINK = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ADDRESS)}`
+
 const FIELD =
   'h-[50px] w-full rounded-[12px] border-[1.5px] border-line-soft bg-white px-4 font-body text-[15px] text-ink transition-colors duration-200 focus:border-green-deep focus:outline-none'
 
@@ -59,7 +67,7 @@ const FIELD =
 export default function ContactPage() {
   const [industry, setIndustry] = useState('Automotive')
   const { status, onSubmit } = useEnquiry('Contact page', () => setIndustry('Automotive'))
-  const { externalContentAllowed, openPrivacyChoices } = usePrivacyConsent()
+  const { consent, openPrivacyChoices } = usePrivacyConsent()
 
   return (
     <PageShell title="Contact Us">
@@ -143,8 +151,11 @@ export default function ContactPage() {
             <EnquiryStatusNote status={status} />
 
             <p className="font-body text-[12px] text-body">
-              By submitting, you agree to our privacy policy. We typically respond within two working
-              days.
+              By submitting, you agree to our{' '}
+              <Link to={ROUTES.privacy} className="underline underline-offset-2 transition-colors hover:text-green-deep">
+                privacy policy
+              </Link>
+              . We typically respond within two working days.
             </p>
           </form>
 
@@ -169,7 +180,9 @@ export default function ContactPage() {
                 it grows into the rest of the column. The frame is absolutely
                 placed so it always fills the box, whatever height that is. */}
             <div className="relative h-[300px] w-full overflow-hidden rounded-[24px] border-[1.5px] border-line-soft bg-surface-mute lg:h-auto lg:min-h-[300px] lg:flex-1">
-              {externalContentAllowed ? (
+              {/* Google can use the embed's cookies for advertising, so it
+                  waits for Targeting consent. */}
+              {consent.targeting ? (
                 <iframe
                   src={MAP_EMBED}
                   title="Map — INEL R&D Tech Center, SIPCOT Industrial Complex, Hosur"
@@ -181,15 +194,26 @@ export default function ContactPage() {
               ) : (
                 <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-6 text-center">
                   <p className="max-w-[320px] font-body text-[14px] leading-[1.5] text-body">
-                    Google Maps is hidden until you allow optional external content.
+                    The map is hidden because it uses Google’s targeting cookies. Allow them in
+                    Privacy choices, or open the address on Google Maps.
                   </p>
-                  <button
-                    type="button"
-                    onClick={openPrivacyChoices}
-                    className="rounded-full border border-green-deep px-5 py-2 font-body text-[13px] font-medium text-green-deep transition-colors hover:bg-lime-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-deep"
-                  >
-                    Privacy choices
-                  </button>
+                  <div className="flex flex-wrap justify-center gap-2">
+                    <button
+                      type="button"
+                      onClick={openPrivacyChoices}
+                      className="rounded-full border border-green-deep px-5 py-2 font-body text-[13px] font-medium text-green-deep transition-colors hover:bg-lime-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-deep"
+                    >
+                      Privacy choices
+                    </button>
+                    <a
+                      href={MAP_LINK}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rounded-full border border-green-deep px-5 py-2 font-body text-[13px] font-medium text-green-deep transition-colors hover:bg-lime-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-deep"
+                    >
+                      Open in Google Maps ↗
+                    </a>
+                  </div>
                 </div>
               )}
             </div>
