@@ -7,7 +7,6 @@ import { approachBackdrop } from '../../lib/assets'
 const DESTINATIONS = [
   { label: 'About Us', to: ROUTES.about },
   { label: 'Capabilities', to: ROUTES.capabilities },
-  { label: 'Products & Platforms', to: ROUTES.products },
   { label: 'Industries', to: ROUTES.industries },
   { label: 'Careers', to: ROUTES.careers },
   { label: 'Contact Us', to: ROUTES.contact },

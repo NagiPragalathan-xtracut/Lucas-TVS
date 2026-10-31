@@ -5,13 +5,12 @@ import { Eyebrow } from '../../components/site/design'
 import { ArrowCircle, Band, ChipFilter, DarkHero } from '../../components/site/blocks'
 import { ENGAGEMENT_MODELS, SERVICE_LINES, STANDARDS } from '../../data/capabilities'
 import { INDUSTRIES } from '../../data/industries'
-import { PRODUCTS } from '../../data/products'
 import { TECHNOLOGIES } from '../../data/technologies'
 import { INSIGHTS } from '../../data/insights'
-import { ROUTES, SHOW_INSIGHTS, insightPath, productPath } from '../../lib/routes'
+import { ROUTES, SHOW_INSIGHTS, insightPath } from '../../lib/routes'
 import { approachBackdrop } from '../../lib/assets'
 
-type Kind = 'Page' | 'Industry' | 'Capability' | 'Technology' | 'Product' | 'Insight'
+type Kind = 'Page' | 'Industry' | 'Capability' | 'Technology' | 'Insight'
 
 type Entry = {
   id: string
@@ -32,7 +31,6 @@ const INDEX: Entry[] = [
   { id: 'p:about', kind: 'Page', title: 'About Us', to: ROUTES.about, excerpt: 'End-to-end engineering, software and digital solutions for Automotive, Industrial and Defence & Aerospace.', keywords: 'who we are heritage vision mission leadership hosur ecosystem inel bat' },
   { id: 'p:capabilities', kind: 'Page', title: 'Engineering Services', to: ROUTES.capabilities, excerpt: 'From concept to deployment, our engineering services span embedded systems, electronics, software, safety and validation.', keywords: 'capabilities services lifecycle engagement' },
   { id: 'p:rd', kind: 'Page', title: 'Engineering & R&D', to: ROUTES.engineering, excerpt: 'Labs for electronics, embedded software and validation — including HIL rigs for faster, safer testing.', keywords: 'r&d research hosur tech center lab' },
-  { id: 'p:products', kind: 'Page', title: 'Products & Platforms', to: ROUTES.products, excerpt: 'High-performance hardware and systems for next-generation mobility, industry and defence — backed by the Lucas-TVS group.', keywords: 'catalogue hardware' },
   { id: 'p:quality', kind: 'Page', title: 'Quality & Standards', to: ROUTES.quality, excerpt: 'Proven processes, international standards and rigorous validation — so every product performs as designed.', keywords: 'certification deming iso validation mil sil hil' },
   // Insights (the landing page and every article) is indexed only while
   // SHOW_INSIGHTS is on — today it is placeholder content; see routes.ts.
@@ -83,14 +81,6 @@ const INDEX: Entry[] = [
     excerpt: t.blurb,
     keywords: t.items.join(' '),
   })),
-  ...PRODUCTS.map((p) => ({
-    id: `pr:${p.slug}`,
-    kind: 'Product' as const,
-    title: p.name,
-    to: productPath(p.slug),
-    excerpt: p.blurb,
-    keywords: `${p.category} ${p.sector} ${p.highlights.join(' ')}`,
-  })),
   ...(SHOW_INSIGHTS ? INSIGHTS : []).map((n) => ({
     id: `n:${n.slug}`,
     kind: 'Insight' as const,
@@ -108,7 +98,6 @@ const KINDS: ('All' | Kind)[] = [
   'Industry',
   'Capability',
   'Technology',
-  'Product',
   ...(SHOW_INSIGHTS ? (['Insight'] as const) : []),
 ]
 
@@ -164,7 +153,7 @@ export default function SearchPage() {
         crumbs={[{ label: 'Search' }]}
         title="Search the"
         accent="site."
-        intro={`Pages, engineering services, technologies${SHOW_INSIGHTS ? ', products and insights' : ' and products'} — searched as you type.`}
+        intro={`Pages, engineering services, ${SHOW_INSIGHTS ? 'technologies and insights' : 'and technologies'} — searched as you type.`}
       />
 
       <Band tone="mute">

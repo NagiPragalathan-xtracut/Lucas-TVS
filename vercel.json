@@ -3,7 +3,9 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
-    { "source": "/home3", "destination": "/", "permanent": true }
+    { "source": "/home3", "destination": "/", "permanent": true },
+    { "source": "/products", "destination": "/capabilities", "permanent": true },
+    { "source": "/products/:path*", "destination": "/capabilities", "permanent": true }
   ],
   "headers": [
     {

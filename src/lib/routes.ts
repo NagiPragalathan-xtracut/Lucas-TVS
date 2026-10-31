@@ -82,12 +82,6 @@ export const NAV: NavItem[] = [
         blurb: 'Eight service families across the product lifecycle',
       },
       {
-        // 30 Oct (launch audit): /products had no way in from the nav.
-        label: 'Products & Platforms',
-        to: ROUTES.products,
-        blurb: 'Hardware and systems for mobility, industry and defence',
-      },
-      {
         label: 'Technologies',
         to: ROUTES.technologies,
         blurb: 'The five focus areas our teams are organised around',
@@ -151,7 +145,6 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
     links: [
       { label: 'About', to: ROUTES.about },
       { label: 'Careers', to: ROUTES.careers },
-      { label: 'Sustainability', to: ROUTES.sustainability },
       { label: 'Contact', to: ROUTES.contact },
     ],
   },
@@ -160,13 +153,13 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
     links: [
       { label: 'Engineering Services', to: ROUTES.capabilities },
       { label: 'Technologies', to: ROUTES.technologies },
-      { label: 'Quality & Standards', to: ROUTES.quality },
     ],
   },
   {
+    // 31 Oct: external catalogues only — our own /products page was
+    // removed (it now redirects to /capabilities).
     heading: 'Products',
     links: [
-      { label: 'Products & Platforms', to: ROUTES.products },
       {
         label: 'Lucas-TVS Products',
         href: 'https://lucas-tvs.com/automotive-solutions-products/',

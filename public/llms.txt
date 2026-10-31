@@ -24,10 +24,6 @@ The engineering teams are based at the India Nippon Electricals Limited (INEL) R
 - [Industrial](https://software.lucas-tvs.com/industries/industrial): smart manufacturing, IIoT, motion and energy for industrial OEMs and manufacturers
 - [Defence & Aerospace](https://software.lucas-tvs.com/industries/defence-aerospace): engineering for defence OEMs, system integrators, DPSUs, DRDO laboratories and armed forces programmes
 
-## Products
-
-- [Products & Platforms](https://software.lucas-tvs.com/products): motor controllers, battery management systems, DC-DC converters, chargers, vehicle and body control units, rugged vehicle electronics, embedded processing platforms, motion controllers, energy management systems, edge gateways and condition monitoring units
-
 ## Optional
 
 - [Sustainability](https://software.lucas-tvs.com/sustainability): points to the Lucas-TVS group's corporate sustainability reporting

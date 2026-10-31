@@ -16,8 +16,6 @@ const AboutPage = lazy(() => import('./pages/inner/AboutPage'))
 const CapabilitiesPage = lazy(() => import('./pages/inner/CapabilitiesPage'))
 const EngineeringRdPage = lazy(() => import('./pages/inner/EngineeringRdPage'))
 const TechnologiesPage = lazy(() => import('./pages/inner/TechnologiesPage'))
-const ProductsPage = lazy(() => import('./pages/inner/ProductsPage'))
-const ProductDetailPage = lazy(() => import('./pages/inner/ProductDetailPage'))
 const IndustriesPage = lazy(() => import('./pages/inner/IndustriesPage'))
 const IndustryPage = lazy(() => import('./pages/inner/IndustryPage'))
 const QualityPage = lazy(() => import('./pages/inner/QualityPage'))
@@ -57,8 +55,11 @@ export default function App() {
           <Route path="/capabilities" element={<CapabilitiesPage />} />
           <Route path="/engineering-rd" element={<EngineeringRdPage />} />
           <Route path="/technologies" element={<TechnologiesPage />} />
-          <Route path="/products" element={<ProductsPage />} />
-          <Route path="/products/:slug" element={<ProductDetailPage />} />
+          {/* 31 Oct: the site no longer covers products. Old links (and
+              search results) land on Engineering Services; vercel.json sends
+              the same redirect server-side. */}
+          <Route path="/products" element={<Navigate to="/capabilities" replace />} />
+          <Route path="/products/*" element={<Navigate to="/capabilities" replace />} />
           <Route path="/industries" element={<IndustriesPage />} />
           <Route path="/industries/:slug" element={<IndustryPage />} />
           <Route path="/quality" element={<QualityPage />} />

@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import { PRODUCTS } from '../data/products'
 import { INDUSTRIES } from '../data/industries'
 import { INSIGHTS } from '../data/insights'
 
@@ -19,8 +18,8 @@ import { INSIGHTS } from '../data/insights'
  *
  * Descriptions are taken from each page's own hero intro or data-file copy
  * — keep them that way rather than writing marketing lines nobody has
- * approved. Product and industry entries are derived from src/data, so a
- * new product gets its own prerendered page and sitemap entry for free.
+ * approved. Industry entries are derived from src/data, so a new
+ * industry gets its own prerendered page and sitemap entry for free.
  */
 
 export const SITE_URL = 'https://software.lucas-tvs.com'
@@ -89,12 +88,6 @@ const STATIC_META: Record<string, PageMeta> = {
     description:
       'The technology areas our engineering teams are organised around — applied across Automotive, Industrial and Defence.',
   },
-  '/products': {
-    title: 'Products & Platforms',
-    // Built from the catalogue in src/data/products.ts.
-    description:
-      'Motor controllers, battery management systems, DC-DC converters, chargers, vehicle control units, rugged electronics and industrial controllers for Automotive, Industrial and Defence platforms.',
-  },
   '/industries': {
     title: 'Industries',
     description:
@@ -129,7 +122,7 @@ const STATIC_META: Record<string, PageMeta> = {
   '/search': {
     title: 'Search',
     description:
-      'Pages, engineering services, technologies, products and insights — searched as you type.',
+      'Pages, engineering services and technologies — searched as you type.',
     noindex: true,
   },
   '/privacy-policy': {
@@ -139,20 +132,9 @@ const STATIC_META: Record<string, PageMeta> = {
   },
 }
 
-const SECTOR_LABEL = { Automotive: 'Automotive', Industrial: 'Industrial', Defence: 'Defence & Aerospace' }
-
 /** Every route with its own head, static and data-driven, in nav order. */
 export const ROUTE_META: Record<string, PageMeta> = {
   ...STATIC_META,
-  ...Object.fromEntries(
-    PRODUCTS.map((p) => [
-      `/products/${p.slug}`,
-      {
-        title: p.name,
-        description: `${p.blurb} Part of the Lucas-TVS ${SECTOR_LABEL[p.sector]} product portfolio.`,
-      },
-    ]),
-  ),
   ...Object.fromEntries(
     INDUSTRIES.map((i) => [`/industries/${i.slug}`, { title: i.label, description: i.intro }]),
   ),

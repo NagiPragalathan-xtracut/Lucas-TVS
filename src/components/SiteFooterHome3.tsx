@@ -18,7 +18,6 @@ const COLUMNS: { heading: string; links: { label: string; href: string; external
     links: [
       { label: 'About', href: '/about' },
       { label: 'Careers', href: '/careers' },
-      { label: 'Sustainability', href: '/sustainability' },
       { label: 'Contact', href: '/contact' },
     ],
   },
@@ -31,15 +30,13 @@ const COLUMNS: { heading: string; links: { label: string; href: string; external
       { label: 'Software Engineering', href: '/capabilities' },
       { label: 'Functional Safety & Cybersecurity', href: '/capabilities' },
       { label: 'Digital Engineering', href: '/capabilities' },
-      // 30 Oct (launch audit): Quality, Products and Sustainability had no
-      // link anywhere on the site; they now sit in both footers.
-      { label: 'Quality & Standards', href: '/quality' },
     ],
   },
   {
+    // 31 Oct: external catalogues only — our own /products page was
+    // removed (it now redirects to /capabilities).
     heading: 'Products',
     links: [
-      { label: 'Products & Platforms', href: '/products' },
       {
         label: 'Lucas-TVS Products',
         href: 'https://lucas-tvs.com/automotive-solutions-products/',
