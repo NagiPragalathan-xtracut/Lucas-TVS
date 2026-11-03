@@ -1,7 +1,6 @@
 /**
- * The three cookie types from the client's privacy policy (Cookie
- * Settings section), verbatim. Shared by the Privacy Policy page and the
- * cookie preferences panel so the two can never describe them differently.
+ * Cookie categories shared by the Privacy Policy and preferences panel.
+ * Keep the description aligned with the tools actually used on this site.
  */
 export const COOKIE_TYPES = {
   necessary: {
@@ -10,10 +9,10 @@ export const COOKIE_TYPES = {
   },
   performance: {
     term: 'Performance Cookies',
-    body: 'These cookies collect information about how you use our website, such as which pages you visit and if you encounter any errors. The data is aggregated and anonymized, helping us improve the performance of our site. You have the option to disable these cookies.',
+    body: 'These tools collect information about how you use our website, including pages visited and interactions. Microsoft Clarity may capture session recordings and heatmaps. We use this information to improve the site. You can disable these tools at any time.',
   },
   targeting: {
     term: 'Targeting Cookies',
-    body: 'These cookies are used to deliver ads more relevant to you and your interests. They also help limit the number of times you see an ad and measure the effectiveness of advertising campaigns. You can choose to disable these cookies if you prefer.',
+    body: 'This category allows optional third-party content, such as the Google Map on our Contact page. That provider may set cookies, including for advertising. You can disable this content at any time.',
   },
 }

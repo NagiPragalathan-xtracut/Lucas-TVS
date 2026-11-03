@@ -1,61 +1,93 @@
-/**
- * Google Analytics 4, behind the "Performance cookies" consent.
- *
- * Nothing loads until a visitor allows Performance cookies in the privacy
- * choices (components/site/PrivacyConsent.tsx), and never while their
- * browser sends Do Not Track / Global Privacy Control. Withdrawing consent
- * switches GA off with its own kill flag and deletes its cookies.
- *
- * Set the GA4 Measurement ID ("G-XXXXXXXXXX") to switch it on. While this
- * is empty nothing loads at all, and the preferences panel lists no
- * analytics tool, so the site never claims tracking it doesn't do.
- */
-export const GA_MEASUREMENT_ID = ''
+/** Optional measurement tools start only after Performance consent. */
+export const GA_MEASUREMENT_ID = 'G-NRM9VL9YXQ'
+export const GTM_CONTAINER_ID = 'GTM-TRS8MDV8'
+export const CLARITY_PROJECT_ID = 'z7t3ml7tfm'
 
 declare global {
   interface Window {
     dataLayer?: unknown[]
     gtag?: (...args: unknown[]) => void
+    clarity?: (...args: unknown[]) => void
   }
 }
 
-let loaded = false
+let enabled = false
+let googleReady = false
+let gaLoaded = false
+let gtmLoaded = false
+let clarityLoaded = false
 
-export function setAnalyticsEnabled(enabled: boolean) {
-  if (!GA_MEASUREMENT_ID) return
-  // GA's documented opt-out: while set, gtag.js sends nothing.
-  ;(window as unknown as Record<string, boolean>)[`ga-disable-${GA_MEASUREMENT_ID}`] = !enabled
-
-  if (!enabled) {
-    clearAnalyticsCookies()
-    return
-  }
-  if (loaded) return
-  loaded = true
-
+function initializeGoogle() {
+  if (googleReady) return
+  googleReady = true
   window.dataLayer = window.dataLayer ?? []
-  // gtag.js reads the `arguments` object itself, not an array of them.
+  // gtag.js consumes the arguments object, not an array.
   window.gtag = function gtag() {
     window.dataLayer!.push(arguments)
   }
   window.gtag('consent', 'default', {
-    analytics_storage: 'granted',
+    analytics_storage: 'denied',
     ad_storage: 'denied',
     ad_user_data: 'denied',
     ad_personalization: 'denied',
   })
-  window.gtag('js', new Date())
-  // Page views are sent by AnalyticsTracker on each route change.
-  window.gtag('config', GA_MEASUREMENT_ID, { send_page_view: false })
+}
 
+function loadScript(src: string) {
   const script = document.createElement('script')
   script.async = true
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`
+  script.src = src
   document.head.appendChild(script)
 }
 
+export function setAnalyticsEnabled(allow: boolean) {
+  initializeGoogle()
+  window.gtag?.('consent', 'update', {
+    analytics_storage: allow ? 'granted' : 'denied',
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+  })
+  const wasEnabled = enabled
+  enabled = allow
+  // GA's documented opt-out: while set, gtag.js sends nothing.
+  ;(window as unknown as Record<string, boolean>)[`ga-disable-${GA_MEASUREMENT_ID}`] = !allow
+
+  if (!allow) {
+    clearAnalyticsCookies()
+    if (clarityLoaded && wasEnabled) window.clarity?.('consent', false)
+    return
+  }
+  if (!gtmLoaded) {
+    gtmLoaded = true
+    window.dataLayer!.push({ 'gtm.start': Date.now(), event: 'gtm.js' })
+    loadScript(`https://www.googletagmanager.com/gtm.js?id=${GTM_CONTAINER_ID}`)
+  }
+  if (!gaLoaded) {
+    gaLoaded = true
+    window.gtag?.('js', new Date())
+    // AnalyticsTracker sends page views on each route change.
+    window.gtag?.('config', GA_MEASUREMENT_ID, { send_page_view: false })
+    loadScript(`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`)
+  }
+  if (!clarityLoaded) {
+    clarityLoaded = true
+    window.clarity = function clarity(...args: unknown[]) {
+      ;(window.clarity as typeof window.clarity & { q?: unknown[][] }).q ??= []
+      ;(window.clarity as typeof window.clarity & { q: unknown[][] }).q.push(args)
+    }
+    loadScript(`https://www.clarity.ms/tag/${CLARITY_PROJECT_ID}`)
+  }
+  if (!wasEnabled) {
+    window.clarity?.('consentv2', {
+      ad_Storage: 'denied',
+      analytics_Storage: 'granted',
+    })
+  }
+}
+
 export function trackPageView(path: string) {
-  if (!loaded) return
+  if (!enabled || !gaLoaded) return
   window.gtag?.('event', 'page_view', {
     page_path: path,
     page_location: window.location.href,
@@ -87,6 +119,6 @@ function clearAnalyticsCookies() {
  * for the enquiry form's `generate_lead` conversion (launch audit).
  */
 export function trackEvent(name: string, params?: Record<string, unknown>) {
-  if (!loaded) return
+  if (!enabled || !gaLoaded) return
   window.gtag?.('event', name, params)
 }

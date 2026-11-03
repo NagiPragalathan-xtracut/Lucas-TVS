@@ -13,10 +13,9 @@ type PolicySection = {
 }
 
 /**
- * The policy text, verbatim from the client's current page
- * (lucas-tvs.com/privacy-policy, last updated 31-03-2026). Wording,
- * spelling and order are theirs; change it only with a new version from
- * the client, and update LAST_UPDATED with it.
+ * Policy text from the client's current page (lucas-tvs.com/privacy-policy,
+ * last updated 31-03-2026), with the cookie category descriptions shared
+ * with this site's live consent controls.
  */
 const SECTIONS: PolicySection[] = [
   {
@@ -153,7 +152,7 @@ const SECTIONS: PolicySection[] = [
 // in COMPANY (lib/routes.ts).
 const TOLL_FREE = '1800-425-8979'
 const PRIVACY_EMAIL = 'oe@lucastvs.co.in'
-const LAST_UPDATED = '31-03-2026'
+const LAST_UPDATED = '03-11-2026'
 
 const H2 = 'font-display text-[22px] leading-[1.25] font-semibold text-ink lg:text-[26px]'
 const TEXT = 'font-body text-[16px] leading-[1.7] text-body'
@@ -200,13 +199,22 @@ export default function PrivacyPolicyPage() {
                 </ul>
               )}
               {section.heading === 'Cookie Settings' && (
-                <button
-                  type="button"
-                  onClick={openPrivacyChoices}
-                  className="self-start rounded-full border border-green-deep px-5 py-2 font-body text-[14px] font-medium text-green-deep transition-colors hover:bg-lime-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-deep"
-                >
-                  Privacy choices
-                </button>
+                <>
+                  <p className={TEXT}>
+                    On this website, Performance permission enables Google Analytics, Google Tag Manager
+                    and Microsoft Clarity. Clarity helps us understand visits through session recordings
+                    and heatmaps. These tools load only after you allow Performance cookies. Targeting
+                    permission controls the Google Map on our Contact page. You can withdraw either
+                    permission at any time using Privacy choices.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={openPrivacyChoices}
+                    className="self-start rounded-full border border-green-deep px-5 py-2 font-body text-[14px] font-medium text-green-deep transition-colors hover:bg-lime-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-deep"
+                  >
+                    Privacy choices
+                  </button>
+                </>
               )}
             </PolicyBlock>
           ))}

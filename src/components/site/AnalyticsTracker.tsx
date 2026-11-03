@@ -4,7 +4,7 @@ import { setAnalyticsEnabled, trackPageView } from '../../lib/analytics'
 import { usePrivacyConsent } from './PrivacyConsent'
 
 /**
- * Starts or stops Google Analytics as Performance consent changes, and
+ * Starts or stops analytics tools as Performance consent changes, and
  * sends a page view on each navigation while it is allowed (gtag only
  * sees the first page load of a single-page app on its own).
  *

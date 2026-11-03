@@ -2,11 +2,11 @@ import { createContext, useContext, useEffect, useId, useRef, useState, type Rea
 import { Switch } from '@base-ui/react/switch'
 import { ShieldCheck, X } from 'lucide-react'
 import { COOKIE_TYPES } from '../../data/cookieTypes'
-import { GA_MEASUREMENT_ID } from '../../lib/analytics'
 import { ROUTES } from '../../lib/routes'
 
 const STORAGE_KEY = 'lucas-tvs-cookie-consent'
-const VERSION = 2
+// Re-ask visitors who chose v2 before the new analytics vendors were active.
+const VERSION = 3
 // A choice is asked for again after a year rather than kept forever.
 const MAX_AGE_MS = 365 * 24 * 60 * 60 * 1000
 // v1 stored a single "external content" answer, which doesn't cover the
@@ -24,7 +24,7 @@ const ALL: Consent = { performance: true, targeting: true }
 // policy's own description of it.
 const USED_FOR: Record<keyof typeof COOKIE_TYPES, string> = {
   necessary: 'Remembering the cookie choices you make here, for up to 12 months.',
-  performance: GA_MEASUREMENT_ID ? 'Google Analytics.' : 'Nothing at present.',
+  performance: 'Google Analytics, Google Tag Manager and Microsoft Clarity.',
   targeting:
     'The Google Map on our Contact page, which lets Google set its own cookies, including for advertising.',
 }
@@ -72,7 +72,7 @@ function readSaved(): Consent | null {
  *   - once a choice exists, a "Privacy choices" button on every page to
  *     reopen the panel (the footer's "Cookie Settings" works throughout).
  *
- * Nothing optional runs until it is allowed: Google Analytics waits for
+ * Nothing optional runs until it is allowed: analytics tools wait for
  * Performance (lib/analytics.ts via AnalyticsTracker), the Contact page
  * map for Targeting. With Do Not Track or Global Privacy Control on, both
  * stay off and there is nothing to ask, so no banner shows.
