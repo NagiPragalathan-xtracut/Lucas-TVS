@@ -83,13 +83,13 @@ export function ChevronPill({
   return (
     <span
       className={cx(
-        'inline-flex h-[26px] w-[52px] shrink-0 items-center justify-center rounded-full bg-lime',
+        'inline-flex h-[26px] w-[52px] shrink-0 items-center justify-center rounded-full bg-lime text-white',
         className,
       )}
       role="img"
       aria-label={label}
     >
-      <ChevronDoubleRight className={cx('text-white', iconClassName)} />
+      <ChevronDoubleRight className={iconClassName} />
     </span>
   )
 }

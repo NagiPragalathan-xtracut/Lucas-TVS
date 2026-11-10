@@ -123,7 +123,7 @@ export function ResearchDevelopment() {
                   Learn More
                 </span>
                 <ChevronPill
-                  className="!h-[50px] !w-[102px] !bg-white shadow-[0_4px_4px_0_rgba(211,211,211,0.25),inset_0_0_4px_0_rgba(0,0,0,0.25)]"
+                  className="!h-[50px] !w-[102px] !bg-white !text-ink shadow-[0_4px_4px_0_rgba(211,211,211,0.25),inset_0_0_4px_0_rgba(0,0,0,0.25)]"
                   iconClassName="h-[26px] w-[26px]"
                   label="Learn more"
                 />

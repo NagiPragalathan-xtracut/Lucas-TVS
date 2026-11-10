@@ -172,7 +172,7 @@ export function EngineeringServicesHome3() {
                   Explore Engineering Services
                 </span>
                 <ChevronPill
-                  className="!h-[40px] !w-[48px] shrink-0 min-[360px]:!h-[42px] min-[360px]:!w-[64px] !bg-white shadow-[0_4px_4px_0_rgba(211,211,211,0.25),inset_0_0_4px_0_rgba(0,0,0,0.25)] sm:!h-[50px] sm:!w-[102px]"
+                  className="!h-[40px] !w-[48px] shrink-0 min-[360px]:!h-[42px] min-[360px]:!w-[64px] !bg-white !text-ink shadow-[0_4px_4px_0_rgba(211,211,211,0.25),inset_0_0_4px_0_rgba(0,0,0,0.25)] sm:!h-[50px] sm:!w-[102px]"
                   iconClassName="h-[22px] w-[22px] sm:h-[26px] sm:w-[26px]"
                   label="Explore Engineering Services"
                 />

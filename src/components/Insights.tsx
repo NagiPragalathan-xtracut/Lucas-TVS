@@ -48,7 +48,7 @@ export function Insights() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
           <ChevronPill
-            className="absolute top-[9px] right-[10px] !h-[52px] !w-[106px] !bg-white transition-transform duration-300 group-hover:scale-110"
+            className="absolute top-[9px] right-[10px] !h-[52px] !w-[106px] !bg-white !text-ink transition-transform duration-300 group-hover:scale-110"
             iconClassName="h-[26px] w-[26px]"
             label="Read the lead story"
           />
