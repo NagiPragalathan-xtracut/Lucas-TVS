@@ -127,6 +127,19 @@ export function SiteFooter() {
             ))}
           </ul>
         </div>
+
+        <p className="mt-4 text-center font-mono text-[12px] leading-[1.29] tracking-[0.98px] text-black sm:text-left">
+          Design &amp; developed by{' '}
+          <a
+            href="https://xtracut.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-6 items-center font-semibold underline-offset-2 transition-colors hover:text-green-ink hover:underline"
+          >
+            Xtracut
+            <span className="sr-only"> (opens in a new tab)</span>
+          </a>
+        </p>
       </div>
     </footer>
   )
