@@ -194,5 +194,5 @@ export const COMPANY = {
   phone: '+91 89255 50242',
   phoneHref: 'tel:+918925550242',
   email: 'shrihari.km@lucastvs.co.in',
-  careersPortal: 'https://career.lucas-tvs.com',
+  careersPortal: 'https://chroma.tcsapps.com/webhcm/LTVS/careers?jobLevelSearch=experienced',
 }

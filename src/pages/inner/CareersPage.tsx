@@ -17,9 +17,9 @@ import {
   FRAME,
   Pill,
   SplitHeader,
+  StackHeader,
 } from '../../components/site/design'
 import {
-  ArrowCircle,
   BODY_GAP,
   Band,
   DarkBand,
@@ -77,7 +77,7 @@ const HIRING_STEPS: { title: string; sub: string; icon: LucideIcon }[] = [
  * the reference's.
  *
  * Every role link goes to the careers portal the reference names
- * (career.lucas-tvs.com); the site lists no roles itself.
+ * (the TCS Chroma portal, experienced roles); the site lists no roles itself.
  */
 export default function CareersPage() {
   const portal = COMPANY.careersPortal
@@ -129,32 +129,22 @@ export default function CareersPage() {
       </section>
 
       <Band tone="mute">
-        <SplitHeader
-          eyebrow="Teams we hire for"
-          title="Find your"
-          accent="place."
-          actions={
-            <Pill href={portal} tone="ghost">
-              See All Roles ↗
-            </Pill>
-          }
-        />
+        {/* 20 Nov: centred, without the "See All Roles" button, and the team
+            cards are plain cards rather than links — the portal stays one
+            click away from the hero and the closing band. */}
+        <div className="text-center">
+          <StackHeader eyebrow="Teams we hire for" title="Find your" accent="place." />
+        </div>
         <ul className={`${BODY_GAP} grid gap-3.5 md:grid-cols-2 lg:grid-cols-3 lg:gap-4`}>
           {TEAMS.map((team) => (
-            <li key={team.title}>
-              <SmartLink
-                href={portal}
-                label={`${team.title} roles on the careers portal`}
-                className="group flex items-center justify-between gap-3.5 rounded-[18px] border-[1.5px] border-line-soft bg-white px-5 py-[18px] transition-colors duration-300 hover:border-green-deep/50"
-              >
-                <span className="flex items-center gap-3.5">
-                  <IconTile tone="tint">
-                    <team.icon />
-                  </IconTile>
-                  <span className="font-display text-[17px] leading-[1.25] font-semibold text-ink">{team.title}</span>
-                </span>
-                <ArrowCircle />
-              </SmartLink>
+            <li
+              key={team.title}
+              className="flex items-center gap-3.5 rounded-[18px] border-[1.5px] border-line-soft bg-white px-5 py-[18px]"
+            >
+              <IconTile tone="tint">
+                <team.icon />
+              </IconTile>
+              <span className="font-display text-[17px] leading-[1.25] font-semibold text-ink">{team.title}</span>
             </li>
           ))}
         </ul>
