@@ -158,7 +158,7 @@ export default function CareersPage() {
             title="A simple,"
             accent="transparent process."
             body="Four steps from application to your first day — usually within a few weeks."
-            actions={<Pill href={portal}>View Open Roles ↗</Pill>}
+            // 20 Nov: "View Open Roles" hidden here; the hero keeps it.
           />
           <HiringProcess />
         </DarkBand>
