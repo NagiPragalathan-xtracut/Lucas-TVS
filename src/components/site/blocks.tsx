@@ -139,6 +139,7 @@ export function DarkHero({
   title,
   accent,
   intro,
+  introWidthClass = 'max-w-[640px]',
   actions,
   below,
 }: {
@@ -155,6 +156,8 @@ export function DarkHero({
   accent?: ReactNode
   /** Optional — the About Us banner runs without one (13 Oct). */
   intro?: ReactNode
+  /** Literal Tailwind max-width classes for the intro; 640px by default. */
+  introWidthClass?: string
   actions?: ReactNode
   /** An extra row under the actions — the sector pills on the industry pages. */
   below?: ReactNode
@@ -246,7 +249,7 @@ export function DarkHero({
               )}
             </h1>
             {intro && (
-              <p className="max-w-[640px] font-body text-[15px] leading-[1.6] text-white/90 lg:text-[18px]">
+              <p className={cx(introWidthClass, 'font-body text-[15px] leading-[1.6] text-white/90 lg:text-[18px]')}>
                 {intro}
               </p>
             )}

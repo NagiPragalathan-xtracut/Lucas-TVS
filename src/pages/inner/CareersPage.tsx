@@ -92,6 +92,8 @@ export default function CareersPage() {
         title="Solve hard engineering problems."
         accent="Build what’s next."
         intro="Join a young software & product-engineering division inside Lucas-TVS — electrification, SDV, embedded systems, defence electronics and AI."
+        // Two lines on desktop (20 Nov) rather than the default 640px's three.
+        introWidthClass="max-w-[640px] lg:max-w-[860px]"
         actions={
           <>
             <Pill href={portal}>View Open Roles</Pill>
