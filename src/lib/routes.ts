@@ -193,7 +193,7 @@ export const COMPANY = {
   // Confirmed by the client (24 Oct).
   phone: '+91 89255 50242',
   phoneHref: 'tel:+918925550242',
-  email: 'shrihari.km@lucastvs.co.in',
+  email: 'pes.solutions@lucastvs.co.in',
   careersPortal: 'https://chroma.tcsapps.com/webhcm/LTVS/careers?jobLevelSearch=experienced',
   /** The group careers site — the "Grow your career" card on /careers. */
   careersSite: 'https://career.lucas-tvs.com/',

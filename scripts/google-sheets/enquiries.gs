@@ -32,12 +32,12 @@ const SHEET_ID = '13eL9yGKPZcvFsfJ_l4jzrYp03V_id39XhIie6KcjZNM'
 // Who is told about each enquiry. Several addresses: separate with commas.
 // First is the site's published enquiry contact (COMPANY.email in
 // src/lib/routes.ts); second is the Xtracut team.
-const NOTIFY_TO = 'shrihari.km@lucastvs.co.in, raghul@xtracut.com'
+const NOTIFY_TO = 'pes.solutions@lucastvs.co.in, raghul@xtracut.com'
 const SENDER_NAME = 'Lucas TVS Website'
 
 // Bump with every change: doGet reports it, so whether the latest copy is
 // the one deployed can be checked from outside the editor.
-const SCRIPT_VERSION = 4
+const SCRIPT_VERSION = 5
 
 // Column order in the sheet. `key` is the form field name the site sends.
 const COLUMNS = [
@@ -73,7 +73,9 @@ function doPost(e) {
       sheet.getRange(1, 1, 1, COLUMNS.length).setFontWeight('bold')
       sheet.setFrozenRows(1)
     }
-    sheet.appendRow(COLUMNS.map((c) => (c.key ? clean(p[c.key]) : new Date())))
+    sheet.appendRow(
+      COLUMNS.map((c) => (!c.key ? new Date() : c.key === 'phone' ? asText(clean(p.phone)) : clean(p[c.key]))),
+    )
   } finally {
     lock.releaseLock()
   }
@@ -187,6 +189,12 @@ const MAX_CELL_LENGTH = 2000
 function clean(value) {
   const s = String(value == null ? '' : value).trim().slice(0, MAX_CELL_LENGTH)
   return /^[=+\-@]/.test(s) ? "'" + s : s
+}
+
+// Phone numbers are text, not numbers: without the leading apostrophe
+// Sheets turns "0442..." into 442... and drops the leading zeros (20 Nov).
+function asText(s) {
+  return s && s[0] !== "'" ? "'" + s : s
 }
 
 function json(body) {
