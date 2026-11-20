@@ -51,7 +51,7 @@ const REASONS: {
 }[] = [
   { lines: ['Work on real-world', 'impact'], icon: IconTarget, image: whyImpact, link: { to: ROUTES.industries } },
   { lines: ['Collaborate with', 'experts'], icon: IconPeople, image: whyExperts, link: { to: ROUTES.capabilities } },
-  { lines: ['Grow your', 'career'], icon: IconTrend, image: whyCareer, link: { href: COMPANY.careersPortal } },
+  { lines: ['Grow your', 'career'], icon: IconTrend, image: whyCareer, link: { href: COMPANY.careersSite } },
   { lines: ['Shape a smarter', 'tomorrow'], icon: IconBurst, image: whyTomorrow, link: { to: ROUTES.technologies } },
 ]
 
